@@ -1,0 +1,1768 @@
+fileFormatVersion: 2
+guid: 6d882fdc7f0d43b4992e6a389e581e5a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1020
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07f9be526778c6b4291237392f6e8d98
+      internalID: -2101382626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 1020
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf2184944da07594c909f594dc11fbee
+      internalID: 107012122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_2
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1020
+        width: 47
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b018ab6fb93fdce428e507bd33683715
+      internalID: -836042883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_3
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 1020
+        width: 49
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75c71aeb10cf80c48843cbaf8df2fd37
+      internalID: 210970554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_4
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 1020
+        width: 51
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d56dd56181a5fe4c904654e2ad37ca9
+      internalID: -399363310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_5
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 1020
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b4726c2fbd33d04d9eb565f378f61b4
+      internalID: -195648227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_6
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1020
+        width: 51
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f05185d8cad5db040a6c2d0410309c8f
+      internalID: -1504516442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_7
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 1020
+        width: 51
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 769de6eb767b45643acaf1591409ff2b
+      internalID: 1813818754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_8
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 1020
+        width: 51
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02500b8cc444f5e4c91096df4e29ad30
+      internalID: 596681732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_9
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 920
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eed436546111f74e8a5ce81244533b4
+      internalID: -1306470787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_10
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 920
+        width: 49
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4a4944020e57864ca3e7dc9e8f3800b
+      internalID: -784727898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_11
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 925
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59a1279b665527f48b6c5ba26d1ff5ce
+      internalID: -584554303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_12
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 926
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6209ab2f08974924a9d5f50728e8327d
+      internalID: 454406174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_13
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 921
+        width: 50
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db72b8dc338b25c41a8bb8461a17131c
+      internalID: -1417844346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_14
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 920
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f6e94494952ede4d9f642de21028d35
+      internalID: -101787745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_15
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 920
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328c6d9701cdb5b4a9cc5ad638cb9f58
+      internalID: 399447998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_16
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 920
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab172be25f8eae3488cd00c6fe5641f1
+      internalID: -1187223336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_17
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 925
+        width: 49
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 065acb2a98069af4395e170de7aff67a
+      internalID: -1353928464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_18
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 926
+        width: 50
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a423e58df8c23242b5cf9f50dc5109e
+      internalID: 1792854239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_19
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 921
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95124452cf113c44ea3bfcbcb6583c81
+      internalID: 221133796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_20
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 920
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9754d9fe7cb051342b3caccd631a2542
+      internalID: -651969122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_21
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 820
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a59b475ad910414e9028a8afd535239
+      internalID: -108964274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_22
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 820
+        width: 49
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05408aeba7a27e4eb9711a827ce6767
+      internalID: -1173064227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_23
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 825
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8985ef7d458c73047877162de5dc4734
+      internalID: 1778442465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_24
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 826
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc027eb4116ae047816b3bcdb7bf102
+      internalID: 55196533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_25
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 821
+        width: 50
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e360e6306e65ce449aa3cff1c4cb2437
+      internalID: 723213721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_26
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 820
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91c4a7383e4c82b47886f8d4599158ed
+      internalID: -960799936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_27
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 820
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a84ef49e13bd2143a7bb440ca56649a
+      internalID: 1241095432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_28
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 820
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 669f050463cd2ef49939e1774ee117f7
+      internalID: 1971402313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_29
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 825
+        width: 49
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d80a3d974d1e3474282ed36f57e8e6e2
+      internalID: 229337450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_30
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 826
+        width: 50
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 560e64320a46f3b4a8d7e7b945ad0a5f
+      internalID: 89793679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_31
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 821
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f33a86581a0a7ed4eb5f182b38d13bd6
+      internalID: -685171257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_32
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 820
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2311fa2fbec6de341a89e8a25db2d6c0
+      internalID: 1089102729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_33
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 720
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f98202139151c42438723cf9a74ee5d3
+      internalID: -490592649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_34
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 720
+        width: 49
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 446403c28055bc94686d951236adccdc
+      internalID: 343191329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_35
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 725
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce58ce720a87f4b4d90a9ad9e1b272c0
+      internalID: 343313635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_36
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 726
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b4633d538780c643872ce466472e99d
+      internalID: 1449058023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_37
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 721
+        width: 50
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18235df2034498d4bb26e933d00eb1b5
+      internalID: 242178743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_38
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 720
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbcb9ff62f11ead40b4adb44bc16cf29
+      internalID: 1492271246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_39
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 720
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 068e07f970ec27445ac3a38aa05e222e
+      internalID: 121836556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_40
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 720
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6423ae01f31fafa4aa1a03106173eace
+      internalID: -1721950595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_41
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 725
+        width: 49
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10e58c59d8ac46b49b5c4640128127d7
+      internalID: -118095164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_42
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 726
+        width: 50
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52d2662df0db40146aff2c8de6bf6b8b
+      internalID: 1597112094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_43
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 721
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636e6e9a8452d5a46819101b497e8c7c
+      internalID: 608806668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_44
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 720
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c018b763840202a4fb677c98664dcaa5
+      internalID: -805194791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_45
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 620
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5cd426ce9d833340b619b7fae29ba83
+      internalID: 1996930262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_46
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 620
+        width: 39
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 679e847db6ffe8d4a9d7fe59bd2328a0
+      internalID: -557930668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_47
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 620
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eaf60ab833bd2b4c9849397db80c01a
+      internalID: -1553300308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_48
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 620
+        width: 42
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ef6f05d4579d3b439c2ac835275ba3f
+      internalID: -1417882785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_49
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 620
+        width: 48
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9fba3ed69f319d49b71dc8ff4188a8a
+      internalID: 667640602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_50
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 520
+        width: 48
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8d7a43fed65964bbd204cb82b2a896
+      internalID: -491215852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_51
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 520
+        width: 47
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 297c5351118c114448710eba3664522c
+      internalID: -167037668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_52
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 520
+        width: 44
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c740d1d61d050d489425d6953218d4c
+      internalID: -1189397357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_53
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 520
+        width: 41
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b5e2d121ca1c0741bfae7b4f49885cd
+      internalID: 241618835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_54
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 520
+        width: 36
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55fe6de9d1731b34f99fc2cc30b1f624
+      internalID: -2131880604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_55
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 520
+        width: 32
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7c9781cf8e52cf4ba04fcb087091dda
+      internalID: -1119803490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_56
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 520
+        width: 48
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848fc8adeff1eca488ae5705e2d5b24c
+      internalID: 1756785648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_57
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 520
+        width: 61
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98a502acd4b924148a622ffb3777033e
+      internalID: -1948166717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_58
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 520
+        width: 70
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a3ccb9f636eebd4295b5b8effbe04a2
+      internalID: 909532087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_59
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 520
+        width: 73
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63275366b592434498e337f4b31ecab9
+      internalID: 820807859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_60
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 520
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e6b45f508495a849a6883b3bd98e67b
+      internalID: 1865888323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_61
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 420
+        width: 65
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 531d1973f55e4b34fa2b2c01690fbe8e
+      internalID: -1436274957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_62
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 420
+        width: 66
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05d7a38af6d0a349813b19b06714106
+      internalID: -1546878275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_63
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 420
+        width: 68
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4fab68d4e85ddb47a474444a66fd0cc
+      internalID: 378493190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_64
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 323
+        width: 64
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430abaee7a6822e44a030a90b85aa3ac
+      internalID: 1579199276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_65
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 328
+        width: 58
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c30cf8460fb77d8408a19809d5aa4239
+      internalID: 1096999297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_66
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 220
+        width: 59
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a4ab36115c8a9e4dbf2eb268dc129cb
+      internalID: 363448576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_67
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 218
+        width: 59
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7b03a661b961834684b73e0772f9654
+      internalID: -2097351170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_68
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 120
+        width: 59
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01ee36a520f131740b7e2b5ed87617c5
+      internalID: -523800865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_69
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 118
+        width: 59
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 817c171364f5f0048ae7933f756fbba4
+      internalID: 199799073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_70
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 20
+        width: 59
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9ea8023639bfea498f34ab51813dc16
+      internalID: -1156382419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_71
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 18
+        width: 58
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 563bf2e8cf04f484ba9da96090f0738a
+      internalID: -2081159325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_72
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 20
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd1534f1b619a4645801c178bdb66cde
+      internalID: 1963726178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better throwing exceptions animation_73
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 20
+        width: 24
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2387ce90391347143bc1448071421f17
+      internalID: -1189179159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      better sprite sheet better throwing exceptions animation_0: -2101382626
+      better sprite sheet better throwing exceptions animation_1: 107012122
+      better sprite sheet better throwing exceptions animation_10: -784727898
+      better sprite sheet better throwing exceptions animation_11: -584554303
+      better sprite sheet better throwing exceptions animation_12: 454406174
+      better sprite sheet better throwing exceptions animation_13: -1417844346
+      better sprite sheet better throwing exceptions animation_14: -101787745
+      better sprite sheet better throwing exceptions animation_15: 399447998
+      better sprite sheet better throwing exceptions animation_16: -1187223336
+      better sprite sheet better throwing exceptions animation_17: -1353928464
+      better sprite sheet better throwing exceptions animation_18: 1792854239
+      better sprite sheet better throwing exceptions animation_19: 221133796
+      better sprite sheet better throwing exceptions animation_2: -836042883
+      better sprite sheet better throwing exceptions animation_20: -651969122
+      better sprite sheet better throwing exceptions animation_21: -108964274
+      better sprite sheet better throwing exceptions animation_22: -1173064227
+      better sprite sheet better throwing exceptions animation_23: 1778442465
+      better sprite sheet better throwing exceptions animation_24: 55196533
+      better sprite sheet better throwing exceptions animation_25: 723213721
+      better sprite sheet better throwing exceptions animation_26: -960799936
+      better sprite sheet better throwing exceptions animation_27: 1241095432
+      better sprite sheet better throwing exceptions animation_28: 1971402313
+      better sprite sheet better throwing exceptions animation_29: 229337450
+      better sprite sheet better throwing exceptions animation_3: 210970554
+      better sprite sheet better throwing exceptions animation_30: 89793679
+      better sprite sheet better throwing exceptions animation_31: -685171257
+      better sprite sheet better throwing exceptions animation_32: 1089102729
+      better sprite sheet better throwing exceptions animation_33: -490592649
+      better sprite sheet better throwing exceptions animation_34: 343191329
+      better sprite sheet better throwing exceptions animation_35: 343313635
+      better sprite sheet better throwing exceptions animation_36: 1449058023
+      better sprite sheet better throwing exceptions animation_37: 242178743
+      better sprite sheet better throwing exceptions animation_38: 1492271246
+      better sprite sheet better throwing exceptions animation_39: 121836556
+      better sprite sheet better throwing exceptions animation_4: -399363310
+      better sprite sheet better throwing exceptions animation_40: -1721950595
+      better sprite sheet better throwing exceptions animation_41: -118095164
+      better sprite sheet better throwing exceptions animation_42: 1597112094
+      better sprite sheet better throwing exceptions animation_43: 608806668
+      better sprite sheet better throwing exceptions animation_44: -805194791
+      better sprite sheet better throwing exceptions animation_45: 1996930262
+      better sprite sheet better throwing exceptions animation_46: -557930668
+      better sprite sheet better throwing exceptions animation_47: -1553300308
+      better sprite sheet better throwing exceptions animation_48: -1417882785
+      better sprite sheet better throwing exceptions animation_49: 667640602
+      better sprite sheet better throwing exceptions animation_5: -195648227
+      better sprite sheet better throwing exceptions animation_50: -491215852
+      better sprite sheet better throwing exceptions animation_51: -167037668
+      better sprite sheet better throwing exceptions animation_52: -1189397357
+      better sprite sheet better throwing exceptions animation_53: 241618835
+      better sprite sheet better throwing exceptions animation_54: -2131880604
+      better sprite sheet better throwing exceptions animation_55: -1119803490
+      better sprite sheet better throwing exceptions animation_56: 1756785648
+      better sprite sheet better throwing exceptions animation_57: -1948166717
+      better sprite sheet better throwing exceptions animation_58: 909532087
+      better sprite sheet better throwing exceptions animation_59: 820807859
+      better sprite sheet better throwing exceptions animation_6: -1504516442
+      better sprite sheet better throwing exceptions animation_60: 1865888323
+      better sprite sheet better throwing exceptions animation_61: -1436274957
+      better sprite sheet better throwing exceptions animation_62: -1546878275
+      better sprite sheet better throwing exceptions animation_63: 378493190
+      better sprite sheet better throwing exceptions animation_64: 1579199276
+      better sprite sheet better throwing exceptions animation_65: 1096999297
+      better sprite sheet better throwing exceptions animation_66: 363448576
+      better sprite sheet better throwing exceptions animation_67: -2097351170
+      better sprite sheet better throwing exceptions animation_68: -523800865
+      better sprite sheet better throwing exceptions animation_69: 199799073
+      better sprite sheet better throwing exceptions animation_7: 1813818754
+      better sprite sheet better throwing exceptions animation_70: -1156382419
+      better sprite sheet better throwing exceptions animation_71: -2081159325
+      better sprite sheet better throwing exceptions animation_72: 1963726178
+      better sprite sheet better throwing exceptions animation_73: -1189179159
+      better sprite sheet better throwing exceptions animation_8: 596681732
+      better sprite sheet better throwing exceptions animation_9: -1306470787
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

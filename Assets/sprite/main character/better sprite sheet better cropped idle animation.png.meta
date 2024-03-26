@@ -1,0 +1,1196 @@
+fileFormatVersion: 2
+guid: 04c73e6f8571df24f9fa367cd9784895
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fc1a42ed551cd743b022c1fbb1d905c
+      internalID: -952934508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17cd5b65c083f9c41b769680a48e748e
+      internalID: -420917610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_2
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beede6f7a6ef6454babadeabe201c5b5
+      internalID: -394830772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_3
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bff3d05229832b4c8daf4608ad10ac0
+      internalID: -154004466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_4
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc27875bbe5be3042829e9e60bef3936
+      internalID: -1235882107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_5
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2348d96da1dde6e4d8289a47533f445d
+      internalID: 128202892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_6
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb4e770a8d57e2d4c961afa6a7beba20
+      internalID: 849476482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_7
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2638a298079e764f819acec79c3f420
+      internalID: -1932660830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_8
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2347f1bf38ab1f1408b8e443bc0fac08
+      internalID: -653684550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_9
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f6aa0ad8f3bd174ebc10c7ce256f9fd
+      internalID: -445149520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_10
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51b1eef834bd99f448e6bdc59a6450ae
+      internalID: 1191286015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_11
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 184.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fda475369b67bf64bb781da3a3944882
+      internalID: 419052479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e37e92a7d161a514f89957fa1d3d2ff9
+      internalID: -1329643807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_13
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7c5314f92c94d842a75a1c1c1540731
+      internalID: 2113171397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_14
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d58289f7208d3014cb8eb169e745b96d
+      internalID: 380490009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_15
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de17d2f5124af404e9e6a525efacd077
+      internalID: -1779566880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_16
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1610773b8fdd6f74f9af8fbbd59b6f6a
+      internalID: -1356489109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_17
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a06001c27efbe64bb33238e3649f2be
+      internalID: -110559133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_18
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fea93acda336df34db2efb8384d2f232
+      internalID: 1127788496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_19
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d02356e0036e64fbb1eecdf8ad8053
+      internalID: -1185939868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_20
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c67599755fe70aa479e5a1973d14e0c9
+      internalID: -133966423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_21
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b5ecec45c46774aa676e84423e6caa
+      internalID: 1835358336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_22
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f230aa83afcc8cd4ebc0a7ac0764c6e2
+      internalID: 1320775119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_23
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 123.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3f9bc096b7507d40986dda818c2f125
+      internalID: -1192977925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49f2ec043792e13449e053a39e9c9a1b
+      internalID: 1209481594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_25
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea4225a395965114a8f002defabdf5e1
+      internalID: -1497339750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_26
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8a7a91c384e33e4fa5539d1b69ef573
+      internalID: 1678782801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_27
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02ed914c119b44442a97b06f9f527aac
+      internalID: -1580584150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_28
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 384def3f3c8fc364c953298c069f8a2a
+      internalID: 1277323272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_29
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b548bf39362e814ea3a635ca4d77c21
+      internalID: 1177476830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_30
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6d0f2e994b772142ac1a6f234af6640
+      internalID: -1743878087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_31
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1f39524dc354b0488dd9bce56e1783c
+      internalID: -293613894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_32
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d470262c343c3114a8199f2bb8666c6d
+      internalID: 1340776707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_33
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b5a12a50f9ffdb43a79beef66d8bb29
+      internalID: -851472581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_34
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a6eb4e0fe91e6c4c87f8e5209cca3c6
+      internalID: -1677571548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_35
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 62.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 812162a57568a7c4ba3ff90d3a43572f
+      internalID: -353548213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 807de0aa5c6658248ba68a04f8514007
+      internalID: 718735666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_37
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 491b99dc42114664893aa87215f32367
+      internalID: 982656521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_38
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fa8418416415ff4399ed2c4dd250108
+      internalID: -240835354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_39
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff1af763b1dcbe34689e64225a6f2994
+      internalID: 1743522003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_40
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08f3195acb32cf14da4d1a7f2932d18d
+      internalID: 1661885247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_41
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5939c311f662d4349a3c10973581f28a
+      internalID: -748363440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_42
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c56b38aebbdb7a9489e11af9b0f8ec4c
+      internalID: -29279716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_43
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0884e7102dc613740b95754090f6bc0d
+      internalID: -466304549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_44
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1e12b8ee2e80624ea9988d1a827322b
+      internalID: -992835346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_45
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d21b662d48b3d4b8a266e3452e488f
+      internalID: 1688393999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_46
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ce238af0332bae4b8b0abb578b8ef45
+      internalID: -1329521305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: better sprite sheet better cropped idle animation_47
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1.5
+        width: 84.416664
+        height: 61.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04bd2d636f35f6e4990c95365101fa93
+      internalID: -92496402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      better sprite sheet better cropped idle animation_0: -952934508
+      better sprite sheet better cropped idle animation_1: -420917610
+      better sprite sheet better cropped idle animation_10: 1191286015
+      better sprite sheet better cropped idle animation_11: 419052479
+      better sprite sheet better cropped idle animation_12: -1329643807
+      better sprite sheet better cropped idle animation_13: 2113171397
+      better sprite sheet better cropped idle animation_14: 380490009
+      better sprite sheet better cropped idle animation_15: -1779566880
+      better sprite sheet better cropped idle animation_16: -1356489109
+      better sprite sheet better cropped idle animation_17: -110559133
+      better sprite sheet better cropped idle animation_18: 1127788496
+      better sprite sheet better cropped idle animation_19: -1185939868
+      better sprite sheet better cropped idle animation_2: -394830772
+      better sprite sheet better cropped idle animation_20: -133966423
+      better sprite sheet better cropped idle animation_21: 1835358336
+      better sprite sheet better cropped idle animation_22: 1320775119
+      better sprite sheet better cropped idle animation_23: -1192977925
+      better sprite sheet better cropped idle animation_24: 1209481594
+      better sprite sheet better cropped idle animation_25: -1497339750
+      better sprite sheet better cropped idle animation_26: 1678782801
+      better sprite sheet better cropped idle animation_27: -1580584150
+      better sprite sheet better cropped idle animation_28: 1277323272
+      better sprite sheet better cropped idle animation_29: 1177476830
+      better sprite sheet better cropped idle animation_3: -154004466
+      better sprite sheet better cropped idle animation_30: -1743878087
+      better sprite sheet better cropped idle animation_31: -293613894
+      better sprite sheet better cropped idle animation_32: 1340776707
+      better sprite sheet better cropped idle animation_33: -851472581
+      better sprite sheet better cropped idle animation_34: -1677571548
+      better sprite sheet better cropped idle animation_35: -353548213
+      better sprite sheet better cropped idle animation_36: 718735666
+      better sprite sheet better cropped idle animation_37: 982656521
+      better sprite sheet better cropped idle animation_38: -240835354
+      better sprite sheet better cropped idle animation_39: 1743522003
+      better sprite sheet better cropped idle animation_4: -1235882107
+      better sprite sheet better cropped idle animation_40: 1661885247
+      better sprite sheet better cropped idle animation_41: -748363440
+      better sprite sheet better cropped idle animation_42: -29279716
+      better sprite sheet better cropped idle animation_43: -466304549
+      better sprite sheet better cropped idle animation_44: -992835346
+      better sprite sheet better cropped idle animation_45: 1688393999
+      better sprite sheet better cropped idle animation_46: -1329521305
+      better sprite sheet better cropped idle animation_47: -92496402
+      better sprite sheet better cropped idle animation_5: 128202892
+      better sprite sheet better cropped idle animation_6: 849476482
+      better sprite sheet better cropped idle animation_7: -1932660830
+      better sprite sheet better cropped idle animation_8: -653684550
+      better sprite sheet better cropped idle animation_9: -445149520
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
