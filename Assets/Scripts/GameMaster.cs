@@ -5,26 +5,33 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Deck playerDeck;
+    Deck enemyDeck;
+    Hand playerHand;
+    Hand enemyHand;
+    int startingHandSize;
 
-    // Update is called once per frame
-    void Update()
+
+    private void Start()
     {
+        for(int i = 0; i < startingHandSize; i++)
+        {
+            playerHand.AddCard(GetPlayerDeck().Draw());
+            enemyHand.AddCard(GetPlayerDeck().Draw());
+        }     
         
+      
     }
 
     Deck GetPlayerDeck()
     {
-        throw new NotImplementedException();
+        return playerDeck;
+
     }
 
     Deck GetEnemyDeck()
     {
-        throw new NotImplementedException();
+        return enemyDeck;
     }
 
     bool TryPlay(Move m)

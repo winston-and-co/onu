@@ -1,34 +1,48 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+
 
 public class Deck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    List<Card> currentCards;
+    List<Card> discardedCards;
+    
 
     void Pop()
-    {
-        throw new NotImplementedException();
+    {    
+        throw new System.NotImplementedException();
     }
 
     void Shuffle()
     {
-        throw new NotImplementedException();
+        currentCards.AddRange(discardedCards);
+        discardedCards.Clear();
+        int cardCount = currentCards.Count;
+        while (cardCount > 1)
+        {
+            cardCount--;
+            int itsPosition = Random.Range(0, cardCount + 1);
+            Card card = currentCards[itsPosition];
+            currentCards[itsPosition] = currentCards[cardCount];
+            currentCards[cardCount] = card;
+        }
+        
     }
 
-    void Draw()
+    public Card Draw()
     {
-        throw new NotImplementedException();
+        if (currentCards.Count == 0) 
+        {
+            Shuffle();
+        }
+
+        Card card = currentCards[0];
+        currentCards.RemoveAt(0);
+        return card;
+
+        
+  
     }
 }

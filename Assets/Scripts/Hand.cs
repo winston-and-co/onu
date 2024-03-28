@@ -6,15 +6,21 @@ public class Hand : MonoBehaviour
 {
     List<Card> hand;
 
-    // Start is called before the first frame update
-    void Start()
+    public void AddCard(Card card)
     {
-        
+        hand.Add(card);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RemoveCard(Card card)
     {
-        
+        hand.Remove(card);
     }
+
+    public bool Empty()
+    {
+        return hand.Count == 0;
+    }
+
+
 }
