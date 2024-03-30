@@ -5,22 +5,33 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+	public float maxHP;
+	public float maxMana;
+
+	public float hp;
+	public float mana;
+
+	public GameMaster master;
     void Start()
     {
-        
+		hp = maxHP;
+		mana = maxMana;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Damage(float damage)
     {
-        
+		hp -= damage;
+		hp = Math.Max(0, hp);
+		master.entityDamageEvent.Invoke(this, damage);
     }
 
-    void Damage()
-    {
-        throw new NotImplementedException();
-    }
+	public void SpendMana(float amount)
+	{
+		mana -= amount;
+		
+	}
 
 	int GetMana()
 	{
