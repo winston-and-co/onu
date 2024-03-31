@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-
 	public float maxHP;
 	public float maxMana;
 
@@ -13,24 +12,24 @@ public class Entity : MonoBehaviour
 	public float mana;
 
 	public GameMaster master;
-    void Start()
-    {
+	void Start()
+	{
 		hp = maxHP;
 		mana = maxMana;
-    }
+	}
 
 
-    public void Damage(float damage)
-    {
+	public void Damage(float damage)
+	{
 		hp -= damage;
 		hp = Math.Max(0, hp);
 		master.entityDamageEvent.Invoke(this, damage);
-    }
+	}
 
 	public void SpendMana(float amount)
 	{
 		mana -= amount;
-		
+
 	}
 
 	int GetMana()
@@ -47,7 +46,7 @@ public class Entity : MonoBehaviour
 	{
 		throw new NotImplementedException();
 	}
-	
+
 	Hand GetHand()
 	{
 		throw new NotImplementedException();
