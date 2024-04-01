@@ -32,18 +32,18 @@ public class CardHandLayout : MonoBehaviour
 
     void OnCardPlayed(Entity e, Card c)
     {
-        if(!e.name.ToLower().Equals("player"))
-        {
-            return;
-        }
+        //if(!e.name.ToLower().Equals("player"))
+        //{
+        //    return;
+        //}
         ArrangeCards();
     }
     void OnCardDrawn(Entity e, Card c)
     {
-        if (!e.name.ToLower().Equals("player"))
-        {
-            return;
-        }
+        //if (!e.name.ToLower().Equals("player"))
+        //{
+        //    return;
+        //}
         ArrangeCards();
     }
 

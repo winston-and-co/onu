@@ -30,7 +30,7 @@ public class GameMaster : MonoBehaviour
         // successful:
         if (true)
         {
-            PlayCard(e, c,true);
+            PlayCard(e, c);
         }
         else
         {
@@ -38,24 +38,42 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    void PlayCard(Entity e, Card c, bool wasPlayer)
+    void PlayCard(Entity e, Card c)
     {
         if(e.e_name.ToLower().Equals("player"))
         {
             float dmg = c.value;
             enemy.Damage(dmg);
+            BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
         }
-        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e,c);
+        else
+        {
+            float dmg = c.value;
+            player.Damage(dmg);
+            BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+
+        }
     }
 
     void OnTryDraw(Entity e, Card c)
     {
-        if(playerHand.GetCardCount() < 7) // logic
+        if (e.e_name.ToLower().Equals("player"))
         {
-            BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+            if (playerHand.GetCardCount() < 7) // logic
+            {
+                BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+            }
+            else
+            {
+                BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
+            }
+
         } else
         {
-            BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
+            if(enemyHand.GetCardCount() < 7)
+            {
+                BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+            }
         }
     }
 
