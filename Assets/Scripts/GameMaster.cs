@@ -15,72 +15,52 @@ public class GameMaster : MonoBehaviour
 	[SerializeField] Entity player;
 	[SerializeField] Entity enemy;
 
-	public CardTryPlayedEvent tryPlayEvent = new CardTryPlayedEvent();
-	public CardPlayedEvent cardPlayedEvent = new CardPlayedEvent();
-	public CardIllegalEvent cardIllegalEvent = new CardIllegalEvent();
-	public PlayerCardDrawEvent playerCardDrawEvent = new PlayerCardDrawEvent();
-	public PlayerCardDrawEvent playerCardNoDrawEvent = new PlayerCardDrawEvent();
-	public PlayerCardTryDrawEvent playerCardTryDrawEvent = new PlayerCardTryDrawEvent();
-	public EntityDamageEvent entityDamageEvent = new EntityDamageEvent();
-
-	// Start is called before the first frame update
-	void Start()
-	{
-		tryPlayEvent.AddListener(TryPlay);
-		playerCardTryDrawEvent.AddListener(OnPlayerTryDraw);
+    // Start is called before the first frame update
+    void Start()
+    {
+        BattleEventBus.getInstance().tryPlayEvent.AddListener(TryPlay);
+        BattleEventBus.getInstance().cardTryDrawEvent.AddListener(OnTryDraw);
+    }
+    void StartTurn()
+    {
 	}
-	void StartTurn()
-	{
+    void TryPlay(Entity e, Card c)
+    {
+        // TODO: real life logic
+        // successful:
+        if (true)
+        {
+            PlayCard(e, c,true);
+        }
+        else
+        {
+            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+        }
+    }
 
-	}
+    void PlayCard(Entity e, Card c, bool wasPlayer)
+    {
+        if(e.e_name.ToLower().Equals("player"))
+        {
+            float dmg = c.value;
+            enemy.Damage(dmg);
+        }
+        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e,c);
+    }
 
-	void TryPlay(Card c)
-	{
-		// TODO: real life logic
-		// successful:
-		if (true)
-		{
-			PlayCard(c, true);
-		}
-		else
-		{
-			cardIllegalEvent.Invoke(c);
-		}
-	}
-
-	void PlayCard(Card c, bool wasPlayer)
-	{
-		if (wasPlayer)
-		{
-			float dmg = c.value;
-			enemy.Damage(dmg);
-		}
-		cardPlayedEvent.Invoke(c);
-	}
-
-	void OnPlayerTryDraw(Card c)
-	{
-		if (playerHand.GetCardCount() < playerHand.maxHandSize) // logic
-		{
-			playerCardDrawEvent.Invoke(c);
-		}
-		else
-		{
-			playerCardNoDrawEvent.Invoke(c);
-		}
-	}
+    void OnTryDraw(Entity e, Card c)
+    {
+        if(playerHand.GetCardCount() < 7) // logic
+        {
+            BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+        } else
+        {
+            BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
+        }
+    }
 
 	void OnPlayerDraw(Card c)
 	{
 		player.SpendMana(c.value);
 	}
 }
-
-public class CardTryPlayedEvent : UnityEvent<Card> { }
-public class CardPlayedEvent : UnityEvent<Card> { }
-public class CardIllegalEvent : UnityEvent<Card> { }
-
-public class PlayerCardDrawEvent : UnityEvent<Card> { }
-public class PlayerCardNoDrawEvent : UnityEvent<Card> { }
-public class PlayerCardTryDrawEvent : UnityEvent<Card> { }
-public class EntityDamageEvent : UnityEvent<Entity, float> { }

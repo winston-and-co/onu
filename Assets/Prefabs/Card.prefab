@@ -181,7 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4276593290043300014}
   - component: {fileID: 1447437960867306658}
-  - component: {fileID: 3344459164617966916}
+  - component: {fileID: 7878742004536922901}
   m_Layer: 0
   m_Name: CardSprite
   m_TagString: Untagged
@@ -261,7 +261,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3344459164617966916
+--- !u!114 &7878742004536922901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,13 +270,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 989359640563724714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d3d0508fc288449a2f6bfdc9d4c20f, type: 3}
+  m_Script: {fileID: 11500000, guid: b32c9c7e316df4244a706d86e60bea5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1447437960867306658}
   textMeshPro: {fileID: 3379011113209444705}
   c: {fileID: 274505643498360935}
-  enlargedScale: {x: 1.2, y: 1.2, z: 1.2}
+  enlargedScale: {x: 1.2, y: 1.2, z: 1}
   originalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1257537865484679012
 GameObject:
@@ -333,6 +333,7 @@ MonoBehaviour:
   m_PlayEvent:
     m_PersistentCalls:
       m_Calls: []
+  entity: {fileID: 0}
 --- !u!61 &3671351996870052269
 BoxCollider2D:
   m_ObjectHideFlags: 0

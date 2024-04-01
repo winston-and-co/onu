@@ -13,12 +13,11 @@ public class Card : MonoBehaviour
     public Color color;
     protected int lastOrder;
     public UnityEvent m_PlayEvent;
-    private GameMaster gameMaster;
     private CardSprite spriteController;
+    public Entity entity;
 
     public void OnEnable()
     {
-        gameMaster = GameObject.FindAnyObjectByType<GameMaster>();
         spriteController = GetComponentInChildren<CardSprite>();
     }
 
@@ -34,7 +33,7 @@ public class Card : MonoBehaviour
 
     public void OnMouseDown()
     {
-        gameMaster.tryPlayEvent.Invoke(this);
+        BattleEventBus.getInstance().tryPlayEvent.Invoke(entity,this);
     }
 
     public void OnMouseEnter()

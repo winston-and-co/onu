@@ -183,8 +183,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182731195}
-  - component: {fileID: 182731196}
   - component: {fileID: 182731197}
+  - component: {fileID: 182731198}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -212,21 +212,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1.799173, y: 1.3053131}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &182731196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 182731194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65cce73d32482e4fafac38d4791e616, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hand: {fileID: 182731197}
-  root: {fileID: 1237705720}
-  spacing: 1
 --- !u!114 &182731197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +225,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: []
+  e: {fileID: 2128003036}
+--- !u!114 &182731198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182731194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fc2f435dcabe145b9d863f69c7f97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: {fileID: 182731197}
+  root: {fileID: 1237705720}
+  spacing: 1.1
 --- !u!1 &437758998
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +269,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1868164798}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -363,38 +365,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615084347}
   m_CullTransparentMesh: 1
---- !u!1 &668736613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 668736614}
-  m_Layer: 0
-  m_Name: Table
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &668736614
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668736613}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3992535, y: -0.15215445, z: -2.8741453}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1868164798}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054397163
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9571309339b83b44b39ed8accc6e3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaster: {fileID: 161396741}
   entity: {fileID: 1713554705}
   bar: {fileID: 1968551956}
 --- !u!1 &1713554703
@@ -775,7 +744,7 @@ MonoBehaviour:
   maxMana: 100
   hp: 100
   mana: 100
-  master: {fileID: 161396741}
+  e_name: 
 --- !u!1 &1743229100
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Cards: []
   card_prefab: {fileID: 1257537865484679012, guid: 36a653fb2dc0d024a9de1de1db464fc7, type: 3}
-  gameMaster: {fileID: 161396741}
+  e: {fileID: 2128003036}
 --- !u!61 &1743229104
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1134,12 +1103,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868164797}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3894, y: 0.0156, z: 2.8741453}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.02014649, y: -0.13655445, z: 0}
   m_LocalScale: {x: 3.0872686, y: 3.0087, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 668736614}
+  m_Father: {fileID: 437759001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1868164799
 SpriteRenderer:
@@ -1332,13 +1301,12 @@ MonoBehaviour:
   maxMana: 10
   hp: 0
   mana: 0
-  master: {fileID: 161396741}
+  e_name: player
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1775144352}
-  - {fileID: 668736614}
   - {fileID: 161396740}
   - {fileID: 437759001}
   - {fileID: 2128003035}

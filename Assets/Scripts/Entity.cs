@@ -11,9 +11,10 @@ public class Entity : MonoBehaviour
 	public float hp;
 	public float mana;
 
-	public GameMaster master;
-	void Start()
-	{
+	public String e_name;
+
+    void Start()
+    {
 		hp = maxHP;
 		mana = maxMana;
 	}
@@ -23,8 +24,8 @@ public class Entity : MonoBehaviour
 	{
 		hp -= damage;
 		hp = Math.Max(0, hp);
-		master.entityDamageEvent.Invoke(this, damage);
-	}
+        BattleEventBus.getInstance().entityDamageEvent.Invoke(this, damage);
+    }
 
 	public void SpendMana(float amount)
 	{

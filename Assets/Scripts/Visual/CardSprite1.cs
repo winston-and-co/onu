@@ -20,7 +20,7 @@ public class CardSprite : MonoBehaviour
 
 
     public void SetupCard()
-    { 
+    {
         textMeshPro.text = c.value.ToString();
         textMeshPro.color = c.color.WithAlpha(1.0f);
     }

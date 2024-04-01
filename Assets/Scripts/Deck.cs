@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-
-	[SerializeField] private List<Card> m_Cards;
-	public GameObject card_prefab;
-	public GameMaster gameMaster;
+    [SerializeField] private List<Card> m_Cards;
+    public GameObject card_prefab;
+    public Entity e;
 
 	Color[] colors = new Color[] {
 		Color.red,
@@ -22,23 +21,23 @@ public class Deck : MonoBehaviour
 		Generate();
 		Shuffle();
 
-		gameMaster.playerCardDrawEvent.AddListener(OnConfirmDraw);
-	}
+        BattleEventBus.getInstance().cardDrawEvent.AddListener(OnConfirmDraw);
+    }
 
-	public void Generate()
-	{
-		for (int i = 0; i < 25; i++)
-		{
-			int randomIndex = UnityEngine.Random.Range(0, colors.Length);
-			m_Cards.Add(
-				Instantiate(card_prefab).GetComponent<Card>());
-			m_Cards[i].color = colors[randomIndex];
-			m_Cards[i].value = UnityEngine.Random.Range(0, 15);
-			m_Cards[i].gameObject.SetActive(false);
-			m_Cards[i].transform.SetParent(transform, false);
-		}
-	}
-
+    public void Generate()
+    {
+        for(int i = 0; i < 25; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, colors.Length);
+            m_Cards.Add(
+                Instantiate(card_prefab).GetComponent<Card>());
+            m_Cards[i].color = colors[randomIndex];
+            m_Cards[i].value = UnityEngine.Random.Range(0, 15);
+            m_Cards[i].gameObject.SetActive(false);
+            m_Cards[i].transform.SetParent(transform, false);
+            m_Cards[i].entity = e;
+        }
+    }
 
 	public Card Draw()
 	{
@@ -51,16 +50,19 @@ public class Deck : MonoBehaviour
 	{
 		return m_Cards[0];
 	}
+    public void OnMouseDown()
+    {
+        BattleEventBus.getInstance().cardTryDrawEvent.Invoke(e, Peek());
+    }
 
-	public void OnMouseDown()
-	{
-		gameMaster.playerCardTryDrawEvent.Invoke(Peek());
-	}
-
-	public void OnConfirmDraw(Card c)
-	{
-		Draw();
-	}
+    public void OnConfirmDraw(Entity e, Card c)
+    {
+        if(e != this.e)
+        {
+            return;
+        }
+        Draw();
+    }
 
 	public void Shuffle()
 	{

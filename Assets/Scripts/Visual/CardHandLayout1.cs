@@ -5,15 +5,12 @@ public class CardHandLayout : MonoBehaviour
     public Hand hand;
     public GameObject root; // Starting point of the layout
     public float spacing = 1.1f; // Space between cards
-    private GameMaster gameMaster;
 
     void Start()
     {
-        ArrangeCards();
 
-        gameMaster = GameObject.FindAnyObjectByType<GameMaster>();
-        gameMaster.cardPlayedEvent.AddListener(OnCardPlayed);
-        gameMaster.playerCardDrawEvent.AddListener(OnCardDrawn);
+        BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
 
     }
 
@@ -33,12 +30,20 @@ public class CardHandLayout : MonoBehaviour
         }
     }
 
-    void OnCardPlayed(Card c)
+    void OnCardPlayed(Entity e, Card c)
     {
+        if(!e.name.ToLower().Equals("player"))
+        {
+            return;
+        }
         ArrangeCards();
     }
-    void OnCardDrawn(Card c)
+    void OnCardDrawn(Entity e, Card c)
     {
+        if (!e.name.ToLower().Equals("player"))
+        {
+            return;
+        }
         ArrangeCards();
     }
 
