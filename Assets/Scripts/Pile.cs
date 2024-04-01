@@ -18,6 +18,15 @@ public class Pile : MonoBehaviour
         AddToTop(card);
     }
 
+    public Card Peek()
+    {
+        if(pile.Count == 0)
+        {
+            return null;
+        }
+        return pile[pile.Count - 1];
+    }
+
     void AddToTop(Card card) {
         if(pile.Count > 0)
         {

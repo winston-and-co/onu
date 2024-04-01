@@ -19,6 +19,7 @@ public class BattleEventBus
     public CardNoDrawEvent cardNoDrawEvent = new CardNoDrawEvent();
     public CardTryDrawEvent cardTryDrawEvent = new CardTryDrawEvent();
     public EntityDamageEvent entityDamageEvent = new EntityDamageEvent();
+    public EntityManaSpentEvent entityManaSpentEvent = new EntityManaSpentEvent();
 
 }
 
@@ -30,3 +31,4 @@ public class CardDrawEvent : UnityEvent<Entity, Card> { }
 public class CardNoDrawEvent : UnityEvent<Entity, Card> { }
 public class CardTryDrawEvent : UnityEvent<Entity, Card> { }
 public class EntityDamageEvent : UnityEvent<Entity, float> { }
+public class EntityManaSpentEvent : UnityEvent<Entity, float> { }

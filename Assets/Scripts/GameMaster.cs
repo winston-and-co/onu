@@ -40,19 +40,25 @@ public class GameMaster : MonoBehaviour
 
     void PlayCard(Entity e, Card c)
     {
+        Entity attack_entity;
         if(e.e_name.ToLower().Equals("player"))
         {
-            float dmg = c.value;
-            enemy.Damage(dmg);
-            BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
-        }
-        else
+            attack_entity = enemy;
+        } else
         {
-            float dmg = c.value;
-            player.Damage(dmg);
-            BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
-
+            attack_entity = player;
         }
+        
+        float dmg = c.value;
+        
+        attack_entity.Damage(dmg);
+        if(discard.Peek()?.color != c.color)
+        {
+            e.SpendMana(dmg);
+            BattleEventBus.getInstance().entityManaSpentEvent.Invoke(e, dmg);
+        }
+
+        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
     }
 
     void OnTryDraw(Entity e, Card c)
