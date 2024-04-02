@@ -15,20 +15,48 @@ public class GameMaster : MonoBehaviour
 	[SerializeField] Entity player;
 	[SerializeField] Entity enemy;
 
-    // Start is called before the first frame update
+    int turn = 0;
+    Entity[] order;
+    Entity current_turn_entity;
+
     void Start()
     {
-        BattleEventBus.getInstance().tryPlayEvent.AddListener(TryPlay);
+        BattleEventBus.getInstance().tryPlayEvent.AddListener(OnTryPlay);
         BattleEventBus.getInstance().cardTryDrawEvent.AddListener(OnTryDraw);
+        BattleEventBus.getInstance().tryEndTurnEvent.AddListener(TryEndTurn);
+
+        order = new Entity[2];
+        order[0] = player;
+        order[1] = enemy;
+
+        StartTurn(0); // player
     }
-    void StartTurn()
+    void StartNextTurn()
     {
+        turn = (turn + 1) % order.Length;
+        StartTurn(turn);
 	}
-    void TryPlay(Entity e, Card c)
+
+    void StartTurn(int turn)
     {
+        current_turn_entity = order[turn];
+        BattleEventBus.getInstance().startTurnEvent.Invoke(current_turn_entity);
+    }
+
+    void TryEndTurn(Entity e)
+    {
+        BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
+        StartNextTurn();
+    }
+
+    /*
+     * Validate card being played
+     */
+    void OnTryPlay(Entity e, Card c)
+    {
+        bool turn = IsEntityTurn(e);
         // TODO: real life logic
-        // successful:
-        if (true)
+        if (turn)
         {
             PlayCard(e, c);
         }
@@ -36,6 +64,11 @@ public class GameMaster : MonoBehaviour
         {
             BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
         }
+    }
+
+    bool IsEntityTurn(Entity e)
+    {
+        return e == current_turn_entity;
     }
 
     void PlayCard(Entity e, Card c)
