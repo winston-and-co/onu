@@ -58,12 +58,19 @@ public class GameMaster : MonoBehaviour
         // TODO: real life logic
         if (turn)
         {
-            PlayCard(e, c);
+            if(discard.Peek() == null)
+            {
+                PlayCard(e, c);
+                return;
+            }
+            if(c.value == discard.Peek().value || c.color == discard.Peek().color)
+            {
+                PlayCard(e, c);
+                return;
+            }
         }
-        else
-        {
-            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
-        }
+        BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+        
     }
 
     bool IsEntityTurn(Entity e)
