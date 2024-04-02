@@ -19,6 +19,9 @@ public class GameMaster : MonoBehaviour
     Entity[] order;
     Entity current_turn_entity;
 
+    float damage_accum = 0;
+    float mana_accum = 0;
+
     void Start()
     {
         BattleEventBus.getInstance().tryPlayEvent.AddListener(OnTryPlay);
@@ -39,14 +42,27 @@ public class GameMaster : MonoBehaviour
 
     void StartTurn(int turn)
     {
+        damage_accum = 0;
+        mana_accum = 0;
         current_turn_entity = order[turn];
         BattleEventBus.getInstance().startTurnEvent.Invoke(current_turn_entity);
     }
 
     void TryEndTurn(Entity e)
     {
-        BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
-        StartNextTurn();
+
+        //if(IsEntityTurn(e))
+        //{
+
+            Entity attack_entity = order[(turn + 1) % order.Length];
+            attack_entity.Damage(damage_accum);
+            e.SpendMana(mana_accum);
+            BattleEventBus.getInstance().entityManaSpentEvent.Invoke(e, damage_accum);
+
+            BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
+            StartNextTurn();
+
+        //}
     }
 
     /*
@@ -55,24 +71,47 @@ public class GameMaster : MonoBehaviour
     void OnTryPlay(Entity e, Card c)
     {
         bool turn = IsEntityTurn(e);
+        bool flag = false;
         // TODO: real life logic
         if (turn)
         {
-            if(discard.Peek() == null)
-            {
-                PlayCard(e, c);
-                return;
-            }
-            if(c.value == discard.Peek().value || c.color == discard.Peek().color)
-            {
-                PlayCard(e, c);
-                return;
-            }
+            flag = GameRules.getInstance().TryPlay(discard, c);
         }
-        BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+
         
+        if(flag)
+        {
+            PlayCard(e, c);
+        } else
+        {
+            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+        }
+
     }
 
+    /*
+     * Validate card being drawn
+     */
+
+    void OnTryDraw(Entity e, Card c)
+    {
+        Hand h = e.gameObject.GetComponentInChildren<Hand>();
+        bool flag = false;
+        if (h != null)
+        {
+            flag = GameRules.getInstance().TryDraw(h);
+        }
+
+        if (flag)
+        {
+            BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+        }
+        else
+        {
+            BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
+        }
+
+    }
     bool IsEntityTurn(Entity e)
     {
         return e == current_turn_entity;
@@ -88,43 +127,12 @@ public class GameMaster : MonoBehaviour
         {
             attack_entity = player;
         }
-        
-        float dmg = c.value;
-        
-        attack_entity.Damage(dmg);
-        if(discard.Peek()?.color != c.color)
-        {
-            e.SpendMana(dmg);
-            BattleEventBus.getInstance().entityManaSpentEvent.Invoke(e, dmg);
-        }
 
+        damage_accum += c.value;
+        mana_accum += c.value;
+        
         BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
     }
 
-    void OnTryDraw(Entity e, Card c)
-    {
-        if (e.e_name.ToLower().Equals("player"))
-        {
-            if (playerHand.GetCardCount() < 7) // logic
-            {
-                BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
-            }
-            else
-            {
-                BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
-            }
 
-        } else
-        {
-            if(enemyHand.GetCardCount() < 7)
-            {
-                BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
-            }
-        }
-    }
-
-	void OnPlayerDraw(Card c)
-	{
-		player.SpendMana(c.value);
-	}
 }
