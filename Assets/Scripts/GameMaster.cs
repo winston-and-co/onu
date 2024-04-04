@@ -6,21 +6,18 @@ using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
-	[SerializeField] Deck playerDeck;
-	[SerializeField] Deck enemyDeck;
-	[SerializeField] Pile discard;
-	[SerializeField] Hand playerHand;
+    [SerializeField] Deck playerDeck;
+    [SerializeField] Deck enemyDeck;
+    [SerializeField] Pile discard;
+    [SerializeField] Hand playerHand;
 
-	[SerializeField] Hand enemyHand;
-	[SerializeField] Entity player;
-	[SerializeField] Entity enemy;
+    [SerializeField] Hand enemyHand;
+    [SerializeField] Entity player;
+    [SerializeField] Entity enemy;
 
     int turn = 0;
     Entity[] order;
     Entity current_turn_entity;
-
-    float damage_accum = 0;
-    float mana_accum = 0;
 
     void Start()
     {
@@ -28,41 +25,51 @@ public class GameMaster : MonoBehaviour
         BattleEventBus.getInstance().cardTryDrawEvent.AddListener(OnTryDraw);
         BattleEventBus.getInstance().tryEndTurnEvent.AddListener(TryEndTurn);
 
+        player.deck = playerDeck;
+        player.hand = playerHand;
+        enemy.deck = enemyDeck;
+        enemy.hand = enemyHand;
+
+        // Init combat
         order = new Entity[2];
         order[0] = player;
         order[1] = enemy;
 
+        player.hp = player.maxHP;
+        player.mana = player.maxMana;
+        enemy.hp = enemy.maxHP;
+        enemy.mana = enemy.maxMana;
+
+        playerDeck.Shuffle();
+        enemyDeck.Shuffle();
+        for (int i = 0; i < player.startingHandSize; i++)
+        {
+            playerDeck.TryDraw();
+        }
+        for (int i = 0; i < enemy.startingHandSize; i++)
+        {
+            enemyDeck.TryDraw();
+        }
+
         StartTurn(0); // player
     }
+
     void StartNextTurn()
     {
         turn = (turn + 1) % order.Length;
         StartTurn(turn);
-	}
+    }
 
     void StartTurn(int turn)
     {
-        damage_accum = 0;
-        mana_accum = 0;
         current_turn_entity = order[turn];
         BattleEventBus.getInstance().startTurnEvent.Invoke(current_turn_entity);
     }
 
     void TryEndTurn(Entity e)
     {
-
-        //if(IsEntityTurn(e))
-        //{
-
-            Entity attack_entity = order[(turn + 1) % order.Length];
-            attack_entity.Damage(damage_accum);
-            e.SpendMana(mana_accum);
-            BattleEventBus.getInstance().entityManaSpentEvent.Invoke(e, damage_accum);
-
-            BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
-            StartNextTurn();
-
-        //}
+        BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
+        StartNextTurn();
     }
 
     /*
@@ -78,11 +85,11 @@ public class GameMaster : MonoBehaviour
             flag = GameRules.getInstance().TryPlay(discard, c);
         }
 
-        
-        if(flag)
+        if (flag)
         {
             PlayCard(e, c);
-        } else
+        }
+        else
         {
             BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
         }
@@ -92,47 +99,56 @@ public class GameMaster : MonoBehaviour
     /*
      * Validate card being drawn
      */
-
     void OnTryDraw(Entity e, Card c)
     {
-        Hand h = e.gameObject.GetComponentInChildren<Hand>();
-        bool flag = false;
-        if (h != null)
-        {
-            flag = GameRules.getInstance().TryDraw(h);
-        }
+        bool canDraw = GameRules.getInstance().CanDraw(this, e);
 
-        if (flag)
+        if (canDraw)
         {
-            BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
+            DrawCard(e, c);
         }
-        else
-        {
-            BattleEventBus.getInstance().cardNoDrawEvent.Invoke(e, c);
-        }
-
     }
     bool IsEntityTurn(Entity e)
     {
         return e == current_turn_entity;
     }
 
-    void PlayCard(Entity e, Card c)
+    void DrawCard(Entity e, Card c)
     {
-        Entity attack_entity;
-        if(e.e_name.ToLower().Equals("player"))
-        {
-            attack_entity = enemy;
-        } else
-        {
-            attack_entity = player;
-        }
-
-        damage_accum += c.value;
-        mana_accum += c.value;
-        
-        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+        Card drawn = e.deck.Draw();
+        e.hand.AddCard(drawn);
+        BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
     }
 
+    void PlayCard(Entity e, Card c)
+    {
+        Entity target;
+        if (e.e_name.ToLower().Equals("player"))
+        {
+            target = enemy;
+        }
+        else
+        {
+            target = player;
+        }
 
+        if (discard.Peek() != null && discard.Peek().color != c.color)
+        {
+            e.SpendMana(c.value);
+        }
+        target.Damage(c.value);
+        e.hand.RemoveCard(c);
+        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+
+        if (e.hand.GetCardCount() == 0)
+        {
+            Refresh(e);
+        }
+    }
+
+    void Refresh(Entity e)
+    {
+        e.Refresh();
+        BattleEventBus.getInstance().entityRefreshEvent.Invoke(e);
+    }
 }

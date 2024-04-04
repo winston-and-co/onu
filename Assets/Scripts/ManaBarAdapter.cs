@@ -16,9 +16,9 @@ public class ManaBarAdapter : MonoBehaviour
         bar.Initialize(entity.maxMana);
     }
 
-    void OnManaSpent(Entity e, float cost)
+    void OnManaSpent(Entity e, int cost)
     {
-        if(e == entity)
+        if (e == entity)
         {
             bar.UpdateHealthBar(e.mana);
         }
@@ -27,6 +27,6 @@ public class ManaBarAdapter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

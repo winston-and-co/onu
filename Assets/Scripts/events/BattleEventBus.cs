@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BattleEventBus 
+public class BattleEventBus
 {
     private static BattleEventBus EVENTBUS;
 
@@ -20,6 +20,7 @@ public class BattleEventBus
     public CardTryDrawEvent cardTryDrawEvent = new CardTryDrawEvent();
     public EntityDamageEvent entityDamageEvent = new EntityDamageEvent();
     public EntityManaSpentEvent entityManaSpentEvent = new EntityManaSpentEvent();
+    public EntityRefreshEvent entityRefreshEvent = new EntityRefreshEvent();
     public StartTurnEvent startTurnEvent = new StartTurnEvent();
     public EndTurnEvent endTurnEvent = new EndTurnEvent();
     public TryEndTurnEvent tryEndTurnEvent = new TryEndTurnEvent();
@@ -35,11 +36,11 @@ public class CardNoDrawEvent : UnityEvent<Entity, Card> { }
 public class CardTryDrawEvent : UnityEvent<Entity, Card> { }
 
 // Game flow
-
 public class StartTurnEvent : UnityEvent<Entity> { }
 public class EndTurnEvent : UnityEvent<Entity> { }
 public class TryEndTurnEvent : UnityEvent<Entity> { }
 
 // Combat
-public class EntityDamageEvent : UnityEvent<Entity, float> { }
-public class EntityManaSpentEvent : UnityEvent<Entity, float> { }
+public class EntityDamageEvent : UnityEvent<Entity, int> { }
+public class EntityManaSpentEvent : UnityEvent<Entity, int> { }
+public class EntityRefreshEvent : UnityEvent<Entity> { }

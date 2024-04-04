@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,15 +21,16 @@ public class Pile : MonoBehaviour
 
     public Card Peek()
     {
-        if(pile.Count == 0)
+        if (pile.Count == 0)
         {
             return null;
         }
         return pile[pile.Count - 1];
     }
 
-    void AddToTop(Card card) {
-        if(pile.Count > 0)
+    void AddToTop(Card card)
+    {
+        if (pile.Count > 0)
         {
             foreach (Renderer r in pile[pile.Count - 1].gameObject.GetComponentsInChildren<Renderer>())
             {

@@ -6,12 +6,10 @@ public class CardHandLayout : MonoBehaviour
     public GameObject root; // Starting point of the layout
     public float spacing = 1.1f; // Space between cards
 
-    void Start()
+    void Awake()
     {
-
         BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
         BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
-
     }
 
 
@@ -20,7 +18,7 @@ public class CardHandLayout : MonoBehaviour
         int numberOfCards = hand.GetCardCount();
         for (int i = 0; i < hand.GetCardCount(); i++)
         {
-            Vector3 position = root.GetComponent<RectTransform>().position + new Vector3(i * spacing, 0, 0); 
+            Vector3 position = root.GetComponent<RectTransform>().position + new Vector3(i * spacing, 0, 0);
 
             GameObject card = GetCardAtIndex(i);
             card.transform.position = position;

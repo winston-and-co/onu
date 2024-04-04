@@ -23,6 +23,10 @@ public class CardSprite : MonoBehaviour
     {
         textMeshPro.text = c.value.ToString();
         textMeshPro.color = c.color.WithAlpha(1.0f);
+        // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
+        textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
+        textMeshPro.outlineColor = Color.black;
+        textMeshPro.outlineWidth = 0.5f;
     }
 
     public void MouseEnter()

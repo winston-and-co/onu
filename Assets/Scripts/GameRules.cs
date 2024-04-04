@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameRules 
+public class GameRules
 {
     public static GameRules INSTANCE = null;
     public static GameRules getInstance()
@@ -25,12 +25,9 @@ public class GameRules
         return false;
     }
 
-    public bool TryDraw(Hand hand)
+    public bool CanDraw(GameMaster gm, Entity e)
     {
-        if (hand.GetCardCount() < 7) // logic
-        {
-            return true;
-        }
-        return false;
+        // there may be effects preventing draw
+        return true;
     }
 }

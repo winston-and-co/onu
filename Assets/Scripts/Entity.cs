@@ -1,55 +1,83 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-	public float maxHP;
-	public float maxMana;
+	public TMP_Text hpText;
+	public TMP_Text manaText;
 
-	public float hp;
-	public float mana;
+	public Deck deck;
+	public Hand hand;
+
+	public int maxHP;
+	public int maxMana;
+
+	public int hp;
+	public int mana;
+
+	public int startingHandSize;
 
 	public String e_name;
 
-    void Start()
-    {
+	void Start()
+	{
 		hp = maxHP;
 		mana = maxMana;
+
+		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
+		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
 	}
 
-
-	public void Damage(float damage)
+	public void Damage(int damage)
 	{
 		hp -= damage;
 		hp = Math.Max(0, hp);
-        BattleEventBus.getInstance().entityDamageEvent.Invoke(this, damage);
-    }
+		BattleEventBus.getInstance().entityDamageEvent.Invoke(this, damage);
+		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
+		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+	}
 
-	public void SpendMana(float amount)
+	public void SpendMana(int amount)
 	{
 		mana -= amount;
+		BattleEventBus.getInstance().entityManaSpentEvent.Invoke(this, amount);
+		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
+		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+	}
 
+	public void Refresh()
+	{
+		hp = maxHP;
+		mana = maxMana;
+		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
+		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+		deck.Shuffle();
+		for (int i = 0; i < startingHandSize; i++)
+		{
+			deck.Draw();
+		}
 	}
 
 	int GetMana()
 	{
-		throw new NotImplementedException();
+		return mana;
 	}
 
 	int GetHP()
 	{
-		throw new NotImplementedException();
+		return hp;
 	}
 
 	Deck GetDeck()
 	{
-		throw new NotImplementedException();
+		return deck;
 	}
 
 	Hand GetHand()
 	{
-		throw new NotImplementedException();
+		return hand;
 	}
 }

@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthBarAdapter : MonoBehaviour
 {
-
     public Entity entity;
     public Microlight.MicroBar.MicroBar bar;
 
@@ -16,9 +16,9 @@ public class HealthBarAdapter : MonoBehaviour
         bar.Initialize(entity.maxHP);
     }
 
-    void OnEntityDamage(Entity e, float damage)
+    void OnEntityDamage(Entity e, int damage)
     {
-        if(e == entity)
+        if (e == entity)
         {
             bar.UpdateHealthBar(e.hp);
         }
@@ -27,6 +27,6 @@ public class HealthBarAdapter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

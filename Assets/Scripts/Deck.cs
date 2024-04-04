@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Card> m_Cards;
-    public GameObject card_prefab;
-    public Entity e;
+	[SerializeField] private List<Card> m_Cards;
+	public GameObject card_prefab;
+	public Entity e;
 
 	Color[] colors = new Color[] {
 		Color.red,
 		Color.blue,
 		Color.green,
-		Color.yellow,
+		new Color(217, 195, 0),
 	};
 
 	public void Awake()
@@ -21,23 +21,27 @@ public class Deck : MonoBehaviour
 		Generate();
 		Shuffle();
 
-        BattleEventBus.getInstance().cardDrawEvent.AddListener(OnConfirmDraw);
-    }
+		BattleEventBus.getInstance().cardDrawEvent.AddListener(OnConfirmDraw);
+	}
 
-    public void Generate()
-    {
-        for(int i = 0; i < 25; i++)
-        {
-            int randomIndex = UnityEngine.Random.Range(0, colors.Length);
-            m_Cards.Add(
-                Instantiate(card_prefab).GetComponent<Card>());
-            m_Cards[i].color = colors[randomIndex];
-            m_Cards[i].value = UnityEngine.Random.Range(0, 15);
-            m_Cards[i].gameObject.SetActive(false);
-            m_Cards[i].transform.SetParent(transform, false);
-            m_Cards[i].entity = e;
-        }
-    }
+	public void Generate()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+			{
+				Card newCard = Instantiate(card_prefab).GetComponent<Card>();
+				newCard.value = i;
+				newCard.color = colors[colorIdx];
+
+				newCard.gameObject.SetActive(false);
+				newCard.transform.SetParent(transform, false);
+				newCard.entity = e;
+
+				m_Cards.Add(newCard);
+			}
+		}
+	}
 
 	public Card Draw()
 	{
@@ -50,19 +54,25 @@ public class Deck : MonoBehaviour
 	{
 		return m_Cards[0];
 	}
-    public void OnMouseDown()
-    {
-        BattleEventBus.getInstance().cardTryDrawEvent.Invoke(e, Peek());
-    }
 
-    public void OnConfirmDraw(Entity e, Card c)
-    {
-        if(e != this.e)
-        {
-            return;
-        }
-        Draw();
-    }
+	public void TryDraw()
+	{
+		BattleEventBus.getInstance().cardTryDrawEvent.Invoke(e, Peek());
+	}
+
+	public void OnMouseDown()
+	{
+		TryDraw();
+	}
+
+	public void OnConfirmDraw(Entity e, Card c)
+	{
+		if (e != this.e)
+		{
+			return;
+		}
+		Draw();
+	}
 
 	public void Shuffle()
 	{

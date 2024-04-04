@@ -29,7 +29,7 @@ public class CameraShake : MonoBehaviour
         BattleEventBus.getInstance().entityDamageEvent.AddListener(OnDamage);
     }
 
-    void OnDamage(Entity e, float dmg)
+    void OnDamage(Entity e, int dmg)
     {
         StartCoroutine(Shake(0.4f, 0.25f)); // TODO: Adjust based on damage
     }
