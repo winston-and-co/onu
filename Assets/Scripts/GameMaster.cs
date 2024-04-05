@@ -6,25 +6,32 @@ using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
+    public Pile discard;
+    public Entity player;
     [SerializeField] Deck playerDeck;
-    [SerializeField] Deck enemyDeck;
-    [SerializeField] Pile discard;
     [SerializeField] Hand playerHand;
-
+    public Entity enemy;
+    [SerializeField] Deck enemyDeck;
     [SerializeField] Hand enemyHand;
-    [SerializeField] Entity player;
-    [SerializeField] Entity enemy;
 
     int turn = 0;
     Entity[] order;
     Entity current_turn_entity;
 
+    public int turnNumber;
+
+    public Entity victor;
+
+    void Awake()
+    {
+        BattleEventBus bus = BattleEventBus.getInstance();
+        bus.tryPlayEvent.AddListener(OnTryPlay);
+        bus.tryEndTurnEvent.AddListener(TryEndTurn);
+        bus.entityDamageEvent.AddListener(CheckVictory);
+    }
+
     void Start()
     {
-        BattleEventBus.getInstance().tryPlayEvent.AddListener(OnTryPlay);
-        BattleEventBus.getInstance().cardTryDrawEvent.AddListener(OnTryDraw);
-        BattleEventBus.getInstance().tryEndTurnEvent.AddListener(TryEndTurn);
-
         player.deck = playerDeck;
         player.hand = playerHand;
         enemy.deck = enemyDeck;
@@ -40,15 +47,21 @@ public class GameMaster : MonoBehaviour
         enemy.hp = enemy.maxHP;
         enemy.mana = enemy.maxMana;
 
+        turnNumber = 0;
+        victor = null;
+
+        // Begin combat
+        BattleEventBus.getInstance().startBattleEvent.Invoke(this);
+
         playerDeck.Shuffle();
-        enemyDeck.Shuffle();
         for (int i = 0; i < player.startingHandSize; i++)
         {
-            playerDeck.TryDraw();
+            player.Draw();
         }
+        enemyDeck.Shuffle();
         for (int i = 0; i < enemy.startingHandSize; i++)
         {
-            enemyDeck.TryDraw();
+            enemy.Draw();
         }
 
         StartTurn(0); // player
@@ -63,7 +76,34 @@ public class GameMaster : MonoBehaviour
     void StartTurn(int turn)
     {
         current_turn_entity = order[turn];
+
+        if (current_turn_entity == player)
+        {
+            turnNumber++;
+        }
+
         BattleEventBus.getInstance().startTurnEvent.Invoke(current_turn_entity);
+
+        // Draw cards until you draw a playable one
+        // Might change to just draw one at start of turn
+        bool hasPlayable = false;
+        foreach (Card c in current_turn_entity.hand.hand)
+        {
+            if (GameRules.getInstance().CardIsPlayable(current_turn_entity, c))
+            {
+                hasPlayable = true;
+                break;
+            }
+        }
+        if (!hasPlayable)
+        {
+            Card cardDrawn;
+            do
+            {
+                cardDrawn = current_turn_entity.Draw();
+            }
+            while (!GameRules.getInstance().CardIsPlayable(current_turn_entity, cardDrawn));
+        }
     }
 
     void TryEndTurn(Entity e)
@@ -72,20 +112,20 @@ public class GameMaster : MonoBehaviour
         StartNextTurn();
     }
 
+    bool IsEntityTurn(Entity e)
+    {
+        return e == current_turn_entity;
+    }
+
     /*
      * Validate card being played
      */
     void OnTryPlay(Entity e, Card c)
     {
         bool turn = IsEntityTurn(e);
-        bool flag = false;
-        // TODO: real life logic
-        if (turn)
-        {
-            flag = GameRules.getInstance().TryPlay(discard, c);
-        }
+        bool playable = GameRules.getInstance().CardIsPlayable(e, c);
 
-        if (flag)
+        if (turn && playable)
         {
             PlayCard(e, c);
         }
@@ -94,30 +134,6 @@ public class GameMaster : MonoBehaviour
             BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
         }
 
-    }
-
-    /*
-     * Validate card being drawn
-     */
-    void OnTryDraw(Entity e, Card c)
-    {
-        bool canDraw = GameRules.getInstance().CanDraw(this, e);
-
-        if (canDraw)
-        {
-            DrawCard(e, c);
-        }
-    }
-    bool IsEntityTurn(Entity e)
-    {
-        return e == current_turn_entity;
-    }
-
-    void DrawCard(Entity e, Card c)
-    {
-        Card drawn = e.deck.Draw();
-        e.hand.AddCard(drawn);
-        BattleEventBus.getInstance().cardDrawEvent.Invoke(e, c);
     }
 
     void PlayCard(Entity e, Card c)
@@ -136,19 +152,37 @@ public class GameMaster : MonoBehaviour
         {
             e.SpendMana(c.value);
         }
-        target.Damage(c.value);
+        if (discard.Peek() != null && discard.Peek().value == 0)
+        {
+            e.Heal(c.value);
+        }
+        else
+        {
+            target.Damage(c.value);
+        }
         e.hand.RemoveCard(c);
         BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
 
         if (e.hand.GetCardCount() == 0)
         {
-            Refresh(e);
+            e.Refresh();
         }
     }
 
-    void Refresh(Entity e)
+    void CheckVictory(Entity e, int _)
     {
-        e.Refresh();
-        BattleEventBus.getInstance().entityRefreshEvent.Invoke(e);
+        if (e.hp <= 0)
+        {
+            if (e == player)
+            {
+                victor = enemy;
+                BattleEventBus.getInstance().endBattleEvent.Invoke(this);
+            }
+            else if (e == enemy)
+            {
+                victor = player;
+                BattleEventBus.getInstance().endBattleEvent.Invoke(this);
+            }
+        }
     }
 }

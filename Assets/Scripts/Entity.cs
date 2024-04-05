@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-	public TMP_Text hpText;
-	public TMP_Text manaText;
-
 	public Deck deck;
 	public Hand hand;
 
@@ -20,64 +17,68 @@ public class Entity : MonoBehaviour
 
 	public int startingHandSize;
 
-	public String e_name;
+	public string e_name;
 
 	void Start()
 	{
 		hp = maxHP;
 		mana = maxMana;
-
-		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
-		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
 	}
 
-	public void Damage(int damage)
+	public void Damage(int amount)
 	{
-		hp -= damage;
+		hp -= amount;
 		hp = Math.Max(0, hp);
-		BattleEventBus.getInstance().entityDamageEvent.Invoke(this, damage);
-		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
-		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+		var bus = BattleEventBus.getInstance();
+		bus.entityDamageEvent.Invoke(this, amount);
+		bus.entityHealthChangedEvent.Invoke(this, amount);
+	}
+
+	public void Heal(int amount)
+	{
+		hp += amount;
+		hp = Math.Min(maxHP, hp);
+		var bus = BattleEventBus.getInstance();
+		bus.entityHealEvent.Invoke(this, amount);
+		bus.entityHealthChangedEvent.Invoke(this, amount);
 	}
 
 	public void SpendMana(int amount)
 	{
 		mana -= amount;
+		mana = Math.Max(0, mana);
 		BattleEventBus.getInstance().entityManaSpentEvent.Invoke(this, amount);
-		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
-		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+		BattleEventBus.getInstance().entityManaChangedEvent.Invoke(this, amount);
+	}
+
+	public void RestoreMana(int amount)
+	{
+		mana += amount;
+		mana = Math.Min(maxMana, mana);
+		BattleEventBus.getInstance().entityManaChangedEvent.Invoke(this, amount);
+	}
+
+	public Card Draw()
+	{
+		if (GameRules.getInstance().CanDraw(this))
+		{
+			Card drawn = deck.Draw();
+			hand.AddCard(drawn);
+			BattleEventBus.getInstance().cardDrawEvent.Invoke(this, drawn);
+			return drawn;
+		}
+		return null;
 	}
 
 	public void Refresh()
 	{
-		hp = maxHP;
-		mana = maxMana;
-		hpText.SetText(hp.ToString() + " / " + maxHP.ToString());
-		manaText.SetText(mana.ToString() + " / " + maxMana.ToString());
+		RestoreMana(maxMana - mana);
 		deck.Shuffle();
 		for (int i = 0; i < startingHandSize; i++)
 		{
-			deck.Draw();
+			Draw();
 		}
+		BattleEventBus.getInstance().entityRefreshEvent.Invoke(this);
 	}
 
-	int GetMana()
-	{
-		return mana;
-	}
-
-	int GetHP()
-	{
-		return hp;
-	}
-
-	Deck GetDeck()
-	{
-		return deck;
-	}
-
-	Hand GetHand()
-	{
-		return hand;
-	}
 }

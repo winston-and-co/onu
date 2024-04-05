@@ -20,25 +20,26 @@ public class Deck : MonoBehaviour
 	{
 		Generate();
 		Shuffle();
-
-		BattleEventBus.getInstance().cardDrawEvent.AddListener(OnConfirmDraw);
 	}
 
 	public void Generate()
 	{
-		for (int i = 0; i < 10; i++)
+		for (int sets = 0; sets < 2; sets++)
 		{
-			for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+			for (int value = 0; value < 10; value++)
 			{
-				Card newCard = Instantiate(card_prefab).GetComponent<Card>();
-				newCard.value = i;
-				newCard.color = colors[colorIdx];
+				for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+				{
+					Card newCard = Instantiate(card_prefab).GetComponent<Card>();
+					newCard.value = value;
+					newCard.color = colors[colorIdx];
 
-				newCard.gameObject.SetActive(false);
-				newCard.transform.SetParent(transform, false);
-				newCard.entity = e;
+					newCard.gameObject.SetActive(false);
+					newCard.transform.SetParent(transform, false);
+					newCard.entity = e;
 
-				m_Cards.Add(newCard);
+					m_Cards.Add(newCard);
+				}
 			}
 		}
 	}
@@ -50,28 +51,9 @@ public class Deck : MonoBehaviour
 		return c;
 	}
 
-	Card Peek()
-	{
-		return m_Cards[0];
-	}
-
-	public void TryDraw()
-	{
-		BattleEventBus.getInstance().cardTryDrawEvent.Invoke(e, Peek());
-	}
-
 	public void OnMouseDown()
 	{
-		TryDraw();
-	}
-
-	public void OnConfirmDraw(Entity e, Card c)
-	{
-		if (e != this.e)
-		{
-			return;
-		}
-		Draw();
+		e.Draw();
 	}
 
 	public void Shuffle()

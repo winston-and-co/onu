@@ -1,32 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ManaBarAdapter : MonoBehaviour
 {
-
     public Entity entity;
+    public TMP_Text manaText;
     public Microlight.MicroBar.MicroBar bar;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        BattleEventBus.getInstance().entityManaSpentEvent.AddListener(OnManaSpent);
+        BattleEventBus.getInstance().startBattleEvent.AddListener((_) =>
+        {
+            manaText.SetText($"{entity.mana} / {entity.maxMana}");
+        });
+        BattleEventBus.getInstance().entityManaChangedEvent.AddListener(OnEntityManaChanged);
 
         bar.Initialize(entity.maxMana);
     }
 
-    void OnManaSpent(Entity e, int cost)
+    void OnEntityManaChanged(Entity e, int _)
     {
         if (e == entity)
         {
             bar.UpdateHealthBar(e.mana);
+            manaText.SetText($"{entity.mana} / {entity.maxMana}");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
