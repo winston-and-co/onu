@@ -56,5 +56,12 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "onu.sln"
+    "dotnet.defaultSolution": "onu.sln",
+    "[csharp]": {
+        "editor.maxTokenizationLineLength": 2500,
+        "editor.tabSize": 4,
+        "editor.useTabStops": true,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    }
 }

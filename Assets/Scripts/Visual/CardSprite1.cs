@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class CardSprite : MonoBehaviour
 {
-
     public SpriteRenderer spriteRenderer;
     public TextMeshPro textMeshPro;
     public Card c;
@@ -55,5 +54,3 @@ public class CardSprite : MonoBehaviour
 
     }
 }
-
-

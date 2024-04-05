@@ -28,20 +28,20 @@ public class CardHandLayout : MonoBehaviour
         }
     }
 
-    void OnCardPlayed(Entity e, Card c)
+    void OnCardPlayed(Entity e, Card _)
     {
-        //if(!e.name.ToLower().Equals("player"))
-        //{
-        //    return;
-        //}
+        if (!e.hand == hand)
+        {
+            return;
+        }
         ArrangeCards();
     }
-    void OnCardDrawn(Entity e, Card c)
+    void OnCardDrawn(Entity e, Card _)
     {
-        //if (!e.name.ToLower().Equals("player"))
-        //{
-        //    return;
-        //}
+        if (!e.hand == hand)
+        {
+            return;
+        }
         ArrangeCards();
     }
 

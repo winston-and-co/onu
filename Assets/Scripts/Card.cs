@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 
 public class Card : MonoBehaviour
 {
-
     public int value;
     public Color color;
     protected int lastOrder;
@@ -33,7 +32,7 @@ public class Card : MonoBehaviour
 
     public void OnMouseDown()
     {
-        BattleEventBus.getInstance().tryPlayEvent.Invoke(entity,this);
+        BattleEventBus.getInstance().tryPlayEvent.Invoke(entity, this);
     }
 
     public void OnMouseEnter()
