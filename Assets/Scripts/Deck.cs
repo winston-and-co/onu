@@ -5,30 +5,69 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<Card> m_Cards;
+    public GameObject card_prefab;
+    public Entity e;
+
+    Color[] colors = new Color[] {
+        Color.red,
+        Color.blue,
+        Color.green,
+        new Color(217, 195, 0),
+    };
+
+    public void Awake()
     {
-        
+        Generate();
+        Shuffle();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Generate()
     {
-        
+        for (int sets = 0; sets < 2; sets++)
+        {
+            for (int value = 0; value < 10; value++)
+            {
+                for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+                {
+                    Card newCard = Instantiate(card_prefab).GetComponent<Card>();
+                    newCard.value = value;
+                    newCard.color = colors[colorIdx];
+
+                    newCard.gameObject.SetActive(false);
+                    newCard.transform.SetParent(transform, false);
+                    newCard.entity = e;
+
+                    m_Cards.Add(newCard);
+                }
+            }
+        }
     }
 
-    void Pop()
+    public Card Draw()
     {
-        throw new NotImplementedException();
+        Card c = m_Cards[0];
+        m_Cards.RemoveAt(0);
+        return c;
     }
 
-    void Shuffle()
+    public void OnMouseDown()
     {
-        throw new NotImplementedException();
+        e.Draw();
     }
 
-    void Draw()
+    public void Shuffle()
     {
-        throw new NotImplementedException();
+        System.Random rng = new System.Random();
+        int n = m_Cards.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Card value = m_Cards[k];
+            m_Cards[k] = m_Cards[n];
+            m_Cards[n] = value;
+        }
     }
+
 }

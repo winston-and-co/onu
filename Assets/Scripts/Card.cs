@@ -1,20 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class Card : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int value;
+    public Color color;
+    protected int lastOrder;
+    public UnityEvent m_PlayEvent;
+    private CardSprite spriteController;
+    public Entity entity;
 
-    // Update is called once per frame
-    void Update()
+    public void OnEnable()
     {
-        
+        spriteController = GetComponentInChildren<CardSprite>();
     }
 
     string GetColor()
@@ -26,4 +29,19 @@ public class Card : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+
+    public void OnMouseDown()
+    {
+        BattleEventBus.getInstance().tryPlayEvent.Invoke(entity, this);
+    }
+
+    public void OnMouseEnter()
+    {
+        spriteController.MouseEnter();
+    }
+    public void OnMouseExit()
+    {
+        spriteController.MouseLeave();
+    }
+
 }
