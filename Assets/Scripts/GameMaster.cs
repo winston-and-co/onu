@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ActionCards;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +17,7 @@ public class GameMaster : MonoBehaviour
 
     int turn = 0;
     Entity[] order;
-    Entity current_turn_entity;
+    public Entity current_turn_entity;
 
     public int turnNumber;
 
@@ -25,7 +26,8 @@ public class GameMaster : MonoBehaviour
     void Awake()
     {
         BattleEventBus bus = BattleEventBus.getInstance();
-        bus.tryPlayEvent.AddListener(OnTryPlay);
+        bus.cardTryPlayedEvent.AddListener(OnTryPlay);
+        bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
         bus.tryEndTurnEvent.AddListener(TryEndTurn);
         bus.entityDamageEvent.AddListener(CheckVictory);
     }
@@ -120,23 +122,33 @@ public class GameMaster : MonoBehaviour
     /*
      * Validate card being played
      */
-    void OnTryPlay(Entity e, Card c)
+    void OnTryPlay(Entity e, Playable card)
     {
-        bool turn = IsEntityTurn(e);
-        bool playable = GameRules.getInstance().CardIsPlayable(e, c);
-
-        if (turn && playable)
+        if (card.IsPlayable())
         {
-            PlayCard(e, c);
+            PlayCard(e, card);
         }
         else
         {
-            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, card);
         }
-
     }
 
-    void PlayCard(Entity e, Card c)
+    void OnTryUseActionCard(Entity e, IActionCard ac)
+    {
+        if (ac.IsUsable())
+        {
+            UseActionCard(e, ac);
+        }
+    }
+
+    void UseActionCard(Entity e, IActionCard ac)
+    {
+        ac.Use();
+        BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
+    }
+
+    void PlayCard(Entity e, Playable c)
     {
         Entity target;
         if (e.e_name.ToLower().Equals("player"))
@@ -147,21 +159,36 @@ public class GameMaster : MonoBehaviour
         {
             target = player;
         }
-
-        if (discard.Peek() != null && discard.Peek().color != c.color)
+        switch (discard.Peek())
         {
-            e.SpendMana(c.value);
+            case null:
+                goto default;
+            case Card top:
+                if (c.Value.IsNull)
+                {
+                    goto default;
+                }
+                if (top.Color != c.Color)
+                {
+                    e.SpendMana(c.Value.OrIfNull(0));
+                }
+                if (top.Value == 0)
+                {
+                    e.Heal(c.Value.OrIfNull(0));
+                }
+                else
+                {
+                    target.Damage(c.Value.OrIfNull(0));
+                }
+                e.hand.RemoveCard(c);
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+                break;
+            default:
+                target.Damage(c.Value.OrIfNull(0));
+                e.hand.RemoveCard(c);
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+                break;
         }
-        if (discard.Peek() != null && discard.Peek().value == 0)
-        {
-            e.Heal(c.value);
-        }
-        else
-        {
-            target.Damage(c.value);
-        }
-        e.hand.RemoveCard(c);
-        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
 
         if (e.hand.GetCardCount() == 0)
         {

@@ -5,16 +5,22 @@ using UnityEngine;
 
 public class EventTracker : MonoBehaviour
 {
+    [SerializeField]
+    private bool Track;
+
     public void Start()
     {
-        Track();
+        if (Track)
+        {
+            StartTracker();
+        }
     }
 
-    public static void Track()
+    public static void StartTracker()
     {
         // gotta be a better way to do this with reflection but im too lazy to figure that out
         var bus = BattleEventBus.getInstance();
-        bus.tryPlayEvent.AddListener((_, _) => Print("tryPlayEvent"));
+        bus.cardTryPlayedEvent.AddListener((_, _) => Print("tryPlayEvent"));
         bus.cardPlayedEvent.AddListener((_, _) => Print("cardPlayedEvent"));
         bus.cardIllegalEvent.AddListener((_, _) => Print("cardIllegalEvent"));
         bus.cardDrawEvent.AddListener((_, _) => Print("cardDrawEvent"));
@@ -26,6 +32,12 @@ public class EventTracker : MonoBehaviour
         bus.entityManaSpentEvent.AddListener((_, _) => Print("entityManaSpentEvent"));
         bus.entityManaChangedEvent.AddListener((_, _) => Print("entityManaChangedEvent"));
         bus.entityRefreshEvent.AddListener((_) => Print("entityRefreshEvent"));
+
+        bus.actionCardTryUseEvent.AddListener((_, _) => Print("actionCardTryUseEvent"));
+        bus.actionCardUsedEvent.AddListener((_, _) => Print("actionCardUsedEvent"));
+        bus.actionCardObtainedEvent.AddListener((_, _) => Print("actionCardObtainedEvent"));
+        bus.actionCardDiscardedEvent.AddListener((_, _) => Print("actionCardDiscardedEvent"));
+
         bus.startBattleEvent.AddListener((_) => Print("startBattleEvent"));
         bus.startTurnEvent.AddListener((_) => Print("startTurnEvent"));
         bus.endTurnEvent.AddListener((_) => Print("endTurnEvent"));

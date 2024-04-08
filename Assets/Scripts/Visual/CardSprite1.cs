@@ -20,8 +20,9 @@ public class CardSprite : MonoBehaviour
 
     public void SetupCard()
     {
-        textMeshPro.text = c.value.ToString();
-        textMeshPro.color = c.color.WithAlpha(1.0f);
+        textMeshPro.text = c.Value.ToString();
+        spriteRenderer.color = c.Color;
+        textMeshPro.color = Color.white.WithAlpha(1.0f);
         // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
         textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
         textMeshPro.outlineColor = Color.black;

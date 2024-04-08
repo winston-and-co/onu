@@ -80,5 +80,4 @@ public class Entity : MonoBehaviour
         }
         BattleEventBus.getInstance().entityRefreshEvent.Invoke(this);
     }
-
 }

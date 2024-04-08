@@ -9,11 +9,11 @@ public class Deck : MonoBehaviour
     public GameObject card_prefab;
     public Entity e;
 
-    Color[] colors = new Color[] {
-        Color.red,
-        Color.blue,
-        Color.green,
-        new Color(217, 195, 0),
+    public readonly Color[] colors = new Color[] {
+        CardColors.Red,
+        CardColors.Blue,
+        CardColors.Green,
+        CardColors.Yellow,
     };
 
     public void Awake()
@@ -31,8 +31,8 @@ public class Deck : MonoBehaviour
                 for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
                 {
                     Card newCard = Instantiate(card_prefab).GetComponent<Card>();
-                    newCard.value = value;
-                    newCard.color = colors[colorIdx];
+                    newCard.Value = new NullableInt { Value = value, IsNull = false };
+                    newCard.Color = colors[colorIdx];
 
                     newCard.gameObject.SetActive(false);
                     newCard.transform.SetParent(transform, false);

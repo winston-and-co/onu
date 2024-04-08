@@ -32,30 +32,29 @@ public class GameRules : MonoBehaviour
         this.gm = gm;
     }
 
-    public bool CardIsPlayable(Entity e, Card c)
+    public bool CardIsPlayable(Entity e, Playable c)
     {
+        if (e == null || c == null) return false;
+
+        // must be their turn
+        if (e != gm.current_turn_entity) return false;
+
         var discard = gm.discard;
         var topCard = discard.Peek();
-        if (topCard == null)
+        // first card
+        if (topCard == null) return true;
+        // colorless cards are always playable, and you can play anything on them
+        if (topCard.Color == CardColors.Colorless || c.Color == CardColors.Colorless) return true;
+        // matching color
+        if (c.Color == topCard.Color) return true;
+        // matching value only
+        if (c.Value == topCard.Value)
         {
-            return true;
-        }
-        if (c.value == topCard.value)
-        {
-            // if changing color
-            if (c.color != topCard.color)
+            if (e.mana >= c.Value)
             {
-                if (e.mana >= c.value)
-                {
-                    return true;
-                }
-                return false;
+                return true;
             }
-            return true;
-        }
-        if (c.color == topCard.color)
-        {
-            return true;
+            return false;
         }
         return false;
     }

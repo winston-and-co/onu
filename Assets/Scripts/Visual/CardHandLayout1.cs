@@ -28,7 +28,7 @@ public class CardHandLayout : MonoBehaviour
         }
     }
 
-    void OnCardPlayed(Entity e, Card _)
+    void OnCardPlayed(Entity e, Playable _)
     {
         if (!e.hand == hand)
         {
@@ -36,7 +36,7 @@ public class CardHandLayout : MonoBehaviour
         }
         ArrangeCards();
     }
-    void OnCardDrawn(Entity e, Card _)
+    void OnCardDrawn(Entity e, Playable _)
     {
         if (!e.hand == hand)
         {
