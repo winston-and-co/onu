@@ -2,6 +2,10 @@
 // https://stackoverflow.com/questions/52854129/unity-doesnt-serialize-int-field
 using System;
 
+/* I literally made this solely because int? can't be serialized so it doesn't
+ * show in the Unity inspector lol. It should be mostly hot-swappable with
+ * regular int?, but I had to change instances of "v ?? x" with "v.OrIfNull(x)"
+ */
 [Serializable]
 public class NullableInt : IEquatable<NullableInt>, IComparable<NullableInt>
 {
