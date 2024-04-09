@@ -74,4 +74,5 @@ public class NullableInt : IEquatable<NullableInt>, IComparable<NullableInt>
     public static bool operator >=(NullableInt lhs, int rhs) => lhs.CompareTo(rhs) >= 0;
     public static bool operator <=(int lhs, NullableInt rhs) => rhs.CompareTo(lhs) >= 0;
     public static bool operator >=(int lhs, NullableInt rhs) => rhs.CompareTo(lhs) <= 0;
+    public static implicit operator int(NullableInt i) => i.IsNull ? 0 : i.Value;
 }

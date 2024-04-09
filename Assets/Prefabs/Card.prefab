@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1447437960867306658}
   textMeshPro: {fileID: 3379011113209444705}
-  c: {fileID: 274505643498360935}
+  c: {fileID: 8123059603341046139}
   enlargedScale: {x: 1.2, y: 1.2, z: 1}
   originalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1257537865484679012
@@ -287,8 +287,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7710361853092737821}
-  - component: {fileID: 274505643498360935}
   - component: {fileID: 3671351996870052269}
+  - component: {fileID: 8123059603341046139}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -316,22 +316,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1.03, y: -3.0617847}
   m_SizeDelta: {x: 4.4, y: 6.8}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &274505643498360935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257537865484679012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b589f0d96887b46b961f304524d083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entity: {fileID: 0}
-  m_PlayEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!61 &3671351996870052269
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -377,3 +361,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.4, y: 6.8}
   m_EdgeRadius: 0
+--- !u!114 &8123059603341046139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257537865484679012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b589f0d96887b46b961f304524d083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Value:
+    Value: 0
+    IsNull: 0
+  _color: {r: 0, g: 0, b: 0, a: 0}
+  entity: {fileID: 0}
+  m_PlayEvent:
+    m_PersistentCalls:
+      m_Calls: []

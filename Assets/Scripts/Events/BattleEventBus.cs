@@ -39,6 +39,7 @@ public class BattleEventBus
     public EndBattleEvent endBattleEvent = new();
 }
 
+
 // Game rules
 public class CardTryPlayedEvent : UnityEvent<Entity, Playable> { }
 public class CardPlayedEvent : UnityEvent<Entity, Playable> { }

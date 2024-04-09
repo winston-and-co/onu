@@ -26,6 +26,15 @@ public class Ruleset
     }
 }
 
+/// <summary>
+/// If <c>Result</c> is <c>null</c>, this <c>RuleResult</c> is ignored by the
+/// Controller.
+/// <br/><br/>
+/// Precedence values:<br/>
+/// &lt; 0: Guarantees result will not be used<br/>
+/// 0 - 1000: Reserved for base game<br/>
+/// 1000+: May be used for custom rules
+/// </summary>
 public struct RuleResult
 {
     public bool? Result;
@@ -38,4 +47,5 @@ public struct RuleResult
     }
 
     public static implicit operator RuleResult((bool? b, int i) input) => new(input.b, input.i);
+    public static implicit operator bool(RuleResult r) => r.Result ?? false;
 }

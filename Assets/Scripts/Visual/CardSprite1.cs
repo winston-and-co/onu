@@ -52,6 +52,5 @@ public class CardSprite : MonoBehaviour
     public void OnEnable()
     {
         SetupCard();
-
     }
 }

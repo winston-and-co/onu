@@ -1,7 +1,8 @@
-
 using System;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventTracker : MonoBehaviour
 {
@@ -16,6 +17,39 @@ public class EventTracker : MonoBehaviour
         }
     }
 
+    // Written by Mr. GPT
+    // but doesn't work
+    // public static void StartTracker()
+    // {
+    //     print("start tracker");
+    //     var bus = BattleEventBus.getInstance();
+    //     var eventBusType = bus.GetType();
+    //     var methods = typeof(BattleEventBus)
+    //         .GetFields(BindingFlags.Public | BindingFlags.Instance)
+    //         .Where(f => f.FieldType.IsGenericType &&
+    //             f.FieldType.GetGenericTypeDefinition() == typeof(UnityEvent<>));
+    //     print(typeof(BattleEventBus).GetFields(BindingFlags.Public | BindingFlags.Instance));
+
+    //     foreach (var field in methods)
+    //     {
+    //         var eventType = field.FieldType.GetGenericArguments()[0];
+    //         var addListenerMethod = eventBusType.GetMethod("AddListener").MakeGenericMethod(eventType);
+    //         var eventName = field.Name;
+
+    //         // Create a delegate for the Print method with appropriate parameters
+    //         var printMethod = typeof(EventTracker).GetMethod("Print", BindingFlags.NonPublic | BindingFlags.Static);
+    //         var printDelegateType = typeof(Action<,>).MakeGenericType(typeof(string), eventType);
+    //         var printDelegate = Delegate.CreateDelegate(printDelegateType, null, printMethod);
+
+    //         // Get the event field value
+    //         var fieldValue = field.GetValue(bus);
+
+    //         // Invoke the AddListener method on the event with the printDelegate
+    //         addListenerMethod.Invoke(fieldValue, new object[] { printDelegate });
+
+    //         Debug.Log($"Subscribed to {eventName} event.");
+    //     }
+    // }
     public static void StartTracker()
     {
         // gotta be a better way to do this with reflection but im too lazy to figure that out

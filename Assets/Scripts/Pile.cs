@@ -18,6 +18,7 @@ public class Pile : MonoBehaviour
         AddToTop(card);
     }
 
+    ///<returns>Top of pile, or <c>null</c> if empty.</returns>
     public Playable Peek()
     {
         if (pile.Count == 0)

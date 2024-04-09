@@ -43,8 +43,11 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
+        player.gameRules = new();
+        player.gameRules.Add(new RuleCards.Purple());
         player.deck = playerDeck;
         player.hand = playerHand;
+        enemy.gameRules = new();
         enemy.deck = enemyDeck;
         enemy.hand = enemyHand;
 
@@ -98,9 +101,9 @@ public class GameMaster : MonoBehaviour
         // Draw cards until you draw a playable one
         // Might change to just draw one at start of turn
         bool hasPlayable = false;
-        foreach (Card c in current_turn_entity.hand.hand)
+        foreach (Playable c in current_turn_entity.hand.hand)
         {
-            if (gameRules.CardIsPlayable(current_turn_entity, c))
+            if (current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, c))
             {
                 hasPlayable = true;
                 break;
@@ -113,7 +116,7 @@ public class GameMaster : MonoBehaviour
             {
                 cardDrawn = current_turn_entity.Draw();
             }
-            while (!GameRulesController.getInstance().CardIsPlayable(current_turn_entity, cardDrawn));
+            while (!current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, cardDrawn));
         }
     }
 
