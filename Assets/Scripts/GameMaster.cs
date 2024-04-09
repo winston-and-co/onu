@@ -7,13 +7,18 @@ using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
+    private static GameMaster INSTANCE;
+    public static GameMaster GetInstance() => INSTANCE;
+
     public Pile discard;
     public Entity player;
     [SerializeField] Deck playerDeck;
     [SerializeField] Hand playerHand;
+    private GameRulesController playerRules;
     public Entity enemy;
     [SerializeField] Deck enemyDeck;
     [SerializeField] Hand enemyHand;
+    private GameRulesController enemyRules;
 
     int turn = 0;
     Entity[] order;
@@ -25,6 +30,10 @@ public class GameMaster : MonoBehaviour
 
     void Awake()
     {
+        // https://gamedevbeginner.com/singletons-in-unity-the-right-way/
+        if (INSTANCE != null && INSTANCE != this) Destroy(this);
+        else INSTANCE = this;
+
         BattleEventBus bus = BattleEventBus.getInstance();
         bus.cardTryPlayedEvent.AddListener(OnTryPlay);
         bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
@@ -91,7 +100,7 @@ public class GameMaster : MonoBehaviour
         bool hasPlayable = false;
         foreach (Card c in current_turn_entity.hand.hand)
         {
-            if (GameRules.getInstance().CardIsPlayable(current_turn_entity, c))
+            if (gameRules.CardIsPlayable(current_turn_entity, c))
             {
                 hasPlayable = true;
                 break;
@@ -104,7 +113,7 @@ public class GameMaster : MonoBehaviour
             {
                 cardDrawn = current_turn_entity.Draw();
             }
-            while (!GameRules.getInstance().CardIsPlayable(current_turn_entity, cardDrawn));
+            while (!GameRulesController.getInstance().CardIsPlayable(current_turn_entity, cardDrawn));
         }
     }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public GameRulesController gameRules;
     public Deck deck;
     public Hand hand;
 
@@ -60,7 +61,7 @@ public class Entity : MonoBehaviour
 
     public Card Draw()
     {
-        if (GameRules.getInstance().CanDraw(this))
+        if (gameRules.CanDraw(GameMaster.GetInstance(), this))
         {
             Card drawn = deck.Draw();
             hand.AddCard(drawn);
