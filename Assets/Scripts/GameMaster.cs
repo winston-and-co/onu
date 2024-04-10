@@ -171,30 +171,23 @@ public class GameMaster : MonoBehaviour
         {
             target = player;
         }
+        int cost = e.gameRules.CardManaCost(this, e, c);
         switch (discard.Peek())
         {
-            case null:
-                goto default;
             case Card top:
-                if (c.Value.IsNull)
-                {
-                    goto default;
-                }
-                if (top.Color != c.Color)
-                {
-                    e.SpendMana(c.Value.OrIfNull(0));
-                }
+                if (c.Value.IsNull) goto default;
+
+                e.SpendMana(cost);
                 if (top.Value == 0)
-                {
                     e.Heal(c.Value.OrIfNull(0));
-                }
                 else
-                {
                     target.Damage(c.Value.OrIfNull(0));
-                }
+
                 e.hand.RemoveCard(c);
                 BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 break;
+            case IActionCard:
+            case null:
             default:
                 target.Damage(c.Value.OrIfNull(0));
                 e.hand.RemoveCard(c);

@@ -1,6 +1,6 @@
 public class DefaultRuleset : Ruleset
 {
-    public override RuleResult CardIsPlayable(GameMaster gm, Entity e, Playable c)
+    public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
         if (e == null || c == null) return (false, 0);
 
@@ -27,7 +27,17 @@ public class DefaultRuleset : Ruleset
         return (false, 0);
     }
 
-    public override RuleResult CanDraw(GameMaster gm, Entity e)
+    public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+    {
+        var topCard = gm.discard.Peek();
+        if (topCard != null && topCard.Color != c.Color)
+        {
+            return (c.Value, 0);
+        }
+        return (0, 0);
+    }
+
+    public override RuleResult<bool> CanDraw(GameMaster gm, Entity e)
     {
         // there may be effects preventing draw
         return (true, 0);

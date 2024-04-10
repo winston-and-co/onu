@@ -21,41 +21,42 @@ public class GameRulesController : Ruleset
         return rules.Remove(ruleset);
     }
 
-    public override RuleResult CardIsPlayable(GameMaster gm, Entity e, Playable c)
+    public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
-        List<RuleResult> res = rules
+        List<RuleResult<bool>> res = rules
             .Select(r => r.CardIsPlayable(gm, e, c))
-            .OrderBy(r => r.Precedence)
+            .OrderBy(r => -r.Precedence)
             .ToList();
 
-        for (int i = 0; i < res.Count; i++)
-        {
-            if (res[i].Result == null)
-            {
-                continue;
-            }
-            return (res[i].Result, int.MaxValue);
-        }
+        if (res.Count == 0)
+            throw new Exception("Rule check (CardIsPlayable) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
 
-        throw new Exception("Rule check (CardIsPlayable) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
+        return (res[0].Result, int.MaxValue);
     }
 
-    public override RuleResult CanDraw(GameMaster gm, Entity e)
+    public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
     {
-        List<RuleResult> res = rules
-            .Select(r => r.CanDraw(gm, e))
-            .OrderBy(r => r.Precedence)
+        List<RuleResult<int>> res = rules
+            .Select(r => r.CardManaCost(gm, e, c))
+            .OrderBy(r => -r.Precedence)
             .ToList();
 
-        for (int i = 0; i < res.Count; i++)
-        {
-            if (res[i].Result == null)
-            {
-                continue;
-            }
-            return (res[i].Result, int.MaxValue);
-        }
+        if (res.Count == 0)
+            throw new Exception("Rule check (CardIsPlayable) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
 
-        throw new Exception("Rule check (CanDraw) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
+        return (res[0].Result, int.MaxValue);
+    }
+
+    public override RuleResult<bool> CanDraw(GameMaster gm, Entity e)
+    {
+        List<RuleResult<bool>> res = rules
+            .Select(r => r.CanDraw(gm, e))
+            .OrderBy(r => -r.Precedence)
+            .ToList();
+
+        if (res.Count == 0)
+            throw new Exception("Rule check (CanDraw) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
+
+        return (res[0].Result, int.MaxValue);
     }
 }

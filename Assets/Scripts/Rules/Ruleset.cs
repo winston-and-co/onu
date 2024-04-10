@@ -1,51 +1,75 @@
 /// <summary>
 /// Defines rules that other implementations of Ruleset can override. Returned
 /// precedence is the order in which the rules will be checked by
-/// GameRulesController. Null results are passed to the next rule/lower lower
-/// precedence.
+/// GameRulesController.
 /// <br/><br/>
 /// E.g.<br/>
 /// GameRulesController.rules contains:<br/>
 ///   ClassA.CanDraw => (true, 1)<br/>
-///   ClassB.CanDraw => (null, 3)<br/>
+///   ClassB.CanDraw => (true, -1)<br/>
 ///   ClassC.CanDraw => (false, 0)<br/>
 /// <br/>
-/// Since ClassB returned with the highest precedence, it is checked first.
-/// However, since it returned null, the next highest precedence is used
-/// (ClassA). ClassA returned true, so GameRulesController.CanDraw returns true.
+/// ClassA returned with highest precedence, so its return value is used.
 /// </summary>
 public class Ruleset
 {
-    public virtual RuleResult CardIsPlayable(GameMaster gm, Entity e, Playable c)
+    /// <summary>
+    /// Check whether a card is playable given current game state.
+    /// </summary>
+    /// <returns>
+    /// <c>RuleResult</c> whether the card is playable.
+    /// </returns>
+    public virtual RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
         return (false, -1);
     }
-    public virtual RuleResult CanDraw(GameMaster gm, Entity e)
+
+    /// <summary>
+    /// Check the cost of playing a card given current game state.
+    /// </summary>
+    /// <param name="gm"></param>
+    /// <param name="e"></param>
+    /// <param name="c"></param>
+    /// <returns>
+    /// <c>RuleResult</c> cost of card if played.
+    /// </returns>
+    public virtual RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+    {
+        return (false, -1);
+    }
+
+    /// <summary>
+    /// Check whether an entity can draw given current game state.
+    /// </summary>
+    /// <returns>
+    /// <c>RuleResult</c> whether the entity can draw.
+    /// </returns>
+    public virtual RuleResult<bool> CanDraw(GameMaster gm, Entity e)
     {
         return (false, -1);
     }
 }
 
 /// <summary>
-/// If <c>Result</c> is <c>null</c>, this <c>RuleResult</c> is ignored by the
-/// Controller.
+/// Returned by ruleset methods.
 /// <br/><br/>
 /// Precedence values:<br/>
 /// &lt; 0: Guarantees result will not be used<br/>
 /// 0 - 1000: Reserved for base game<br/>
 /// 1000+: May be used for custom rules
 /// </summary>
-public struct RuleResult
+public struct RuleResult<T>
 {
-    public bool? Result;
+    public T Result;
     public int Precedence;
 
-    public RuleResult(bool? result, int precedence)
+    public RuleResult(T result, int precedence)
     {
         Result = result;
         Precedence = precedence;
     }
 
-    public static implicit operator RuleResult((bool? b, int i) input) => new(input.b, input.i);
-    public static implicit operator bool(RuleResult r) => r.Result ?? false;
+    public static implicit operator RuleResult<T>((T b, int i) input) => new(input.b, input.i);
+    public static implicit operator RuleResult<T>((object, int i) input) => new(default, input.i);
+    public static implicit operator T(RuleResult<T> result) => result.Result;
 }

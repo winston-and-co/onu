@@ -59,6 +59,10 @@ public class Entity : MonoBehaviour
         BattleEventBus.getInstance().entityManaChangedEvent.Invoke(this, amount);
     }
 
+    /// <summary>
+    /// Draw a card.
+    /// </summary>
+    /// <returns>The card drawn or <c>null</c> if this entity cannot draw.</returns>
     public Card Draw()
     {
         if (gameRules.CanDraw(GameMaster.GetInstance(), this))

@@ -31,6 +31,6 @@ public class Playable : MonoBehaviour
 
     public virtual bool IsPlayable()
     {
-        return entity.gameRules.CardIsPlayable(GameMaster.GetInstance(), entity, this);
+        return entity.gameRules.CardIsPlayable(GameMaster.GetInstance(), entity, this).Result;
     }
 }
