@@ -38,6 +38,8 @@ public class Map : MonoBehaviour
                 connectedNodes.Add(nodeToConnect);
                 foreach (GameObject nextnode in nodesToConnectTo)
                 {
+                    nextnode.GetComponent<PlayerNode>().connectedNodes.Add(node.GetComponent<PlayerNode>());
+
                     DrawPath newpath = Instantiate(path);
                     newpath.transform.parent = pathParent.transform;
                     newpath.Draw(node, nextnode);
