@@ -22,7 +22,7 @@ public class SimpleAI : MonoBehaviour
 
     float ThinkDuration()
     {
-        return Random.Range(1.00f, 5.00f);
+        return Random.Range(1.00f, 3.00f);
     }
 
     IEnumerator DoTurn()
