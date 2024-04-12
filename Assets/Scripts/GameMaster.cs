@@ -35,7 +35,7 @@ public class GameMaster : MonoBehaviour
         else INSTANCE = this;
 
         BattleEventBus bus = BattleEventBus.getInstance();
-        bus.cardTryPlayedEvent.AddListener(OnTryPlay);
+        bus.cardTryPlayedEvent.AddListener(OnTryPlayCard);
         bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
         bus.tryEndTurnEvent.AddListener(TryEndTurn);
         bus.entityDamageEvent.AddListener(CheckVictory);
@@ -134,7 +134,7 @@ public class GameMaster : MonoBehaviour
     /*
      * Validate card being played
      */
-    void OnTryPlay(Entity e, Playable card)
+    void OnTryPlayCard(Entity e, Playable card)
     {
         if (card.IsPlayable())
         {
@@ -144,20 +144,6 @@ public class GameMaster : MonoBehaviour
         {
             BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, card);
         }
-    }
-
-    void OnTryUseActionCard(Entity e, IActionCard ac)
-    {
-        if (ac.IsUsable())
-        {
-            UseActionCard(e, ac);
-        }
-    }
-
-    void UseActionCard(Entity e, IActionCard ac)
-    {
-        ac.Use();
-        BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
     }
 
     void PlayCard(Entity e, Playable c)
@@ -199,6 +185,20 @@ public class GameMaster : MonoBehaviour
         {
             e.Refresh();
         }
+    }
+
+    void OnTryUseActionCard(Entity e, IActionCard ac)
+    {
+        if (ac.IsUsable())
+        {
+            UseActionCard(e, ac);
+        }
+    }
+
+    void UseActionCard(Entity e, IActionCard ac)
+    {
+        ac.Use();
+        BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
     }
 
     void CheckVictory(Entity e, int _)

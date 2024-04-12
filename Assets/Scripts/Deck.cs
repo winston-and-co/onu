@@ -34,9 +34,9 @@ public class Deck : MonoBehaviour
                     newCard.Value = new NullableInt { Value = value, IsNull = false };
                     newCard.Color = colors[colorIdx];
 
-                    newCard.gameObject.SetActive(false);
                     newCard.transform.SetParent(transform, false);
                     newCard.entity = e;
+                    newCard.gameObject.SetActive(false);
 
                     m_Cards.Add(newCard);
                 }

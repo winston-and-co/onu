@@ -6,40 +6,83 @@ using UnityEngine;
 
 public class CardSprite : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
-    public TextMeshPro textMeshPro;
+    [SerializeField] bool EnableMouseEvents;
+    public bool flipped;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite front;
+    [SerializeField] Sprite back;
+    [SerializeField] TextMeshPro textMeshPro;
     public Card c;
 
     protected int Order;
-
     private int lastOrder;
 
     public Vector3 enlargedScale = new Vector3(0.31f, 0.31f, 0.31f);
     public Vector3 originalScale = new Vector3(0.29f, 0.29f, 0.29f);
 
+    public void OnEnable()
+    {
+        SetupCard();
+    }
 
     public void SetupCard()
     {
-        textMeshPro.text = c.Value.ToString();
-        spriteRenderer.color = c.Color;
-        textMeshPro.color = Color.white.WithAlpha(1.0f);
-        // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
-        textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
-        textMeshPro.outlineColor = Color.black;
-        textMeshPro.outlineWidth = 0.5f;
+        if (!flipped)
+        {
+            spriteRenderer.sprite = front;
+            spriteRenderer.color = c.Color;
+            textMeshPro.text = c.Value.ToString();
+            textMeshPro.color = Color.white.WithAlpha(1.0f);
+            // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
+            textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
+            textMeshPro.outlineColor = Color.black;
+            textMeshPro.outlineWidth = 0.2f;
+        }
+        else
+        {
+            spriteRenderer.sprite = back;
+            spriteRenderer.color = Color.white;
+            textMeshPro.text = null;
+        }
+    }
+
+    public void Awake()
+    {
+        BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+    }
+
+    void OnCardPlayed(Entity _, Playable p)
+    {
+        if (p != c) return;
+        flipped = false;
+        SetupCard();
+        var rt = GetComponentsInParent<RectTransform>()[1];
+        rt.localScale = new Vector3(0.2f, 0.2f, 1.0f);
+    }
+
+    public void Flip()
+    {
+        flipped = !flipped;
+        SetupCard();
     }
 
     public void MouseEnter()
     {
-        lastOrder = spriteRenderer.sortingOrder;
-        transform.localScale = enlargedScale;
-        SetOrder(9999);
+        if (EnableMouseEvents)
+        {
+            lastOrder = spriteRenderer.sortingOrder;
+            transform.localScale = enlargedScale;
+            SetOrder(9999);
+        }
     }
 
     public void MouseLeave()
     {
-        transform.localScale = originalScale;
-        SetOrder(lastOrder);
+        if (EnableMouseEvents)
+        {
+            transform.localScale = originalScale;
+            SetOrder(lastOrder);
+        }
     }
 
     public void SetOrder(int order)
@@ -47,10 +90,5 @@ public class CardSprite : MonoBehaviour
         spriteRenderer.sortingOrder = order;
         textMeshPro.sortingOrder = order + 1;
         Order = order;
-    }
-
-    public void OnEnable()
-    {
-        SetupCard();
     }
 }

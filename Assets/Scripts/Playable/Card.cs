@@ -30,5 +30,4 @@ public class Card : Playable
     {
         spriteController.MouseLeave();
     }
-
 }
