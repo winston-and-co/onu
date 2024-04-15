@@ -1,22 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ActionCards;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
+    private static GameMaster INSTANCE;
+    public static GameMaster GetInstance() => INSTANCE;
+
     public Pile discard;
     public Entity player;
     [SerializeField] Deck playerDeck;
     [SerializeField] Hand playerHand;
+    private GameRulesController playerRules;
     public Entity enemy;
     [SerializeField] Deck enemyDeck;
     [SerializeField] Hand enemyHand;
+    private GameRulesController enemyRules;
 
     int turn = 0;
     Entity[] order;
-    Entity current_turn_entity;
+    public Entity current_turn_entity;
 
     public int turnNumber;
 
@@ -24,16 +30,24 @@ public class GameMaster : MonoBehaviour
 
     void Awake()
     {
+        // https://gamedevbeginner.com/singletons-in-unity-the-right-way/
+        if (INSTANCE != null && INSTANCE != this) Destroy(this);
+        else INSTANCE = this;
+
         BattleEventBus bus = BattleEventBus.getInstance();
-        bus.tryPlayEvent.AddListener(OnTryPlay);
+        bus.cardTryPlayedEvent.AddListener(OnTryPlayCard);
+        bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
         bus.tryEndTurnEvent.AddListener(TryEndTurn);
         bus.entityDamageEvent.AddListener(CheckVictory);
     }
 
     void Start()
     {
+        player.gameRules = new();
+        player.gameRules.Add(new RuleCards.Purple());
         player.deck = playerDeck;
         player.hand = playerHand;
+        enemy.gameRules = new();
         enemy.deck = enemyDeck;
         enemy.hand = enemyHand;
 
@@ -87,9 +101,9 @@ public class GameMaster : MonoBehaviour
         // Draw cards until you draw a playable one
         // Might change to just draw one at start of turn
         bool hasPlayable = false;
-        foreach (Card c in current_turn_entity.hand.hand)
+        foreach (Playable c in current_turn_entity.hand.hand)
         {
-            if (GameRules.getInstance().CardIsPlayable(current_turn_entity, c))
+            if (current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, c))
             {
                 hasPlayable = true;
                 break;
@@ -102,7 +116,7 @@ public class GameMaster : MonoBehaviour
             {
                 cardDrawn = current_turn_entity.Draw();
             }
-            while (!GameRules.getInstance().CardIsPlayable(current_turn_entity, cardDrawn));
+            while (!current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, cardDrawn));
         }
     }
 
@@ -120,23 +134,19 @@ public class GameMaster : MonoBehaviour
     /*
      * Validate card being played
      */
-    void OnTryPlay(Entity e, Card c)
+    void OnTryPlayCard(Entity e, Playable card)
     {
-        bool turn = IsEntityTurn(e);
-        bool playable = GameRules.getInstance().CardIsPlayable(e, c);
-
-        if (turn && playable)
+        if (card.IsPlayable())
         {
-            PlayCard(e, c);
+            PlayCard(e, card);
         }
         else
         {
-            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, c);
+            BattleEventBus.getInstance().cardIllegalEvent.Invoke(e, card);
         }
-
     }
 
-    void PlayCard(Entity e, Card c)
+    void PlayCard(Entity e, Playable c)
     {
         Entity target;
         if (e.e_name.ToLower().Equals("player"))
@@ -147,26 +157,48 @@ public class GameMaster : MonoBehaviour
         {
             target = player;
         }
+        int cost = e.gameRules.CardManaCost(this, e, c);
+        switch (discard.Peek())
+        {
+            case Card top:
+                if (c.Value.IsNull) goto default;
 
-        if (discard.Peek() != null && discard.Peek().color != c.color)
-        {
-            e.SpendMana(c.value);
+                e.SpendMana(cost);
+                if (top.Value == 0)
+                    e.Heal(c.Value.OrIfNull(0));
+                else
+                    target.Damage(c.Value.OrIfNull(0));
+
+                e.hand.RemoveCard(c);
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+                break;
+            case IActionCard:
+            case null:
+            default:
+                target.Damage(c.Value.OrIfNull(0));
+                e.hand.RemoveCard(c);
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
+                break;
         }
-        if (discard.Peek() != null && discard.Peek().value == 0)
-        {
-            e.Heal(c.value);
-        }
-        else
-        {
-            target.Damage(c.value);
-        }
-        e.hand.RemoveCard(c);
-        BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
 
         if (e.hand.GetCardCount() == 0)
         {
             e.Refresh();
         }
+    }
+
+    void OnTryUseActionCard(Entity e, IActionCard ac)
+    {
+        if (ac.IsUsable())
+        {
+            UseActionCard(e, ac);
+        }
+    }
+
+    void UseActionCard(Entity e, IActionCard ac)
+    {
+        ac.Use();
+        BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
     }
 
     void CheckVictory(Entity e, int _)

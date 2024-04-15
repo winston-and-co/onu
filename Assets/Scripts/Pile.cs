@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class Pile : MonoBehaviour
 {
-
-    private List<Card> pile;
+    private List<Playable> pile;
 
     public void OnEnable()
     {
         BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
-        pile = new List<Card>();
+        pile = new();
     }
 
-    void OnCardPlayed(Entity e, Card card)
+    void OnCardPlayed(Entity e, Playable card)
     {
         AddToTop(card);
     }
 
-    public Card Peek()
+    ///<returns>Top of pile, or <c>null</c> if empty.</returns>
+    public Playable Peek()
     {
         if (pile.Count == 0)
         {
@@ -28,7 +28,7 @@ public class Pile : MonoBehaviour
         return pile[pile.Count - 1];
     }
 
-    void AddToTop(Card card)
+    void AddToTop(Playable card)
     {
         if (pile.Count > 0)
         {

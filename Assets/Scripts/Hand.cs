@@ -6,12 +6,12 @@ using UnityEngine.Events;
 
 public class Hand : MonoBehaviour
 {
-    public List<Card> hand;
+    public List<Playable> hand;
     public Entity e;
 
     private void Awake()
     {
-        Card[] c = GetComponentsInChildren<Card>();
+        Playable[] c = GetComponentsInChildren<Playable>();
 
         for (int i = 0; i < c.Length; i++)
         {
@@ -19,19 +19,19 @@ public class Hand : MonoBehaviour
         }
     }
 
-    public void AddCard(Card c)
+    public void AddCard(Playable c)
     {
         hand.Add(c);
         c.gameObject.SetActive(true);
         c.gameObject.transform.SetParent(transform, false);
     }
 
-    public void RemoveCard(Card c)
+    public void RemoveCard(Playable c)
     {
         hand.Remove(c);
     }
 
-    public Card GetCard(int index)
+    public Playable GetCard(int index)
     {
         return hand[index];
     }
