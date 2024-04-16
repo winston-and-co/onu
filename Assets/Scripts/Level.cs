@@ -11,7 +11,7 @@ public class Level : MonoBehaviour
     public Vector2 spawnRegion;
     public float minDistance;
     public List<float> positions;
-
+    public bool startingLevelNodes;
 
     void Awake()
     {
@@ -29,6 +29,10 @@ public class Level : MonoBehaviour
 
             int index = Random.Range(0,nodeTypes.Count);
             GameObject node = Instantiate(nodeTypes[index]);
+            if (startingLevelNodes)
+            {
+                node.GetComponent<PlayerNode>().startingNode = true;
+            }
             node.transform.parent = transform;
             node.transform.position = new Vector2(node.transform.position.x + spawnOffset, transform.position.y);
             positions.Add(spawnOffset);

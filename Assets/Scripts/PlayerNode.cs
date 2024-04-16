@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerNode : MonoBehaviour
 {
+    public bool startingNode;
     public List<PlayerNode> connectedNodes = new List<PlayerNode>();
 
     void OnMouseDown()
@@ -14,11 +15,13 @@ public class PlayerNode : MonoBehaviour
         {
             FindObjectOfType<Player>().transform.position = transform.position;
             player.currentnode = this;
+            GetComponent<SceneChanger>().ChangeScene();
         }
-        if (player.currentnode == null)
+        if (player.currentnode == null && startingNode)
         {
             FindObjectOfType<Player>().transform.position = transform.position;
             player.currentnode = this;
+            GetComponent<SceneChanger>().ChangeScene();
         }
 
 

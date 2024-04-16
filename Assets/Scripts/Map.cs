@@ -8,7 +8,18 @@ public class Map : MonoBehaviour
     public Level[] levels;  
     public DrawPath path;
     public GameObject pathParent;
+    private static Map instance;
 
+    void Awake()
+    {
+        if (instance != null) { 
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);   
+    }
     void Start()
     {
         DrawPaths();
