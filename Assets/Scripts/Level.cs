@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.VFX;
 
 public class Level : MonoBehaviour
@@ -12,11 +13,14 @@ public class Level : MonoBehaviour
     public float minDistance;
     public List<float> positions;
     public bool startingLevelNodes;
+    public int minNodes = 2;
+    public int maxNodes = 3;
+    
 
     void Awake()
     {
         positions.Add(999);
-        int nodeCount = Random.Range(2,4);
+        int nodeCount = Random.Range(minNodes,maxNodes +1);
         for(int i = 0; i < nodeCount; i++)
         {
             float spawnOffset = Random.Range(spawnRegion.x, spawnRegion.y);
