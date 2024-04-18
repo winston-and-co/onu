@@ -32,21 +32,21 @@ public class Map : MonoBehaviour
         {
             Level current = levels[i];
             Level next = levels[i+1];
+            int nodesInCurrent = current.nodes.Count;
+            int nodesInNext = next.nodes.Count; 
 
             List<GameObject> connectedNodes = new List<GameObject>();
 
             foreach (GameObject node in current.nodes)
             {
                 List<GameObject> nodesToConnectTo = new List<GameObject>();
-                int tries = 10;
-                GameObject nodeToConnect = GetRandomNode(next.nodes);
-                while (connectedNodes.Contains(nodeToConnect) && tries > 0)
+                GetNode(connectedNodes, next, nodesToConnectTo);
+                
+                if (nodesInCurrent < nodesInNext)
                 {
-                    nodeToConnect = GetRandomNode(next.nodes);
-                    tries--;
+                    GetNode(connectedNodes, next, nodesToConnectTo);
                 }
-                nodesToConnectTo.Add(nodeToConnect);
-                connectedNodes.Add(nodeToConnect);
+
                 foreach (GameObject nextnode in nodesToConnectTo)
                 {
                     nextnode.GetComponent<PlayerNode>().connectedNodes.Add(node.GetComponent<PlayerNode>());
@@ -64,6 +64,18 @@ public class Map : MonoBehaviour
         return nodes[Random.Range(0, nodes.Count)];
     }
 
+    public void GetNode(List<GameObject> connectedNodes, Level next, List<GameObject> nodesToConnectTo)
+    {
+        int tries = 10;
+        GameObject nodeToConnect = GetRandomNode(next.nodes);
+        while (connectedNodes.Contains(nodeToConnect) && tries > 0)
+        {
+            nodeToConnect = GetRandomNode(next.nodes);
+            tries--;
+        }
+        nodesToConnectTo.Add(nodeToConnect);
+        connectedNodes.Add(nodeToConnect);
+    }
 
     
 }
