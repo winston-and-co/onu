@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace ActionCards
@@ -6,6 +7,7 @@ namespace ActionCards
     {
         public GameMaster GM;
         public string Name => "AC0_Wild";
+        [SerializeField] WildPrompt wildPromptPrefab;
 
         public void Start()
         {
@@ -22,34 +24,31 @@ namespace ActionCards
 
         public bool IsUsable()
         {
-            if (GM.current_turn_entity == GM.player)
+            if (GM.current_turn_entity == GM.player
+            && GM.player.gameRules.CardIsPlayable(GM, GM.player, this))
             {
-                print("ac0 playable");
                 return true;
             }
-            print("ac0 not playable");
             return false;
         }
 
         public void Use()
         {
-            Value.IsNull = true;
-            Color = CardColors.Colorless;
-
-            BattleEventBus.getInstance().cardTryPlayedEvent.Invoke(GM.player, this);
-
-            var picked = PickColor();
-            Color = picked;
+            var canvas = FindObjectOfType<Canvas>();
+            var prompt = Instantiate(wildPromptPrefab, canvas.transform, false);
+            prompt.transform.position.Set(0, 0, 0);
+            prompt.wild = this;
+            prompt.Show();
         }
 
-        public Color PickColor()
+        public void OnColorSelected(Color color)
         {
-            return CardColors.Blue;
+            BattleEventBus.getInstance().cardTryPlayedEvent.Invoke(GM.player, this);
+            Color = color;
         }
 
         public void OnMouseDown()
         {
-            // temp proof of concept
             TryUse();
         }
     }

@@ -12,7 +12,7 @@ public class CardSprite : MonoBehaviour
     [SerializeField] Sprite front;
     [SerializeField] Sprite back;
     [SerializeField] TextMeshPro textMeshPro;
-    public Card c;
+    public Playable playable;
 
     protected int Order;
     private int lastOrder;
@@ -22,6 +22,8 @@ public class CardSprite : MonoBehaviour
 
     public void OnEnable()
     {
+        if (spriteRenderer == null) throw new System.NullReferenceException();
+
         SetupCard();
     }
 
@@ -30,19 +32,25 @@ public class CardSprite : MonoBehaviour
         if (!flipped)
         {
             spriteRenderer.sprite = front;
-            spriteRenderer.color = c.Color;
-            textMeshPro.text = c.Value.ToString();
-            textMeshPro.color = Color.white.WithAlpha(1.0f);
-            // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
-            textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
-            textMeshPro.outlineColor = Color.black;
-            textMeshPro.outlineWidth = 0.2f;
+            spriteRenderer.color = playable.Color;
+            if (textMeshPro != null)
+            {
+                textMeshPro.text = playable.Value.ToString();
+                textMeshPro.color = Color.white.WithAlpha(1.0f);
+                // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
+                textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
+                textMeshPro.outlineColor = Color.black;
+                textMeshPro.outlineWidth = 0.2f;
+            }
         }
         else
         {
             spriteRenderer.sprite = back;
             spriteRenderer.color = Color.white;
-            textMeshPro.text = null;
+            if (textMeshPro != null)
+            {
+                textMeshPro.text = null;
+            }
         }
     }
 
@@ -53,7 +61,7 @@ public class CardSprite : MonoBehaviour
 
     void OnCardPlayed(Entity _, Playable p)
     {
-        if (p != c) return;
+        if (p != playable) return;
         flipped = false;
         SetupCard();
         var rt = GetComponentsInParent<RectTransform>()[1];
@@ -87,8 +95,10 @@ public class CardSprite : MonoBehaviour
 
     public void SetOrder(int order)
     {
-        spriteRenderer.sortingOrder = order;
-        textMeshPro.sortingOrder = order + 1;
+        if (spriteRenderer != null)
+            spriteRenderer.sortingOrder = order;
+        if (textMeshPro != null)
+            textMeshPro.sortingOrder = order + 1;
         Order = order;
     }
 }

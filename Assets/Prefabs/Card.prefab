@@ -279,7 +279,7 @@ MonoBehaviour:
   front: {fileID: 21300000, guid: c0d50a6ad871b744a94464a75b8a96a1, type: 3}
   back: {fileID: 21300000, guid: 4faae378ca212e344bffb4dc40fecd78, type: 3}
   textMeshPro: {fileID: 3379011113209444705}
-  c: {fileID: 8123059603341046139}
+  playable: {fileID: 8123059603341046139}
   enlargedScale: {x: 1.2, y: 1.2, z: 1}
   originalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1257537865484679012

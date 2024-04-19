@@ -118,10 +118,15 @@ public class GameMaster : MonoBehaviour
             }
             while (!current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, cardDrawn));
         }
+        else
+        {
+            current_turn_entity.Draw();
+        }
     }
 
     void TryEndTurn(Entity e)
     {
+        if (UIPopupBlocker.IsBlocked()) return;
         BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
         StartNextTurn();
     }
@@ -136,6 +141,7 @@ public class GameMaster : MonoBehaviour
      */
     void OnTryPlayCard(Entity e, Playable card)
     {
+        if (UIPopupBlocker.IsBlocked()) return;
         if (card.IsPlayable())
         {
             PlayCard(e, card);
@@ -189,6 +195,7 @@ public class GameMaster : MonoBehaviour
 
     void OnTryUseActionCard(Entity e, IActionCard ac)
     {
+        if (UIPopupBlocker.IsBlocked()) return;
         if (ac.IsUsable())
         {
             UseActionCard(e, ac);
