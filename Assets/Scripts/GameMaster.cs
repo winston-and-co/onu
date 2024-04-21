@@ -98,8 +98,10 @@ public class GameMaster : MonoBehaviour
 
         BattleEventBus.getInstance().startTurnEvent.Invoke(current_turn_entity);
 
-        // Draw cards until you draw a playable one
-        // Might change to just draw one at start of turn
+        // if your hand contains no playable cards
+        //   draw cards until you draw a playable one
+        // else
+        //   draw one card
         bool hasPlayable = false;
         foreach (Playable c in current_turn_entity.hand.hand)
         {
