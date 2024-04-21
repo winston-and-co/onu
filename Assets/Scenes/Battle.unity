@@ -282,12 +282,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deck: {fileID: 0}
   hand: {fileID: 0}
-  maxHP: 0
-  maxMana: 0
+  maxHP: 100
+  maxMana: 15
   hp: 0
   mana: 0
-  startingHandSize: 0
-  e_name: 
+  startingHandSize: 7
+  e_name: enemy
 --- !u!4 &115993121
 Transform:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cards: []
-  card_prefab: {fileID: 0}
+  card_prefab: {fileID: 2101343502564723498, guid: d812ab1f8d734d04986f7ccc7ad62b10, type: 3}
   e: {fileID: 0}
 --- !u!212 &119364461
 SpriteRenderer:
@@ -529,11 +529,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a45b9136b297e479191d6017d1d25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  discard: {fileID: 0}
-  player: {fileID: 0}
+  discard: {fileID: 437759002}
+  player: {fileID: 2128003036}
   playerDeck: {fileID: 1743229103}
   playerHand: {fileID: 182731197}
-  enemy: {fileID: 0}
+  enemy: {fileID: 115993120}
   enemyDeck: {fileID: 119364460}
   enemyHand: {fileID: 2066713730}
   current_turn_entity: {fileID: 0}
@@ -1506,7 +1506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3893b1b6d0a8cf8479afeb57487ceff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Track: 1
+  Track: 0
 --- !u!4 &791827794
 Transform:
   m_ObjectHideFlags: 0
@@ -3380,7 +3380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cards: []
-  card_prefab: {fileID: 0}
+  card_prefab: {fileID: 1257537865484679012, guid: 36a653fb2dc0d024a9de1de1db464fc7, type: 3}
   e: {fileID: 0}
 --- !u!61 &1743229104
 BoxCollider2D:
@@ -4602,12 +4602,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deck: {fileID: 0}
   hand: {fileID: 0}
-  maxHP: 0
-  maxMana: 0
+  maxHP: 60
+  maxMana: 13
   hp: 0
   mana: 0
-  startingHandSize: 0
-  e_name: 
+  startingHandSize: 7
+  e_name: player
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,18 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Map_demo.unity
+    path: Assets/Scenes/Map.unity
     guid: ce19a7a8b2ab7f34ab4923dd77230177
   - enabled: 1
-    path: Assets/Scenes/ShadyManNode.unity
+    path: Assets/Scenes/ShadyMan.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/BathroomNode.unity
+    path: Assets/Scenes/Bathroom.unity
     guid: 8ed71f5d2d0ea3046aa4d78cbd532b21
-  - enabled: 1
-    path: Assets/Scenes/CombatNode.unity
+  - enabled: 0
+    path: Assets/Scenes/TEMP_CombatNode.unity
     guid: 97480454df81aff438b44d136f8523d4
   - enabled: 1
-    path: Assets/Scenes/CrownNode.unity
+    path: Assets/Scenes/Boss.unity
     guid: 0ebf1edabe64b954ea57eda1f6eb1235
+  - enabled: 1
+    path: Assets/Scenes/Battle.unity
+    guid: 9c0bbf58a52d0614696fe55167f0cb9e
   m_configObjects: {}
