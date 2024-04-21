@@ -6,43 +6,72 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    List<Card> currentCards;
-    List<Card> discardedCards;
-    
+    [SerializeField] private List<Card> m_Cards;
+    public GameObject card_prefab;
+    public Entity e;
 
-    void Pop()
-    {    
-        throw new System.NotImplementedException();
+    public readonly Color[] colors = new Color[] {
+        CardColors.Red,
+        CardColors.Blue,
+        CardColors.Green,
+        CardColors.Yellow,
+    };
+
+    public void Awake()
+    {
+        Generate();
+        Shuffle();
     }
 
-    void Shuffle()
+    public void Generate()
     {
-        currentCards.AddRange(discardedCards);
-        discardedCards.Clear();
-        int cardCount = currentCards.Count;
-        while (cardCount > 1)
+        for (int sets = 0; sets < 2; sets++)
         {
-            cardCount--;
-            int itsPosition = Random.Range(0, cardCount + 1);
-            Card card = currentCards[itsPosition];
-            currentCards[itsPosition] = currentCards[cardCount];
-            currentCards[cardCount] = card;
+            for (int value = 0; value < 10; value++)
+            {
+                for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+                {
+                    Card newCard = Instantiate(card_prefab).GetComponent<Card>();
+                    newCard.Value = new NullableInt { Value = value, IsNull = false };
+                    newCard.Color = colors[colorIdx];
+
+                    newCard.transform.SetParent(transform, false);
+                    newCard.entity = e;
+                    newCard.gameObject.SetActive(false);
+
+                    m_Cards.Add(newCard);
+                }
+            }
         }
-        
     }
 
     public Card Draw()
     {
-        if (currentCards.Count == 0) 
-        {
-            Shuffle();
-        }
-
-        Card card = currentCards[0];
-        currentCards.RemoveAt(0);
-        return card;
-
-        
-  
+        // TODO: When no cards in deck, maybe reshuffle cards from discard pile
+        // Should probably keep track of who's cards are who's since separate
+        // decks
+        Card c = m_Cards[0];
+        m_Cards.RemoveAt(0);
+        return c;
     }
+
+    public void OnMouseDown()
+    {
+        e.Draw();
+    }
+
+    public void Shuffle()
+    {
+        System.Random rng = new System.Random();
+        int n = m_Cards.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Card value = m_Cards[k];
+            m_Cards[k] = m_Cards[n];
+            m_Cards[n] = value;
+        }
+    }
+
 }
