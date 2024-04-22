@@ -42,7 +42,7 @@ public class DrawPath : MonoBehaviour
     public Transform endObject;
     public float dotSpacing = 0.2f;
 
-    public void Draw(GameObject start, GameObject end)
+    public void Draw(MapNode start, MapNode end)
     {
         Vector3 startPosition = start.transform.position;
         Vector3 endPosition = end.transform.position;

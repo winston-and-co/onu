@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,76 +7,94 @@ using UnityEngine.SceneManagement;
 
 public class Map : MonoBehaviour
 {
-    Scene mapScene;
+    static Map Instance;
+    public static Map GetInstance() => Instance;
+
+    [SerializeField] GameObject levelPrefab;
+
     public Level[] levels;
     public DrawPath path;
     public GameObject pathParent;
 
-    void OnEnable()
+    private void Awake()
     {
-        mapScene = SceneManager.GetSceneByName("Map");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene != mapScene) return;
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        Generate();
         DrawPaths();
     }
 
-    // void Start()
-    // {
-    //     DrawPaths();
-    // }
+    public void Generate()
+    {
+        // TODO: use level prefab
+        levels[0].levelIdx = 0;
+        levels[0].Generate();
+        for (int i = 0; i < levels.Length - 1; i++)
+        {
+            Level currentLevel = levels[i];
+            Level nextLevel = levels[i + 1];
+            nextLevel.levelIdx = i + 1;
+            nextLevel.Generate();
+
+            CreateConnections(currentLevel, nextLevel);
+        }
+    }
 
     public void DrawPaths()
     {
         for (int i = 0; i < levels.Length - 1; i++)
         {
-            Level current = levels[i];
-            Level next = levels[i + 1];
-            int nodesInCurrent = current.nodes.Count;
-            int nodesInNext = next.nodes.Count;
-
-            List<GameObject> connectedNodes = new List<GameObject>();
-
-            foreach (GameObject node in current.nodes)
+            Level currentLevel = levels[i];
+            foreach (MapNode fromNode in currentLevel.nodes)
             {
-                List<GameObject> nodesToConnectTo = new List<GameObject>();
-                GetNode(connectedNodes, next, nodesToConnectTo);
-
-                if (nodesInCurrent < nodesInNext)
+                foreach (MapNode toNode in fromNode.ConnectedNodes)
                 {
-                    GetNode(connectedNodes, next, nodesToConnectTo);
-                }
-
-                foreach (GameObject nextnode in nodesToConnectTo)
-                {
-                    nextnode.GetComponent<MapNode>().connectedNodes.Add(node.GetComponent<MapNode>());
-
                     DrawPath newpath = Instantiate(path);
                     newpath.transform.parent = pathParent.transform;
-                    newpath.Draw(node, nextnode);
+                    newpath.Draw(fromNode, toNode);
                 }
             }
         }
     }
 
-    public GameObject GetRandomNode(List<GameObject> nodes)
+    MapNode GetRandomNode(List<MapNode> nodes)
     {
-        return nodes[Random.Range(0, nodes.Count)];
+        return nodes[UnityEngine.Random.Range(0, nodes.Count)];
     }
 
-    public void GetNode(List<GameObject> connectedNodes, Level next, List<GameObject> nodesToConnectTo)
+    /// <summary>
+    /// Creates connections from one level to another level.
+    /// </summary>
+    /// <param name="minConns">The minimum outdegree of a node.</param>
+    /// <param name="maxConns">The maximum outdegree of a node.</param>
+    void CreateConnections(Level from, Level to, int minConns = 1, int maxConns = 3)
     {
-        int tries = 10;
-        GameObject nodeToConnect = GetRandomNode(next.nodes);
-        while (connectedNodes.Contains(nodeToConnect) && tries > 0)
+        HashSet<MapNode> connected = new();
+
+        foreach (var node in from.nodes)
         {
-            nodeToConnect = GetRandomNode(next.nodes);
-            tries--;
+            int targetNumConnections = Math.Min(UnityEngine.Random.Range(minConns, maxConns), to.nodes.Count);
+            int n = 0;
+            while (n < targetNumConnections)
+            {
+                var target = GetRandomNode(to.nodes);
+                var added = node.AddConnection(target);
+                connected.Add(target);
+                if (added) n++;
+            }
         }
-        nodesToConnectTo.Add(nodeToConnect);
-        connectedNodes.Add(nodeToConnect);
+
+        // connect nodes that are unreachable
+        foreach (var node in to.nodes)
+        {
+            if (connected.Contains(node)) continue;
+            GetRandomNode(from.nodes).AddConnection(node);
+        }
     }
 }
