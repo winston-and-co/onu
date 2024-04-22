@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8149833857667721813}
   - component: {fileID: 3379011113209444705}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: CardText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,12 +250,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c0d50a6ad871b744a94464a75b8a96a1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90ba6b13c12beb645b1a7809cd3b4b08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.4, y: 6.8}
+  m_Size: {x: 4.51, y: 6.58}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -270,14 +270,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 989359640563724714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32c9c7e316df4244a706d86e60bea5f, type: 3}
+  m_Script: {fileID: 11500000, guid: f3bd0b4cdaa6cb444aad16c29aab019a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnableMouseEvents: 1
   flipped: 0
   spriteRenderer: {fileID: 1447437960867306658}
-  front: {fileID: 21300000, guid: c0d50a6ad871b744a94464a75b8a96a1, type: 3}
-  back: {fileID: 21300000, guid: 4faae378ca212e344bffb4dc40fecd78, type: 3}
+  front: {fileID: 21300000, guid: 90ba6b13c12beb645b1a7809cd3b4b08, type: 3}
+  back: {fileID: 21300000, guid: b5001fca2b8fea243838f0d044fd54ee, type: 3}
   textMeshPro: {fileID: 3379011113209444705}
   playable: {fileID: 8123059603341046139}
   enlargedScale: {x: 1.2, y: 1.2, z: 1}
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1257537865484679012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b589f0d96887b46b961f304524d083, type: 3}
+  m_Script: {fileID: 11500000, guid: fe189fdcb8fada04f8e19a51b569278f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Value:
