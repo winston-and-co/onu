@@ -1,26 +1,37 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
 namespace RuleCards
 {
     public class Purple : Ruleset
     {
-        public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
-        {
-            var top = gm.discard.Peek();
-            if (top != null)
-            {
-                if (top.Color == CardColors.Red && c.Color == CardColors.Blue)
-                    return (true, 10);
-                if (top.Color == CardColors.Blue && c.Color == CardColors.Red)
-                    return (true, 10);
-            }
-            return (null, -1);
-        }
+        public override string Name => "RC0_Purple";
 
-        public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+        public override RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth)
         {
-            if (CardIsPlayable(gm, e, c))
+            if (color == CardColors.Red || color == CardColors.Blue)
             {
-                return (0, 10);
+                if (target == CardColors.Red || target == CardColors.Blue)
+                    return (true, 10);
+
+                Color opp = color == CardColors.Red ? CardColors.Blue : CardColors.Red;
+
+                if (depth == e.gameRules.Rules.Count)
+                {
+                    return (target == opp, 10);
+                }
+                var otherRulesets = e.gameRules.Rules.Where((r) => r.Name != Name);
+                foreach (var r in otherRulesets)
+                {
+                    var res = r.ColorsMatch(gm, e, opp, target, depth + 1);
+                    if (res)
+                    {
+                        return (res.Result, res.Precedence + 1);
+                    }
+                }
             }
+
             return (null, -1);
         }
     }

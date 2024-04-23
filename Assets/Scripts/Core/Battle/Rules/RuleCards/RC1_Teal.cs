@@ -1,26 +1,36 @@
+using System.Linq;
+using UnityEngine;
+
 namespace RuleCards
 {
     public class Teal : Ruleset
     {
-        public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
-        {
-            var top = gm.discard.Peek();
-            if (top != null)
-            {
-                if (top.Color == CardColors.Blue && c.Color == CardColors.Green)
-                    return (true, 10);
-                if (top.Color == CardColors.Green && c.Color == CardColors.Blue)
-                    return (true, 10);
-            }
-            return (null, -1);
-        }
+        public override string Name => "RC1_Teal";
 
-        public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+        public override RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth)
         {
-            if (CardIsPlayable(gm, e, c))
+            if (color == CardColors.Blue || color == CardColors.Green)
             {
-                return (0, 10);
+                if (target == CardColors.Blue || target == CardColors.Green)
+                    return (true, 10);
+
+                Color opp = color == CardColors.Blue ? CardColors.Green : CardColors.Blue;
+
+                if (depth == e.gameRules.Rules.Count)
+                {
+                    return (target == opp, 10);
+                }
+                var otherRulesets = e.gameRules.Rules.Where((r) => r.Name != Name);
+                foreach (var r in otherRulesets)
+                {
+                    var res = r.ColorsMatch(gm, e, opp, target, depth + 1);
+                    if (res)
+                    {
+                        return (res.Result, res.Precedence + 1);
+                    }
+                }
             }
+
             return (null, -1);
         }
     }

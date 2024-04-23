@@ -47,6 +47,7 @@ public class GameMaster : MonoBehaviour
     {
         player.gameRules = new();
         player.gameRules.Add(new RuleCards.Purple());
+        player.gameRules.Add(new RuleCards.Teal());
         player.deck = playerDeck;
         player.deck.e = player;
         player.hand = playerHand;

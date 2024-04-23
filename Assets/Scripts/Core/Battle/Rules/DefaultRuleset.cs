@@ -1,5 +1,15 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class DefaultRuleset : Ruleset
 {
+    public override string Name => "DefaultRuleset";
+
+    public override RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth)
+    {
+        return (color == target, 0);
+    }
+
     public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
         if (e == null || c == null) return (false, 0);
@@ -14,7 +24,8 @@ public class DefaultRuleset : Ruleset
         // colorless cards are always playable, and you can play anything on them
         if (topCard.Color == CardColors.Colorless || c.Color == CardColors.Colorless) return (true, 0);
         // matching color
-        if (c.Color == topCard.Color) return (true, 0);
+        if (e.gameRules.ColorsMatch(gm, e, c.Color, topCard.Color))
+            return (true, 0);
         // matching value only
         if (c.Value == topCard.Value)
         {
@@ -30,7 +41,7 @@ public class DefaultRuleset : Ruleset
     public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
     {
         var topCard = gm.discard.Peek();
-        if (topCard != null && topCard.Color != c.Color)
+        if (topCard != null && !e.gameRules.ColorsMatch(gm, e, c.Color, topCard.Color))
         {
             return (c.Value, 0);
         }

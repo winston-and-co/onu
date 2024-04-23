@@ -1,29 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameRulesController : Ruleset
 {
-    private readonly List<Ruleset> rules = new() { new DefaultRuleset() };
+    private readonly HashSet<Ruleset> rules = new() { new DefaultRuleset() };
+    public HashSet<Ruleset> Rules { get => rules; }
 
-    public void Add(Ruleset ruleset)
+    public bool Add(Ruleset ruleset)
     {
-        if (!rules.Contains(ruleset))
-        {
-            rules.Add(ruleset);
-        }
+        return rules.Add(ruleset);
     }
     public bool Remove(Ruleset ruleset)
     {
         return rules.Remove(ruleset);
     }
 
+    /// <param name="depth">Unused</param>
+    public override RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth = 0)
+    {
+        var res = rules
+            .Select(r => r.ColorsMatch(gm, e, color, target, 0))
+            .OrderBy(r => -r.Precedence)
+            .ToList();
+
+        if (res.Count == 0)
+            throw new Exception("Rule check (ColorsMatch) had no valid result. Is GameRulesController.rules missing DefaultRuleset?");
+
+        return (res[0].Result, int.MaxValue);
+    }
+
     public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
-        List<RuleResult<bool>> res = rules
+        var res = rules
             .Select(r => r.CardIsPlayable(gm, e, c))
             .OrderBy(r => -r.Precedence)
             .ToList();
@@ -36,7 +48,7 @@ public class GameRulesController : Ruleset
 
     public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
     {
-        List<RuleResult<int>> res = rules
+        var res = rules
             .Select(r => r.CardManaCost(gm, e, c))
             .OrderBy(r => -r.Precedence)
             .ToList();
@@ -49,7 +61,7 @@ public class GameRulesController : Ruleset
 
     public override RuleResult<bool> CanDraw(GameMaster gm, Entity e)
     {
-        List<RuleResult<bool>> res = rules
+        var res = rules
             .Select(r => r.CanDraw(gm, e))
             .OrderBy(r => -r.Precedence)
             .ToList();

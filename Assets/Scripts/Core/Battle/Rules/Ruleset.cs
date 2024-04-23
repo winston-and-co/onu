@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 /// <summary>
 /// Defines rules that other implementations of Ruleset can override. Returned
 /// precedence is the order in which the rules will be checked by
@@ -13,6 +16,17 @@
 /// </summary>
 public class Ruleset
 {
+    public virtual string Name { get; }
+
+    /// <summary>
+    /// Check whether a card's color matches a target color;
+    /// </summary>
+    /// <returns></returns>
+    public virtual RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth)
+    {
+        return (default, -1);
+    }
+
     /// <summary>
     /// Check whether a card is playable given current game state.
     /// </summary>
@@ -21,7 +35,7 @@ public class Ruleset
     /// </returns>
     public virtual RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
-        return (false, -1);
+        return (default, -1);
     }
 
     /// <summary>
@@ -35,7 +49,7 @@ public class Ruleset
     /// </returns>
     public virtual RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
     {
-        return (false, -1);
+        return (default, -1);
     }
 
     /// <summary>
@@ -46,7 +60,7 @@ public class Ruleset
     /// </returns>
     public virtual RuleResult<bool> CanDraw(GameMaster gm, Entity e)
     {
-        return (false, -1);
+        return (default, -1);
     }
 }
 

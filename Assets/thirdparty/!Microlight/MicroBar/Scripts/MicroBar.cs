@@ -15,11 +15,13 @@ using UnityEditor;
 // Health bar uses width parameter to display HP amount in SpriteRenderers
 // and fillAmount parameter to display HP amount in Images
 // ****************************************************************************************************
-namespace Microlight.MicroBar {
+namespace Microlight.MicroBar
+{
     enum HealthBarType { SpriteRenderer, Image }
 
     [ExecuteInEditMode]
-    public class MicroBar : MonoBehaviour {
+    public class MicroBar : MonoBehaviour
+    {
         //Type
         [SerializeField] HealthBarType _barType;
 
@@ -89,10 +91,12 @@ namespace Microlight.MicroBar {
         bool _isDamage = true;   // Is current animation damage or heal
         float _value = 1f;   // Current value of HP
         float _maxValue = 1f;   // Max value of HP
-        float MaxValue {
+        float MaxValue
+        {
             get => _maxValue;
-            set {
-                if(value < 1f) _maxValue = 1;
+            set
+            {
+                if (value < 1f) _maxValue = 1;
                 else _maxValue = value;
             }
         }
@@ -120,7 +124,8 @@ namespace Microlight.MicroBar {
         /// Initializes health bar with max value
         /// </summary>
         /// <param name="maxValue">Max value</param>
-        public void Initialize(float maxValue) {
+        public void Initialize(float maxValue)
+        {
             _isInitalized = true;
             MaxValue = maxValue;
             _value = MaxValue;
@@ -131,7 +136,8 @@ namespace Microlight.MicroBar {
         /// Updates max value of health bar
         /// </summary>
         /// <param name="maxValue">Max health value</param>
-        public void SetMaxHealth(float maxValue) {
+        public void SetMaxHealth(float maxValue)
+        {
             MaxValue = maxValue;
             UpdateHealthBar(maxValue, true);
         }
@@ -141,28 +147,31 @@ namespace Microlight.MicroBar {
         /// </summary>
         /// <param name="value">Value of HP</param>
         /// <param name="disableAnimate">If true, disables animation regardless of options and just updates bar</param>
-        public void UpdateHealthBar(float value, bool disableAnimate = false) {
-            if(!_isInitalized) Debug.LogWarning("Health bar has not been initalized.");   // Warn if bar has not been initialized        
+        public void UpdateHealthBar(float value, bool disableAnimate = false)
+        {
+            if (!_isInitalized) Debug.LogWarning("Health bar has not been initalized.");   // Warn if bar has not been initialized        
             _value = Mathf.Clamp(value, 0f, MaxValue);   // Set values for health bar, without going over max or below min
             _change = _fillAmount;   // Store for further calculation of change
             _fillAmount = _value / MaxValue;   // At which % does bar needs to be with new value
             _change = Mathf.Abs(_change - _fillAmount);   // Calculate how much bar has moved
 
             // If bar is not animated
-            if(!_isAnimated || disableAnimate || (_animationTriggerThreshold / 100) > _change) {
+            if (!_isAnimated || disableAnimate || (_animationTriggerThreshold / 100) > _change)
+            {
                 SetBarValue();
                 SetGhostBarValue();
             }
-            else {   // Else animate it
+            else
+            {   // Else animate it
                 KillTweens();   // Stop any current animations
 
                 // Is animation for damage or heal
                 float currentValue = (_barType == HealthBarType.SpriteRenderer) ? _srPrimaryBar.size.x : _uiPrimaryBar.fillAmount;
                 _isDamage = currentValue > _fillAmount;
 
-                if(_useGhostBar) PrepareGhostBars();   // If using ghost bars, one of the bars needs to be set instantly
+                if (_useGhostBar) PrepareGhostBars();   // If using ghost bars, one of the bars needs to be set instantly
 
-                if(_isDamage && _damageShake) DamageShake();   // Shake is played before fill animation if its damage
+                if (_isDamage && _damageShake) DamageShake();   // Shake is played before fill animation if its damage
                 else FillHealthBar();   // Else animate health bar 
             }
         }
@@ -172,46 +181,55 @@ namespace Microlight.MicroBar {
         /// </summary>
         /// <param name="fadeIn">True if fades in, False if fades out</param>
         /// <param name="duration">Over what time</param>
-        public void FadeBar(bool fadeIn, float duration) {
-            if(!_isInitalized) Debug.LogWarning("Health bar has not been initalized.");
+        public void FadeBar(bool fadeIn, float duration)
+        {
+            if (!_isInitalized) Debug.LogWarning("Health bar has not been initalized.");
             float backgroundFadeTo = fadeIn ? _backgroundBarColor.a : 0f;
             float barFadeTo = fadeIn ? 1f : 0f;
             float ghostFadeTo = fadeIn ? _ghostBarAlpha : 0f;
 
-            if(_barType == HealthBarType.SpriteRenderer) {   // SpriteRenderer
-                if(duration <= 0f) {   // If just want to set alpha
+            if (_barType == HealthBarType.SpriteRenderer)
+            {   // SpriteRenderer
+                if (duration <= 0f)
+                {   // If just want to set alpha
                     SetAlpha(_srBackground, backgroundFadeTo);
                     SetAlpha(_srPrimaryBar, barFadeTo);
-                    if(_srGhostBar != null) SetAlpha(_srGhostBar, ghostFadeTo);
+                    if (_srGhostBar != null) SetAlpha(_srGhostBar, ghostFadeTo);
                 }
-                else {
+                else
+                {
                     AnimatedHealthBars.Add(this);   // Background bar
                     BackgroundFadeTween = _srBackground.DOFade(backgroundFadeTo, duration)
                         .OnComplete(CompleteAnimation);
                     AnimatedHealthBars.Add(this);   // Primary bar
                     BarFadeTween = _srPrimaryBar.DOFade(barFadeTo, duration)
                         .OnComplete(CompleteAnimation);
-                    if(_useGhostBar) {   // Ghost bar
+                    if (_useGhostBar)
+                    {   // Ghost bar
                         AnimatedHealthBars.Add(this);
                         GhostBarFadeTween = _srGhostBar.DOFade(ghostFadeTo, duration)
                             .OnComplete(CompleteAnimation);
                     }
                 }
             }
-            else {   // UI
-                if(duration <= 0f) {   // If just want to set alpha
+            else
+            {   // UI
+                if (duration <= 0f)
+                {   // If just want to set alpha
                     SetAlpha(_uiBackground, backgroundFadeTo);
                     SetAlpha(_uiPrimaryBar, barFadeTo);
-                    if(_uiGhostBar != null) SetAlpha(_uiGhostBar, ghostFadeTo);
+                    if (_uiGhostBar != null) SetAlpha(_uiGhostBar, ghostFadeTo);
                 }
-                else {
+                else
+                {
                     AnimatedHealthBars.Add(this);   // Background bar
                     BackgroundFadeTween = _uiBackground.DOFade(backgroundFadeTo, duration)
                         .OnComplete(CompleteAnimation);
                     AnimatedHealthBars.Add(this);   // Primary bar
                     BarFadeTween = _uiPrimaryBar.DOFade(barFadeTo, duration)
                         .OnComplete(CompleteAnimation);
-                    if(_useGhostBar) {   // Ghost bar
+                    if (_useGhostBar)
+                    {   // Ghost bar
                         AnimatedHealthBars.Add(this);
                         GhostBarFadeTween = _uiGhostBar.DOFade(ghostFadeTo, duration)
                             .OnComplete(CompleteAnimation);
@@ -219,15 +237,18 @@ namespace Microlight.MicroBar {
                 }
             }
 
-            void CompleteAnimation() {
+            void CompleteAnimation()
+            {
                 AnimatedHealthBars.Remove(this);
-                if(fadeIn) {
+                if (fadeIn)
+                {
                     OnFadeIn?.Invoke(this);
-                    if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                    if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                 }
-                else {
+                else
+                {
                     OnFadeOut?.Invoke(this);
-                    if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                    if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                 }
             }
         }
@@ -241,7 +262,8 @@ namespace Microlight.MicroBar {
         /// <param name="adaptiveAmount">Pass value less than 0 to use default value.</param>
         /// <param name="adaptiveIntensity">Pass value less than 0 to use default value.</param>
         /// <param name="adaptiveDuration">Pass value less than 0 to use default value.</param>
-        public MicroBar OverrideShake(float adaptiveAmount, int adaptiveIntensity, float adaptiveDuration) {
+        public MicroBar OverrideShake(float adaptiveAmount, int adaptiveIntensity, float adaptiveDuration)
+        {
             _overrideShakeAmount = adaptiveAmount;
             _overrideShakeIntensity = adaptiveIntensity;
             _overrideShakeDuration = adaptiveDuration;
@@ -255,7 +277,8 @@ namespace Microlight.MicroBar {
         /// Has no effect on adaptive heal scale
         /// </summary>
         /// <param name="adaptiveAmount">Pass value less than 0 to use default value.</param>
-        public MicroBar OverrideHealScale(float adaptiveAmount) {
+        public MicroBar OverrideHealScale(float adaptiveAmount)
+        {
             _overrideHealScaleAmount = adaptiveAmount;
             return this;
         }
@@ -263,225 +286,265 @@ namespace Microlight.MicroBar {
 
         #region Local
         // Clean up upon disabling or destroying object
-        private void OnDisable() {
+        private void OnDisable()
+        {
             KillTweens();
         }
 
         // At start sort some values
-        private void Awake() {
+        private void Awake()
+        {
             // Hide ghost bars if not using ghost bar
-            if(!_useGhostBar) {
-                if(_srGhostBar != null) _srGhostBar.gameObject.SetActive(false);
-                if(_uiGhostBar != null) _uiGhostBar.gameObject.SetActive(false);
+            if (!_useGhostBar)
+            {
+                if (_srGhostBar != null) _srGhostBar.gameObject.SetActive(false);
+                if (_uiGhostBar != null) _uiGhostBar.gameObject.SetActive(false);
             }
 
             // Store background bar colors and check if all SpriteRenderers/Images are referenced
-            if(_barType == HealthBarType.SpriteRenderer) {   // SpriteRenderer
-                if(_srBackground != null) _backgroundBarColor = _srBackground.color;   // Store background bar color
+            if (_barType == HealthBarType.SpriteRenderer)
+            {   // SpriteRenderer
+                if (_srBackground != null) _backgroundBarColor = _srBackground.color;   // Store background bar color
                 else Debug.LogWarning("SpriteRenderer for Background Bar missing!");
-                if(_srPrimaryBar == null) Debug.LogWarning("SpriteRenderer for Bar missing!");
-                if(_useGhostBar && _srGhostBar == null) Debug.LogWarning("SpriteRenderer for GhostBar missing!");
+                if (_srPrimaryBar == null) Debug.LogWarning("SpriteRenderer for Bar missing!");
+                if (_useGhostBar && _srGhostBar == null) Debug.LogWarning("SpriteRenderer for GhostBar missing!");
             }
-            else {
-                if(_uiBackground != null) _backgroundBarColor = _uiBackground.color;   // Store background bar color
+            else
+            {
+                if (_uiBackground != null) _backgroundBarColor = _uiBackground.color;   // Store background bar color
                 else Debug.LogWarning("Image for Background Bar missing!");
-                if(_uiPrimaryBar == null) Debug.LogWarning("Image for Bar missing!");
-                if(_useGhostBar && _uiGhostBar == null) Debug.LogWarning("Image for GhostBar missing!");
+                if (_uiPrimaryBar == null) Debug.LogWarning("Image for Bar missing!");
+                if (_useGhostBar && _uiGhostBar == null) Debug.LogWarning("Image for GhostBar missing!");
             }
 
             SetBarsColor();   // Sets appropriate color for each bar
         }
 
         // Sets primary bar based on values
-        void SetBarValue() {
-            if(_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.size = new Vector2(_fillAmount, 1f);   // Sets bar value
+        void SetBarValue()
+        {
+            if (_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.size = new Vector2(_fillAmount, 1f);   // Sets bar value
             else _uiPrimaryBar.fillAmount = _fillAmount;
             SetBarsColor();
         }
 
         // Sets ghost bar based on values
-        void SetGhostBarValue() {
-            if(_barType == HealthBarType.SpriteRenderer) _srGhostBar.size = new Vector2(_fillAmount, 1f);   // Sets bar value
+        void SetGhostBarValue()
+        {
+            if (_barType == HealthBarType.SpriteRenderer) _srGhostBar.size = new Vector2(_fillAmount, 1f);   // Sets bar value
             else _uiGhostBar.fillAmount = _fillAmount;
             SetBarsColor();
         }
 
         // Updates bars colors based on settings
-        void SetBarsColor() {
-            if(_adaptiveColor) {   // If using adaptive colors
-                if(_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.color = Color.Lerp(_barAdaptiveColor, _barPrimaryColor, _srPrimaryBar.size.x);
+        void SetBarsColor()
+        {
+            if (_adaptiveColor)
+            {   // If using adaptive colors
+                if (_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.color = Color.Lerp(_barAdaptiveColor, _barPrimaryColor, _srPrimaryBar.size.x);
                 else _uiPrimaryBar.color = Color.Lerp(_barAdaptiveColor, _barPrimaryColor, _uiPrimaryBar.fillAmount);
             }
-            else if(_flashingLowHealth) {
+            else if (_flashingLowHealth)
+            {
                 bool lowHealth = (_value / MaxValue) * 100 <= _lowHealthThreshold;   // Is health considered low
 
-                if(_barType == HealthBarType.SpriteRenderer) {
-                    if(lowHealth && (!BarFlashingColorTween.IsActive())) {
+                if (_barType == HealthBarType.SpriteRenderer)
+                {
+                    if (lowHealth && (!BarFlashingColorTween.IsActive()))
+                    {
                         BarFlashingColorTween = DOTween.Sequence();
                         BarFlashingColorTween.Append(_srPrimaryBar.DOColor(_barFlashingColor, _flashToTime));
                         BarFlashingColorTween.Append(_srPrimaryBar.DOColor(_barPrimaryColor, _flashFromTime));
                         BarFlashingColorTween.SetLoops(-1);
                         BarFlashingColorTween.Play();
                     }
-                    else if(!lowHealth) {
-                        if(BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
+                    else if (!lowHealth)
+                    {
+                        if (BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
                         _srPrimaryBar.color = _barPrimaryColor;
                     }
                 }
-                else {
-                    if(lowHealth && (!BarFlashingColorTween.IsActive())) {
+                else
+                {
+                    if (lowHealth && (!BarFlashingColorTween.IsActive()))
+                    {
                         BarFlashingColorTween = DOTween.Sequence();
                         BarFlashingColorTween.Append(_uiPrimaryBar.DOColor(_barFlashingColor, _flashToTime));
                         BarFlashingColorTween.Append(_uiPrimaryBar.DOColor(_barPrimaryColor, _flashFromTime));
                         BarFlashingColorTween.SetLoops(-1);
                         BarFlashingColorTween.Play();
                     }
-                    else if(!lowHealth) {
-                        if(BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
+                    else if (!lowHealth)
+                    {
+                        if (BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
                         _uiPrimaryBar.color = _barPrimaryColor;
                     }
                 }
             }
-            else {
+            else
+            {
                 // Primary bar
-                if(_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.color = _barPrimaryColor;
+                if (_barType == HealthBarType.SpriteRenderer) _srPrimaryBar.color = _barPrimaryColor;
                 else _uiPrimaryBar.color = _barPrimaryColor;
             }
 
             // Ghost bars
-            if(_barType == HealthBarType.SpriteRenderer) {
-                if(!_dualGhostBars) _srGhostBar.color = _barGhostHurtColor;
-                else if(_isDamage) _srGhostBar.color = _barGhostHurtColor;
+            if (_barType == HealthBarType.SpriteRenderer)
+            {
+                if (!_dualGhostBars) _srGhostBar.color = _barGhostHurtColor;
+                else if (_isDamage) _srGhostBar.color = _barGhostHurtColor;
                 else _srGhostBar.color = _barGhostHealColor;
                 SetAlpha(_srGhostBar, _ghostBarAlpha);   // Update bar alpha
             }
-            else {
-                if(!_dualGhostBars) _uiGhostBar.color = _barGhostHurtColor;
-                else if(_isDamage) _uiGhostBar.color = _barGhostHurtColor;
+            else
+            {
+                if (!_dualGhostBars) _uiGhostBar.color = _barGhostHurtColor;
+                else if (_isDamage) _uiGhostBar.color = _barGhostHurtColor;
                 else _uiGhostBar.color = _barGhostHealColor;
                 SetAlpha(_uiGhostBar, _ghostBarAlpha);
             }
         }
 
         // If using ghost bars, sets ghost bars to prepare for animation
-        void PrepareGhostBars() {
+        void PrepareGhostBars()
+        {
             // If its damage, primary bar is moved and ghost bar is animated else ghost bar is moved and primary bar is animated
-            if(_isDamage) SetBarValue();   // Sets primary bar to current value
+            if (_isDamage) SetBarValue();   // Sets primary bar to current value
             else SetGhostBarValue();   // Sets ghost bar to current value
         }
         #endregion
 
         #region Animations
         // Animates health bar to desired value
-        void FillHealthBar() {
+        void FillHealthBar()
+        {
             float delay = _isDamage ? _damageFillDelay : _healFillDelay;   // Decide delay
 
-            if(_barType == HealthBarType.SpriteRenderer) {   // SpriteRenderer
+            if (_barType == HealthBarType.SpriteRenderer)
+            {   // SpriteRenderer
                 float currentValue;   // Used for tweening SpriteRenderer.size.x
-                if(_isDamage && _useGhostBar) {   // If animating damage and ghost bar, then ghost bar is animated, and only then
+                if (_isDamage && _useGhostBar)
+                {   // If animating damage and ghost bar, then ghost bar is animated, and only then
                     AnimatedHealthBars.Add(this);
                     currentValue = _srGhostBar.size.x;
                     BarTween = DOTween.To(() => currentValue, x => currentValue = x, _fillAmount, _barFillDuration)
                         .SetDelay(delay)
                         .SetEase(Ease.OutQuart)
-                        .OnUpdate(() => {
+                        .OnUpdate(() =>
+                        {
                             _srGhostBar.size = new Vector2(currentValue, 1f);
-                            if(_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
+                            if (_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
                         })
-                        .OnComplete(() => {
+                        .OnComplete(() =>
+                        {
                             SetGhostBarValue();   // Finishes ghost bar position
                             AnimatedHealthBars.Remove(this);
                             OnBarFillEnd?.Invoke(this);
-                            if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                            if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                         });
                 }
-                else {   // This can be damage or heal but can't be ghost bar
+                else
+                {   // This can be damage or heal but can't be ghost bar
                     AnimatedHealthBars.Add(this);
-                    if(_healScale && !_isDamage) HealScale();   // If need to play heal scale animation
+                    if (_healScale && !_isDamage) HealScale();   // If need to play heal scale animation
                     currentValue = _srPrimaryBar.size.x;
                     BarTween = DOTween.To(() => currentValue, x => currentValue = x, _fillAmount, _barFillDuration)
                         .SetDelay(delay)
                         .SetEase(Ease.OutQuart)
-                        .OnUpdate(() => {
+                        .OnUpdate(() =>
+                        {
                             _srPrimaryBar.size = new Vector2(currentValue, 1f);
-                            if(_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
+                            if (_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
                         })
-                        .OnComplete(() => {
+                        .OnComplete(() =>
+                        {
                             SetBarValue();   // Finishes bar position
                             AnimatedHealthBars.Remove(this);
                             OnBarFillEnd?.Invoke(this);
-                            if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                            if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                         });
                 }
             }
-            else {   // UI
-                if(_isDamage && _useGhostBar) {   // If animating damage and ghost bar, then ghost bar is animated, and only then
+            else
+            {   // UI
+                if (_isDamage && _useGhostBar)
+                {   // If animating damage and ghost bar, then ghost bar is animated, and only then
                     AnimatedHealthBars.Add(this);
                     BarTween = _uiGhostBar.DOFillAmount(_fillAmount, _barFillDuration)
                         .SetDelay(delay)
                         .SetEase(Ease.OutQuart)
-                        .OnUpdate(() => {
-                            if(_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
+                        .OnUpdate(() =>
+                        {
+                            if (_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
                         })
-                        .OnComplete(() => {
+                        .OnComplete(() =>
+                        {
                             SetGhostBarValue();   // Finishes bar position
                             AnimatedHealthBars.Remove(this);
                             OnBarFillEnd?.Invoke(this);
-                            if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                            if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                         });
                 }
-                else {   // This can be damage or heal but can't be ghost bar
+                else
+                {   // This can be damage or heal but can't be ghost bar
                     AnimatedHealthBars.Add(this);
-                    if(_healScale && !_isDamage) HealScale();   // If need to play heal scale animation
+                    if (_healScale && !_isDamage) HealScale();   // If need to play heal scale animation
                     BarTween = _uiPrimaryBar.DOFillAmount(_fillAmount, _barFillDuration)
                         .SetDelay(delay)
                         .SetEase(Ease.OutQuart)
-                        .OnUpdate(() => {
-                            if(_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
+                        .OnUpdate(() =>
+                        {
+                            if (_adaptiveColor) SetBarsColor();   // Update color if using adaptive colors
                         })
-                        .OnComplete(() => {
+                        .OnComplete(() =>
+                        {
                             SetBarValue();   // Finishes bar position
                             AnimatedHealthBars.Remove(this);
                             OnBarFillEnd?.Invoke(this);
-                            if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                            if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                         });
                 }
             }
         }
 
-        void DamageShake() {
-            if(!_damageShake) return;   // Don't shake if option is disabled
+        void DamageShake()
+        {
+            if (!_damageShake) return;   // Don't shake if option is disabled
 
             // Override settings
             float shakeAmount = _overrideShakeAmount < 0f ? _damageShakeAmount : _overrideShakeAmount;
             int shakeIntensity = _overrideShakeIntensity < 0f ? _damageShakeIntensity : _overrideShakeIntensity;
             float shakeDuration = _overrideShakeDuration < 0f ? _damageShakeDuration : _overrideShakeDuration;
 
-            if(_adaptiveDamageShake) CalculateAdaptiveDamageShake();   // If using adaptive damage shake
+            if (_adaptiveDamageShake) CalculateAdaptiveDamageShake();   // If using adaptive damage shake
 
             // Shake
-            if(_barType == HealthBarType.SpriteRenderer) {
+            if (_barType == HealthBarType.SpriteRenderer)
+            {
                 Transform barTransform = _srPrimaryBar.GetComponent<Transform>();
                 AnimatedHealthBars.Add(this);
                 ShakeTween = barTransform.DOShakePosition(shakeDuration, new Vector3(1f, .5f, 0f) * shakeAmount, shakeIntensity)
-                    .OnComplete(() => {
+                    .OnComplete(() =>
+                    {
                         barTransform.localPosition = Vector3.zero;   // Reset position
                         AnimatedHealthBars.Remove(this);
                         FillHealthBar();   // Health bar needs to be animated after shake
                         OnShakeEnd?.Invoke(this);
-                        if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                        if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                     });
             }
-            else {
+            else
+            {
                 RectTransform barRectTransform = _uiPrimaryBar.GetComponent<RectTransform>();
                 AnimatedHealthBars.Add(this);
                 ShakeTween = barRectTransform.DOShakeScale(shakeDuration, shakeAmount, shakeIntensity)
-                    .OnComplete(() => {
+                    .OnComplete(() =>
+                    {
                         barRectTransform.localScale = Vector3.one;   // Reset position
                         AnimatedHealthBars.Remove(this);
                         FillHealthBar();   // Health bar needs to be animated after shake
                         OnShakeEnd?.Invoke(this);
-                        if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                        if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                     });
             }
 
@@ -491,7 +554,8 @@ namespace Microlight.MicroBar {
             _overrideShakeDuration = -1f;
 
             #region Utility
-            void CalculateAdaptiveDamageShake() {   // Calculation for adaptive shake
+            void CalculateAdaptiveDamageShake()
+            {   // Calculation for adaptive shake
                 shakeAmount = Mathf.Lerp(_adaptiveShakeAmount.x, _adaptiveShakeAmount.y, Mathf.Clamp(_change / _adaptiveShakeThreshold, 0f, 1f));
                 shakeIntensity = (int)Mathf.Lerp(_adaptiveShakeIntensity.x, _adaptiveShakeIntensity.y, Mathf.Clamp(_change / _adaptiveShakeThreshold, 0f, 1f));
                 shakeDuration = _damageShakeDuration;
@@ -499,37 +563,42 @@ namespace Microlight.MicroBar {
             #endregion
         }
 
-        void HealScale() {
-            if(!_healScale) return;   // Don't scale if option is disabled
+        void HealScale()
+        {
+            if (!_healScale) return;   // Don't scale if option is disabled
 
             // Override settings
             float scaleAmount = _overrideHealScaleAmount < 0f ? _healScaleAmount : _overrideHealScaleAmount;
 
-            if(_adaptiveHealScale) CalculateAdaptiveHealScale();   // If using adaptive heal scale
+            if (_adaptiveHealScale) CalculateAdaptiveHealScale();   // If using adaptive heal scale
 
             // Scale
-            if(_barType == HealthBarType.SpriteRenderer) {
+            if (_barType == HealthBarType.SpriteRenderer)
+            {
                 Transform barTransform = _srPrimaryBar.GetComponent<Transform>();
                 barTransform.localScale = Vector3.one;   // Reset scale
                 AnimatedHealthBars.Add(this);
                 HealTween = barTransform.DOScaleY(scaleAmount, _barFillDuration)
-                    .OnComplete(() => {
+                    .OnComplete(() =>
+                    {
                         barTransform.localScale = Vector3.one;   // Reset scale
                         AnimatedHealthBars.Remove(this);
                         OnScaleEnd?.Invoke(this);
-                        if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                        if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                     });
             }
-            else {
+            else
+            {
                 RectTransform barRectTransform = _uiPrimaryBar.GetComponent<RectTransform>();
                 barRectTransform.localScale = Vector3.one;   // Reset scale
                 AnimatedHealthBars.Add(this);
                 HealTween = barRectTransform.DOScaleY(scaleAmount, _barFillDuration)
-                    .OnComplete(() => {
+                    .OnComplete(() =>
+                    {
                         barRectTransform.localScale = Vector3.one;   // Reset scale
                         AnimatedHealthBars.Remove(this);
                         OnScaleEnd?.Invoke(this);
-                        if(!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
+                        if (!AnimatedHealthBars.Contains(this)) OnAnimationEnd?.Invoke(this);
                     });
             }
 
@@ -537,38 +606,43 @@ namespace Microlight.MicroBar {
             _overrideHealScaleAmount = -1f;
 
             #region Utility
-            void CalculateAdaptiveHealScale() {   // Calculation for adaptive shake
+            void CalculateAdaptiveHealScale()
+            {   // Calculation for adaptive shake
                 scaleAmount = Mathf.Lerp(_adaptiveHealScaleAmount.x, _adaptiveHealScaleAmount.y, Mathf.Clamp(_change / _adaptiveHealScaleThreshold, 0f, 1f));
             }
             #endregion
         }
 
-        void KillTweens() {
-            if(BarTween != null && BarTween.IsActive()) BarTween.Kill();   // Kills tween if already playing
-            if(BarFlashingColorTween != null && BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
-            if(ShakeTween != null && ShakeTween.IsActive()) ShakeTween.Kill();
-            if(HealTween != null && HealTween.IsActive()) HealTween.Kill();
-            if(BackgroundFadeTween != null && BackgroundFadeTween.IsActive()) BackgroundFadeTween.Kill();
-            if(BarFadeTween != null && BarFadeTween.IsActive()) BarFadeTween.Kill();
-            if(GhostBarFadeTween != null && GhostBarFadeTween.IsActive()) GhostBarFadeTween.Kill();
+        void KillTweens()
+        {
+            if (BarTween != null && BarTween.IsActive()) BarTween.Kill();   // Kills tween if already playing
+            if (BarFlashingColorTween != null && BarFlashingColorTween.IsActive()) BarFlashingColorTween.Kill();
+            if (ShakeTween != null && ShakeTween.IsActive()) ShakeTween.Kill();
+            if (HealTween != null && HealTween.IsActive()) HealTween.Kill();
+            if (BackgroundFadeTween != null && BackgroundFadeTween.IsActive()) BackgroundFadeTween.Kill();
+            if (BarFadeTween != null && BarFadeTween.IsActive()) BarFadeTween.Kill();
+            if (GhostBarFadeTween != null && GhostBarFadeTween.IsActive()) GhostBarFadeTween.Kill();
             ResetScaleAndPosition();
         }
 
-        void ResetScaleAndPosition() {
-            if(_srPrimaryBar != null) _srPrimaryBar.GetComponent<Transform>().localPosition = Vector3.zero;
-            if(_srPrimaryBar != null) _srPrimaryBar.GetComponent<Transform>().localScale = Vector3.one;
-            if(_uiPrimaryBar != null) _uiPrimaryBar.GetComponent<RectTransform>().localScale = Vector3.one;
+        void ResetScaleAndPosition()
+        {
+            if (_srPrimaryBar != null) _srPrimaryBar.GetComponent<Transform>().localPosition = Vector3.zero;
+            if (_srPrimaryBar != null) _srPrimaryBar.GetComponent<Transform>().localScale = Vector3.one;
+            if (_uiPrimaryBar != null) _uiPrimaryBar.GetComponent<RectTransform>().localScale = Vector3.one;
         }
         #endregion
 
         #region Utility
         // Sets alpha value of color
-        void SetAlpha(Image image, float value) {
+        void SetAlpha(Image image, float value)
+        {
             Color color = image.color;
             color.a = value;
             image.color = color;
         }
-        void SetAlpha(SpriteRenderer renderer, float value) {
+        void SetAlpha(SpriteRenderer renderer, float value)
+        {
             Color color = renderer.color;
             color.a = value;
             renderer.color = color;
@@ -577,33 +651,38 @@ namespace Microlight.MicroBar {
 
 #if UNITY_EDITOR
         [MenuItem("GameObject/Microlight/SpriteRenderer Health Bar")]
-        private static void AddSpriteRendererHealthBar() {
+        private static void AddSpriteRendererHealthBar()
+        {
             // Get prefab
             GameObject go = MicroBarAssetUtilities.GetPrefab("SpriteRendererMicroBar");
-            if(go == null) return;
+            if (go == null) return;
 
             go = Instantiate(go);   // Instantiate
             go.name = "HealthBar";   // Change name
-            if(Selection.activeGameObject != null) {   // Make child if some object is selected
+            if (Selection.activeGameObject != null)
+            {   // Make child if some object is selected
                 go.transform.SetParent(Selection.activeGameObject.transform);
             }
         }
 
         [MenuItem("GameObject/Microlight/UI Image Health Bar")]
-        private static void AddImageHealthBar() {
+        private static void AddImageHealthBar()
+        {
             // Get prefab
             GameObject go = MicroBarAssetUtilities.GetPrefab("UIImageMicroBar");
-            if(go == null) return;
+            if (go == null) return;
 
             go = Instantiate(go);   // Instantiate
             go.name = "HealthBar";   // Change name
-            if(Selection.activeGameObject != null) {   // Make child if some object is selected
+            if (Selection.activeGameObject != null)
+            {   // Make child if some object is selected
                 go.transform.SetParent(Selection.activeGameObject.transform, false);
             }
         }
 
         [MenuItem("GameObject/Microlight/UI Image Health Bar", true)]
-        private static bool AddImageHealthBar_Validate() {
+        private static bool AddImageHealthBar_Validate()
+        {
             return Selection.activeGameObject && Selection.activeGameObject.GetComponentInParent<Canvas>();
         }
 #endif
@@ -615,14 +694,16 @@ namespace Microlight.MicroBar {
     // Custom editor for MicroBar. Used only for editor
     // ****************************************************************************************************
     [CustomEditor(typeof(MicroBar))]
-    public class MicroBar_Editor : Editor {
+    public class MicroBar_Editor : Editor
+    {
         /*
         float _startHealthAmount = 100f;   // Start health during health bar testing
         float _healthChangeAmount = -10f;   // How much will health change on test
         float HP = 100f;
         */
 
-        public override void OnInspectorGUI() {
+        public override void OnInspectorGUI()
+        {
             serializedObject.Update();
 
             // Store serialized properties
@@ -642,18 +723,19 @@ namespace Microlight.MicroBar {
 
             // References to SpriteRenderers and UI Images
             EditorGUILayout.Space();
-            switch((HealthBarType)barType.enumValueIndex) {
+            switch ((HealthBarType)barType.enumValueIndex)
+            {
                 case HealthBarType.SpriteRenderer:
                     EditorGUILayout.LabelField("Sprite Renderer", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("_srBackground"), new GUIContent("SpriteRenderer Background"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("_srPrimaryBar"), new GUIContent("SpriteRenderer Bar"));
-                    if(ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_srGhostBar"), new GUIContent("SpriteRenderer GhostBar"));
+                    if (ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_srGhostBar"), new GUIContent("SpriteRenderer GhostBar"));
                     break;
                 case HealthBarType.Image:
                     EditorGUILayout.LabelField("Image", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("_uiBackground"), new GUIContent("Image Background"));
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("_uiPrimaryBar"), new GUIContent("Image Bar"));
-                    if(ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_uiGhostBar"), new GUIContent("Image GhostBar"));
+                    if (ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_uiGhostBar"), new GUIContent("Image GhostBar"));
                     break;
                 default: break;
             }
@@ -661,117 +743,119 @@ namespace Microlight.MicroBar {
             // Settings
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("General Settings", EditorStyles.boldLabel);
-            if(!flashingLowHealth.boolValue) EditorGUILayout.PropertyField(adaptiveColor, new GUIContent("Adaptive Color",
+            if (!flashingLowHealth.boolValue) EditorGUILayout.PropertyField(adaptiveColor, new GUIContent("Adaptive Color",
                 "With adaptive color lerps between full and empty color based on fill amount. Without adaptive color every bar has same color whole time. (Disables Flashing Low Health)"));
-            else {
+            else
+            {
                 GUI.enabled = false;
                 EditorGUILayout.PropertyField(adaptiveColor, new GUIContent("Adaptive Color",
                     "With adaptive color lerps between full and empty color based on fill amount. Without adaptive color every bar has same color whole time. (Disables Flashing Low Health)"));
                 GUI.enabled = true;
             }
-            if(!adaptiveColor.boolValue) EditorGUILayout.PropertyField(flashingLowHealth, new GUIContent("Flashing Low Health",
+            if (!adaptiveColor.boolValue) EditorGUILayout.PropertyField(flashingLowHealth, new GUIContent("Flashing Low Health",
                 "Flashing low health alternates between main and secondary color when low is below certain threshold. (Disables Adaptive Color)"));
-            else {
+            else
+            {
                 GUI.enabled = false;
                 EditorGUILayout.PropertyField(flashingLowHealth, new GUIContent("Flashing Low Health",
                 "Flashing low health alternates between main and secondary color when low is below certain threshold. (Disables Adaptive Color)"));
                 GUI.enabled = true;
             }
             EditorGUILayout.PropertyField(isAnimated, new GUIContent("Animated", "Will health bar be instantly updated or animated."));
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(ghostBar, new GUIContent("Use Ghost Bar",
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(ghostBar, new GUIContent("Use Ghost Bar",
                 "Will second health bar be displayed during animation? (showing amount healed and amount hurt)."));
-            if(isAnimated.boolValue && ghostBar.boolValue && !adaptiveColor.boolValue) EditorGUILayout.PropertyField(dualGhostBars, new GUIContent("Dual Ghost Bars",
+            if (isAnimated.boolValue && ghostBar.boolValue && !adaptiveColor.boolValue) EditorGUILayout.PropertyField(dualGhostBars, new GUIContent("Dual Ghost Bars",
                 "Allows for heal bar to be different color than hurt bar."));
 
             // Disable settings that can't be
-            if(!isAnimated.boolValue) ghostBar.boolValue = false;   // Disable ghost bar if bar is not animated
-            if(!isAnimated.boolValue) flashingLowHealth.boolValue = false;   // Disable flashing health bar if bar is not animated
-            if(!ghostBar.boolValue) dualGhostBars.boolValue = false;   // Disable dual ghost bars if ghost bar is disabled
-            if(adaptiveColor.boolValue) dualGhostBars.boolValue = false;   // Disable dual ghost bars if using adaptive colors
-            if(adaptiveColor.boolValue) flashingLowHealth.boolValue = false;   // Disable flashing health bar if adaptive color is enabled
-            if(flashingLowHealth.boolValue) adaptiveColor.boolValue = false;   // Disable adaptive color if flashing health bar is enabled
-            if(!isAnimated.boolValue) damageShake.boolValue = false;   // Disable damage shake if not animated
-            if(!isAnimated.boolValue) healScale.boolValue = false;   // Disable heal scale if not animated
+            if (!isAnimated.boolValue) ghostBar.boolValue = false;   // Disable ghost bar if bar is not animated
+            if (!isAnimated.boolValue) flashingLowHealth.boolValue = false;   // Disable flashing health bar if bar is not animated
+            if (!ghostBar.boolValue) dualGhostBars.boolValue = false;   // Disable dual ghost bars if ghost bar is disabled
+            if (adaptiveColor.boolValue) dualGhostBars.boolValue = false;   // Disable dual ghost bars if using adaptive colors
+            if (adaptiveColor.boolValue) flashingLowHealth.boolValue = false;   // Disable flashing health bar if adaptive color is enabled
+            if (flashingLowHealth.boolValue) adaptiveColor.boolValue = false;   // Disable adaptive color if flashing health bar is enabled
+            if (!isAnimated.boolValue) damageShake.boolValue = false;   // Disable damage shake if not animated
+            if (!isAnimated.boolValue) healScale.boolValue = false;   // Disable heal scale if not animated
 
-            if(!damageShake.boolValue) adaptiveDamageShake.boolValue = false;
-            if(!healScale.boolValue) adaptiveHealScale.boolValue = false;
+            if (!damageShake.boolValue) adaptiveDamageShake.boolValue = false;
+            if (!healScale.boolValue) adaptiveHealScale.boolValue = false;
 
             // Colors
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Colors", EditorStyles.boldLabel);
             // Primary
-            if(adaptiveColor.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Full Health Color", "Color of the bar when health is full."));
-            else if(flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Health Bar Color", "Color of the health bar."));
-            else if(ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Health Bar Color", "Color of the main health bar."));
+            if (adaptiveColor.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Full Health Color", "Color of the bar when health is full."));
+            else if (flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Health Bar Color", "Color of the health bar."));
+            else if (ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Health Bar Color", "Color of the main health bar."));
             else EditorGUILayout.PropertyField(serializedObject.FindProperty("_barPrimaryColor"), new GUIContent("Bar Color", "Color of the health bar."));
             // Secondary
-            if(adaptiveColor.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barAdaptiveColor"), new GUIContent("Low Health Color", "Color of the bar when health is low."));
-            else if(flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barFlashingColor"), new GUIContent("Flash Health Color", "Color of the bar when bar flashes."));
-            if(ghostBar.boolValue && !dualGhostBars.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHurtColor"), new GUIContent("Ghost Bar Color", "Color of the ghost bar."));
-            else if(ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHurtColor"), new GUIContent("Ghost Hurt Color", "Color of the ghost bar when hurt."));
-            if(dualGhostBars.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHealColor"), new GUIContent("Ghost Heal Color", "Color of the ghost bar when healed."));
+            if (adaptiveColor.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barAdaptiveColor"), new GUIContent("Low Health Color", "Color of the bar when health is low."));
+            else if (flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barFlashingColor"), new GUIContent("Flash Health Color", "Color of the bar when bar flashes."));
+            if (ghostBar.boolValue && !dualGhostBars.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHurtColor"), new GUIContent("Ghost Bar Color", "Color of the ghost bar."));
+            else if (ghostBar.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHurtColor"), new GUIContent("Ghost Hurt Color", "Color of the ghost bar when hurt."));
+            if (dualGhostBars.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barGhostHealColor"), new GUIContent("Ghost Heal Color", "Color of the ghost bar when healed."));
             // Transparency
-            if(isAnimated.boolValue && ghostBar.boolValue)
+            if (isAnimated.boolValue && ghostBar.boolValue)
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_ghostBarAlpha"), new GUIContent("Ghost Bar Alpha", "Transparency ghost bar is."));
 
             // Bar animation
-            if(isAnimated.boolValue) EditorGUILayout.Space();
-            if(isAnimated.boolValue) EditorGUILayout.LabelField("Bar Animation", EditorStyles.boldLabel);
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barFillDuration"), new GUIContent("Fill Duration",
+            if (isAnimated.boolValue) EditorGUILayout.Space();
+            if (isAnimated.boolValue) EditorGUILayout.LabelField("Bar Animation", EditorStyles.boldLabel);
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_barFillDuration"), new GUIContent("Fill Duration",
                 "Duration for bar to reach set value."));
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageFillDelay"), new GUIContent("Damage Fill Delay",
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageFillDelay"), new GUIContent("Damage Fill Delay",
                 "Delay before fill animation starts."));
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_healFillDelay"), new GUIContent("Heal Fill Delay",
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_healFillDelay"), new GUIContent("Heal Fill Delay",
                 "Delay before fill animation starts."));
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_animationTriggerThreshold"), new GUIContent("Animation Trigger Threshold",
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_animationTriggerThreshold"), new GUIContent("Animation Trigger Threshold",
                 "% HP needs to change for animation to trigger."));
 
             // Flashing bar
-            if(flashingLowHealth.boolValue) EditorGUILayout.Space();
-            if(flashingLowHealth.boolValue) EditorGUILayout.LabelField("Flashing Low Health", EditorStyles.boldLabel);
-            if(flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_lowHealthThreshold"), new GUIContent("Low Health Threshold",
+            if (flashingLowHealth.boolValue) EditorGUILayout.Space();
+            if (flashingLowHealth.boolValue) EditorGUILayout.LabelField("Flashing Low Health", EditorStyles.boldLabel);
+            if (flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_lowHealthThreshold"), new GUIContent("Low Health Threshold",
                 "At which point is health considered as low health (%)."));
-            if(flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_flashToTime"), new GUIContent("Flash To Time",
+            if (flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_flashToTime"), new GUIContent("Flash To Time",
                 "Time to change from default color to flashing color."));
-            if(flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_flashFromTime"), new GUIContent("Flash From Time",
+            if (flashingLowHealth.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_flashFromTime"), new GUIContent("Flash From Time",
                 "Time to change from flashing color to default color."));
 
             // Damage Shake
-            if(isAnimated.boolValue) EditorGUILayout.Space();
-            if(isAnimated.boolValue) EditorGUILayout.LabelField("Damage Shake", EditorStyles.boldLabel);
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(damageShake, new GUIContent("Shake",
+            if (isAnimated.boolValue) EditorGUILayout.Space();
+            if (isAnimated.boolValue) EditorGUILayout.LabelField("Damage Shake", EditorStyles.boldLabel);
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(damageShake, new GUIContent("Shake",
                 "Will health bar shake during damage."));
-            if(damageShake.boolValue) EditorGUILayout.PropertyField(adaptiveDamageShake, new GUIContent("Adaptive Damage Shake",
+            if (damageShake.boolValue) EditorGUILayout.PropertyField(adaptiveDamageShake, new GUIContent("Adaptive Damage Shake",
                 "Allows to change shake settings based on % of health bar changed."));
-            if(damageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeDuration"), new GUIContent("Damage Shake Duration",
+            if (damageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeDuration"), new GUIContent("Damage Shake Duration",
                 "How long will damage shake last (in seconds)."));
             // Non-adaptive
-            if(damageShake.boolValue && !adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeAmount"), new GUIContent("Damage Shake Amount",
+            if (damageShake.boolValue && !adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeAmount"), new GUIContent("Damage Shake Amount",
                 "How much will bar move around during damage shake."));
-            if(damageShake.boolValue && !adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeIntensity"), new GUIContent("Damage Shake Intensity",
+            if (damageShake.boolValue && !adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_damageShakeIntensity"), new GUIContent("Damage Shake Intensity",
                 "Vibration of damage shake."));
             // Adaptive
-            if(adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeAmount"), new GUIContent("Adaptive Damage Shake Amount",
+            if (adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeAmount"), new GUIContent("Adaptive Damage Shake Amount",
                 "Lowest shake amount when bar changes 0% and largest shake amount when bar changes threshold % amount."));
-            if(adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeIntensity"), new GUIContent("Adaptive Damage Shake Intensity",
+            if (adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeIntensity"), new GUIContent("Adaptive Damage Shake Intensity",
                 "Lowest shake intensity when bar changes 0% and largest shake intensity when bar changes threshold % amount."));
-            if(adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeThreshold"), new GUIContent("Adaptive Damage Shake Threshold",
+            if (adaptiveDamageShake.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveShakeThreshold"), new GUIContent("Adaptive Damage Shake Threshold",
                 "At how much bar % change will adaptive shake reach full."));
 
             // Heal Scale
-            if(isAnimated.boolValue) EditorGUILayout.Space();
-            if(isAnimated.boolValue) EditorGUILayout.LabelField("Heal Scale", EditorStyles.boldLabel);
-            if(isAnimated.boolValue) EditorGUILayout.PropertyField(healScale, new GUIContent("Heal Scale",
+            if (isAnimated.boolValue) EditorGUILayout.Space();
+            if (isAnimated.boolValue) EditorGUILayout.LabelField("Heal Scale", EditorStyles.boldLabel);
+            if (isAnimated.boolValue) EditorGUILayout.PropertyField(healScale, new GUIContent("Heal Scale",
                 "Will health bar scale up during healing."));
-            if(healScale.boolValue) EditorGUILayout.PropertyField(adaptiveHealScale, new GUIContent("Adaptive Heal Scale",
+            if (healScale.boolValue) EditorGUILayout.PropertyField(adaptiveHealScale, new GUIContent("Adaptive Heal Scale",
                 "Allows to change shake settings based on % of health bar changed."));
             // Non-adaptive
-            if(healScale.boolValue && !adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_healScaleAmount"), new GUIContent("Heal Scale Intensity",
+            if (healScale.boolValue && !adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_healScaleAmount"), new GUIContent("Heal Scale Intensity",
                 "How much health bar will scale up."));
             // Adaptive
-            if(adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveHealScaleAmount"), new GUIContent("Adaptive Heal Scale Amount",
+            if (adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveHealScaleAmount"), new GUIContent("Adaptive Heal Scale Amount",
                 "Lowest scale amount when bar changes 0% and largest scale amount when bar changes threshold % amount."));
-            if(adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveHealScaleThreshold"), new GUIContent("Adaptive Heal Scale Threshold",
+            if (adaptiveHealScale.boolValue) EditorGUILayout.PropertyField(serializedObject.FindProperty("_adaptiveHealScaleThreshold"), new GUIContent("Adaptive Heal Scale Threshold",
                 "At how much bar % change will adaptive heal scale reach full."));
 
             // HealthBar Test
