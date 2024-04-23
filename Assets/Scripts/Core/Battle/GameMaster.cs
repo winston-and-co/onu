@@ -233,4 +233,11 @@ public class GameMaster : MonoBehaviour
             }
         }
     }
+
+    public bool PlayerWon()
+    {
+        return victor == player;
+    }
+
+
 }
