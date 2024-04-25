@@ -204,7 +204,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '500
+  m_text: 'Price
+
 
 '
   m_isRightToLeft: 0
@@ -422,4 +423,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currency: {fileID: 0}
-  cost: 500
+  cost: 400
+  costText: {fileID: 1457518994957736656}
