@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// A subset of Playables that are regular uno cards.
+/// </summary>
 public class Card : Playable
 {
-    protected int lastOrder;
-    public UnityEvent m_PlayEvent;
     private CardSprite spriteController;
 
     void OnEnable()

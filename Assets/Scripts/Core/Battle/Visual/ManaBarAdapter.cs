@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class ManaBarAdapter : MonoBehaviour
 {
+    [SerializeField] bool isPlayerAdapter;
     public Entity entity;
     public TMP_Text manaText;
     public Microlight.MicroBar.MicroBar bar;
 
-    void Awake()
+    void Start()
     {
+        var gm = GameMaster.GetInstance();
+        entity = isPlayerAdapter ? gm.player : gm.enemy;
         BattleEventBus.getInstance().startBattleEvent.AddListener((_) =>
         {
             manaText.SetText($"{entity.mana} / {entity.maxMana}");

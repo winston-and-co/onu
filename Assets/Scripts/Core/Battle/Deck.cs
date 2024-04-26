@@ -1,42 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Card> m_Cards;
+    [SerializeField] private List<Card> m_Cards = null;
     public GameObject card_prefab;
     public Entity e;
+    public Color[] colors;
 
-    public readonly Color[] colors = new Color[] {
-        CardColors.Red,
-        CardColors.Blue,
-        CardColors.Green,
-        CardColors.Yellow,
-    };
-
-    public void Generate()
+    public void Populate(List<Card> cards)
     {
-        for (int sets = 0; sets < 2; sets++)
-        {
-            for (int value = 0; value < 10; value++)
-            {
-                for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
-                {
-                    Card newCard = Instantiate(card_prefab).GetComponent<Card>();
-                    newCard.Value = new NullableInt { Value = value, IsNull = false };
-                    newCard.Color = colors[colorIdx];
-
-                    newCard.transform.SetParent(transform, false);
-                    newCard.entity = e;
-                    newCard.gameObject.SetActive(false);
-
-                    m_Cards.Add(newCard);
-                }
-            }
-        }
+        m_Cards = cards;
     }
 
     public Card Draw()
@@ -46,6 +23,22 @@ public class Deck : MonoBehaviour
         // decks
         Card c = m_Cards[0];
         m_Cards.RemoveAt(0);
+
+        if (m_Cards.Count == 0)
+        {
+            // empty deck, reshuffle own cards back in (except top card)
+            var d = GameMaster.GetInstance().discard;
+            IEnumerable<Card> discardedCards = d.Items
+                .Where(c => c.entity == e && c != d.Peek() && c is Card)
+                .Select(c => c as Card);
+            foreach (var dCard in discardedCards)
+            {
+                dCard.transform.SetParent(transform, false);
+                dCard.gameObject.SetActive(false);
+                m_Cards.Add(dCard);
+            }
+            Shuffle();
+        }
         return c;
     }
 

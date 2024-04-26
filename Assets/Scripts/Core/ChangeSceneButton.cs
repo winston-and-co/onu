@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// TEMP
 public class ChangeSceneButton : MonoBehaviour
 {
-    [SerializeField] Scenes target;
+    [SerializeField] Scene target;
 
     void Awake()
     {

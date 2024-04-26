@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Scenes
+public enum Scene
 {
     Map,
     Bathroom,
@@ -14,9 +14,9 @@ public enum Scenes
 
 public class OnuSceneManager : MonoBehaviour
 {
-    [SerializeField] Map map;
     static OnuSceneManager Instance;
     public static OnuSceneManager GetInstance() => Instance;
+    private string lastSceneName = "";
 
     void Awake()
     {
@@ -28,6 +28,11 @@ public class OnuSceneManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
     }
 
     void OnEnable()
@@ -40,47 +45,106 @@ public class OnuSceneManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "Map")
+        // scene initialization
+        switch (scene.name)
         {
-            if (map != null) map.gameObject.SetActive(false);
-            return;
+            case "Map":
+                InitMapScene();
+                break;
+            case "Battle":
+                InitBattleScene();
+                break;
+            default:
+                break;
         }
-        if (map != null) map.gameObject.SetActive(true);
+
+        // scene cleanup
+        if (lastSceneName != scene.name)
+        {
+            switch (lastSceneName)
+            {
+                case "Map":
+                    CleanMapScene();
+                    break;
+                case "Battle":
+                    CleanBattleScene();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        lastSceneName = scene.name;
     }
 
-    public void ChangeScene(Scenes scene)
+    void InitMapScene()
+    {
+        Map map = FindObjectOfType<Map>(true);
+        if (map != null) map.gameObject.SetActive(true);
+    }
+    void CleanMapScene()
+    {
+        Map map = FindObjectOfType<Map>(true);
+        if (map != null) map.gameObject.SetActive(false);
+    }
+
+    void InitBattleScene()
+    {
+        // player
+        var pd = PlayerData.GetInstance();
+        if (pd.Player == null) throw new System.Exception();
+        pd.Player.gameObject.SetActive(true);
+        if (pd.Player.deck == null) throw new System.Exception();
+        pd.Player.deck.gameObject.SetActive(true);
+        var gm = GameMaster.GetInstance();
+        gm.player = pd.Player;
+        // enemy
+        var eg = EnemyGenerator.GetInstance();
+        var enemy = eg.Generate(EnemyCharacter.Ken);
+        gm.enemy = enemy;
+    }
+    void CleanBattleScene()
+    {
+        var pd = PlayerData.GetInstance();
+        if (pd.Player == null) throw new System.Exception();
+        pd.Player.gameObject.SetActive(false);
+        if (pd.Player.deck == null) throw new System.Exception();
+        pd.Player.deck.gameObject.SetActive(false);
+    }
+
+    public void ChangeScene(Scene scene)
     {
         Debug.Log("ChangeScene to: " + scene);
         switch (scene)
         {
-            case Scenes.Map:
+            case Scene.Map:
                 SceneManager.LoadSceneAsync("Map");
                 break;
-            case Scenes.Bathroom:
+            case Scene.Bathroom:
                 SceneManager.LoadSceneAsync("Bathroom");
                 break;
-            case Scenes.Battle:
+            case Scene.Battle:
                 SceneManager.LoadSceneAsync("Battle");
                 break;
-            case Scenes.Boss:
+            case Scene.Boss:
                 SceneManager.LoadSceneAsync("Boss");
                 break;
-            case Scenes.ShadyMan:
+            case Scene.ShadyMan:
                 SceneManager.LoadSceneAsync("ShadyMan");
                 break;
         }
     }
 
     /// <param name="delay">Time to wait in seconds</param>
-    public void ChangeSceneWithDelay(Scenes scene, int delay)
+    public void ChangeSceneWithDelay(Scene scene, int delay)
     {
         Debug.Log("ChangeSceneWithDelay: " + delay);
         StartCoroutine(WaitThenChange(scene, delay));
     }
 
-    private IEnumerator WaitThenChange(Scenes scene, int delay)
+    private IEnumerator WaitThenChange(Scene scene, int delay)
     {
         yield return new WaitForSeconds(delay);
         ChangeScene(scene);

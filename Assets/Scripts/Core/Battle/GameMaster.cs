@@ -12,11 +12,7 @@ public class GameMaster : MonoBehaviour
 
     public Pile discard;
     public Entity player;
-    [SerializeField] Deck playerDeck;
-    [SerializeField] Hand playerHand;
     public Entity enemy;
-    [SerializeField] Deck enemyDeck;
-    [SerializeField] Hand enemyHand;
 
     int turn = 0;
     Entity[] order;
@@ -45,22 +41,11 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
-        player.gameRules = new();
-        player.gameRules.Add(new RuleCards.Purple());
-        player.deck = playerDeck;
-        player.deck.e = player;
-        player.hand = playerHand;
-        enemy.gameRules = new();
-        enemy.deck = enemyDeck;
-        enemy.deck.e = enemy;
-        enemy.hand = enemyHand;
-
         // Init combat
         order = new Entity[2];
         order[0] = player;
         order[1] = enemy;
 
-        player.hp = player.maxHP;
         player.mana = player.maxMana;
         enemy.hp = enemy.maxHP;
         enemy.mana = enemy.maxMana;
@@ -71,14 +56,12 @@ public class GameMaster : MonoBehaviour
         // Begin combat
         BattleEventBus.getInstance().startBattleEvent.Invoke(this);
 
-        playerDeck.Generate();
-        playerDeck.Shuffle();
+        player.deck.Shuffle();
         for (int i = 0; i < player.startingHandSize; i++)
         {
             player.Draw();
         }
-        enemyDeck.Generate();
-        enemyDeck.Shuffle();
+        enemy.deck.Shuffle();
         for (int i = 0; i < enemy.startingHandSize; i++)
         {
             enemy.Draw();

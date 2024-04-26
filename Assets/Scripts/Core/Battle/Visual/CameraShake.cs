@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
 
     void OnDamage(Entity e, int dmg)
     {
-        StartCoroutine(Shake(0.4f, 0.25f)); // TODO: Adjust based on damage
+        StartCoroutine(Shake(0.02f * dmg, 0.01f * dmg)); // TODO: Adjust based on damage
     }
 
 
