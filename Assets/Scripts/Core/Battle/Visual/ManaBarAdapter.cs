@@ -10,17 +10,17 @@ public class ManaBarAdapter : MonoBehaviour
     public TMP_Text manaText;
     public Microlight.MicroBar.MicroBar bar;
 
-    void Start()
+    void Awake()
     {
-        var gm = GameMaster.GetInstance();
-        entity = isPlayerAdapter ? gm.player : gm.enemy;
-        BattleEventBus.getInstance().startBattleEvent.AddListener((_) =>
-        {
-            manaText.SetText($"{entity.mana} / {entity.maxMana}");
-        });
-        BattleEventBus.getInstance().entityManaChangedEvent.AddListener(OnEntityManaChanged);
+        BattleEventBus.getInstance().startBattleEvent.AddListener(OnStartBattle);
+        BattleEventBus.getInstance().entityHealthChangedEvent.AddListener(OnEntityManaChanged);
+    }
 
+    void OnStartBattle(GameMaster gm)
+    {
+        entity = isPlayerAdapter ? gm.player : gm.enemy;
         bar.Initialize(entity.maxMana);
+        manaText.SetText($"{entity.mana} / {entity.maxMana}");
     }
 
     void OnEntityManaChanged(Entity e, int _)
