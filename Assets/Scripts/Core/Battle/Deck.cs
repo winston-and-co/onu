@@ -21,6 +21,12 @@ public class Deck : MonoBehaviour
         return m_Cards.Count;
     }
 
+
+    public Card get(int index)
+    {
+        return m_Cards[index];
+    }
+
     public void Add(Card c)
     {
         m_Cards.Add(c);
