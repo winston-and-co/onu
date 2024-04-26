@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MapNode : MonoBehaviour
 {
-    [SerializeField] Scenes nodeType;
+    [SerializeField] Scene nodeType;
     public bool IsStartingNode;
     public bool IsBossNode;
     /// <summary>

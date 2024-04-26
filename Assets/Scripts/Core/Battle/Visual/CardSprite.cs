@@ -17,8 +17,10 @@ public class CardSprite : MonoBehaviour
     protected int Order;
     private int lastOrder;
 
-    public Vector3 enlargedScale = new Vector3(0.31f, 0.31f, 0.31f);
-    public Vector3 originalScale = new Vector3(0.29f, 0.29f, 0.29f);
+    public Vector3 cardInHandScale = new Vector3(0.3f, 0.3f, 1.0f);
+    public Vector3 cardInPileScale = new Vector3(0.2f, 0.2f, 1.0f);
+    public Vector3 enlargedScale = new Vector3(1.2f, 1.2f, 1.2f);
+    public Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
 
     void OnEnable()
     {
@@ -57,6 +59,7 @@ public class CardSprite : MonoBehaviour
     void Awake()
     {
         BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
     }
 
     void OnCardPlayed(Entity _, Playable p)
@@ -65,7 +68,31 @@ public class CardSprite : MonoBehaviour
         flipped = false;
         SetupCard();
         var rt = GetComponentsInParent<RectTransform>()[1];
-        rt.localScale = new Vector3(0.2f, 0.2f, 1.0f);
+        rt.localScale = cardInPileScale;
+
+        var items = GameMaster.GetInstance().discard.Items;
+        if (items.Count > 1)
+        {
+            var secondFromTop = items[items.Count - 2];
+            foreach (var r in secondFromTop.GetComponentsInChildren<Renderer>())
+            {
+                r.enabled = false;
+            }
+        }
+        GetComponentInParent<BoxCollider2D>().enabled = false;
+    }
+
+    void OnCardDrawn(Entity e, Card c)
+    {
+        if (c != playable) return;
+
+        var rt = GetComponentsInParent<RectTransform>()[1];
+        rt.localScale = cardInHandScale;
+        foreach (var r in GetComponentsInChildren<Renderer>())
+        {
+            r.enabled = true;
+        }
+        GetComponentInParent<BoxCollider2D>().enabled = true;
     }
 
     public void Flip()

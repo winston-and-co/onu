@@ -7,6 +7,18 @@ public class PlayerData : MonoBehaviour
     static PlayerData Instance;
     public static PlayerData GetInstance() => Instance;
 
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     /// <summary>
     /// Tuple of (level index, node index)
     /// </summary>
@@ -23,17 +35,5 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    public Entity Entity;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    public Entity Player;
 }

@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class HealthBarAdapter : MonoBehaviour
 {
+    [SerializeField] bool isPlayerAdapter;
     public Entity entity;
     public TMP_Text hpText;
     public Microlight.MicroBar.MicroBar bar;
 
-    void Awake()
+    void Start()
     {
+        var gm = GameMaster.GetInstance();
+        entity = isPlayerAdapter ? gm.player : gm.enemy;
         BattleEventBus.getInstance().startBattleEvent.AddListener((_) =>
         {
             hpText.SetText($"{entity.hp} / {entity.maxHP}");
