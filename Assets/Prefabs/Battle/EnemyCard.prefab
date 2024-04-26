@@ -100,9 +100,6 @@ MonoBehaviour:
     IsNull: 0
   _color: {r: 0, g: 0, b: 0, a: 0}
   entity: {fileID: 0}
-  m_PlayEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &6230806090270482161
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,5 +380,7 @@ MonoBehaviour:
   back: {fileID: 21300000, guid: b5001fca2b8fea243838f0d044fd54ee, type: 3}
   textMeshPro: {fileID: 2036241338735160019}
   playable: {fileID: 5119425026210792401}
+  cardInHandScale: {x: 0.15, y: 0.15, z: 1}
+  cardInPileScale: {x: 0.2, y: 0.2, z: 1}
   enlargedScale: {x: 1.2, y: 1.2, z: 1}
   originalScale: {x: 1, y: 1, z: 1}
