@@ -16,6 +16,22 @@ public class Deck : MonoBehaviour
         m_Cards = cards;
     }
 
+    public int size()
+    {
+        return m_Cards.Count;
+    }
+
+    public void Add(Card c)
+    {
+        m_Cards.Add(c);
+    }
+    public Card Remove(int id)
+    {
+        Card c = m_Cards[id];
+        m_Cards.RemoveAt(id);
+        return c;
+    }
+
     public Card Draw()
     {
         // TODO: When no cards in deck, maybe reshuffle cards from discard pile
