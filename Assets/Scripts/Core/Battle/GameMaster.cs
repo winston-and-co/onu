@@ -178,10 +178,7 @@ public class GameMaster : MonoBehaviour
                 break;
         }
 
-        if (e.hand.GetCardCount() == 0)
-        {
-            e.Refresh();
-        }
+        BattleEventBus.getInstance().afterCardPlayedEvent.Invoke(e, c);
     }
 
     void OnTryUseActionCard(Entity e, IActionCard ac)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 public class Pile : MonoBehaviour
@@ -36,5 +37,19 @@ public class Pile : MonoBehaviour
         // awful practice, decouple
         card.gameObject.transform.SetParent(gameObject.transform, false);
         card.gameObject.transform.localPosition = Vector3.zero;
+    }
+
+    public List<Card> RemoveCardsFromEntity(Entity e)
+    {
+        IEnumerable<Card> cards = pile
+            .Where(c => c.entity == e && c != Peek() && c is Card)
+            .Select(c => c as Card);
+        List<Card> res = new();
+        foreach (var c in cards)
+        {
+            res.Add(c);
+            pile.Remove(c);
+        }
+        return res;
     }
 }

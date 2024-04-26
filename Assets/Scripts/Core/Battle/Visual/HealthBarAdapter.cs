@@ -11,17 +11,17 @@ public class HealthBarAdapter : MonoBehaviour
     public TMP_Text hpText;
     public Microlight.MicroBar.MicroBar bar;
 
-    void Start()
+    void Awake()
     {
-        var gm = GameMaster.GetInstance();
-        entity = isPlayerAdapter ? gm.player : gm.enemy;
-        BattleEventBus.getInstance().startBattleEvent.AddListener((_) =>
-        {
-            hpText.SetText($"{entity.hp} / {entity.maxHP}");
-        });
+        BattleEventBus.getInstance().startBattleEvent.AddListener(OnStartBattle);
         BattleEventBus.getInstance().entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
+    }
 
+    void OnStartBattle(GameMaster gm)
+    {
+        entity = isPlayerAdapter ? gm.player : gm.enemy;
         bar.Initialize(entity.maxHP);
+        hpText.SetText($"{entity.hp} / {entity.maxHP}");
     }
 
     void OnEntityHealthChanged(Entity e, int _)

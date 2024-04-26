@@ -21,10 +21,24 @@ public class Entity : MonoBehaviour
 
     public string e_name;
 
+    void Awake()
+    {
+        BattleEventBus.getInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+    }
+
     void Start()
     {
         hp = maxHP;
         mana = maxMana;
+    }
+
+    void AfterCardPlayed(Entity e, Playable _)
+    {
+        if (e != this) return;
+        if (hand.GetCardCount() == 0)
+        {
+            Refresh();
+        }
     }
 
     public void Damage(int amount)

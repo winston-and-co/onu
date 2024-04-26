@@ -15,6 +15,7 @@ public class BattleEventBus
 
     public CardTryPlayedEvent cardTryPlayedEvent = new();
     public CardPlayedEvent cardPlayedEvent = new();
+    public AfterCardPlayedEvent afterCardPlayedEvent = new();
     public CardIllegalEvent cardIllegalEvent = new();
     public CardDrawEvent cardDrawEvent = new();
     public CardNoDrawEvent cardNoDrawEvent = new();
@@ -42,6 +43,7 @@ public class BattleEventBus
 // Game rules
 public class CardTryPlayedEvent : UnityEvent<Entity, Playable> { }
 public class CardPlayedEvent : UnityEvent<Entity, Playable> { }
+public class AfterCardPlayedEvent : UnityEvent<Entity, Playable> { }
 public class CardIllegalEvent : UnityEvent<Entity, Playable> { }
 public class CardDrawEvent : UnityEvent<Entity, Card> { }
 public class CardNoDrawEvent : UnityEvent<Entity, Card> { }

@@ -58,11 +58,11 @@ public class CardSprite : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        BattleEventBus.getInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
         BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
     }
 
-    void OnCardPlayed(Entity _, Playable p)
+    void AfterCardPlayed(Entity _, Playable p)
     {
         if (p != playable) return;
         flipped = false;
@@ -76,8 +76,11 @@ public class CardSprite : MonoBehaviour
             var secondFromTop = items[items.Count - 2];
             foreach (var r in secondFromTop.GetComponentsInChildren<Renderer>())
             {
+                print(r.name);
                 r.enabled = false;
             }
+            var tmp = secondFromTop.GetComponentInChildren<TextMeshPro>();
+            tmp.enabled = false;
         }
         GetComponentInParent<BoxCollider2D>().enabled = false;
     }
@@ -92,6 +95,8 @@ public class CardSprite : MonoBehaviour
         {
             r.enabled = true;
         }
+        var tmp = GetComponentInChildren<TextMeshPro>();
+        tmp.enabled = true;
         GetComponentInParent<BoxCollider2D>().enabled = true;
     }
 

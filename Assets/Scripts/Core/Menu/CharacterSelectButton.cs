@@ -24,16 +24,16 @@ Max Mana: {preview.maxMana}
 Starting Hand Size: 7
 
 Deck:
-2x 0 RGBY
-2x 1 RGBY
-2x 2 RGBY
-2x 3 RGBY
-2x 4 RGBY
-2x 5 RGBY
-2x 6 RGBY
-2x 7 RGBY
-2x 8 RGBY
-2x 9 RGBY";
+2x 0 RBGY
+2x 1 RBGY
+2x 2 RBGY
+2x 3 RBGY
+2x 4 RBGY
+2x 5 RBGY
+2x 6 RBGY
+2x 7 RBGY
+2x 8 RBGY
+2x 9 RBGY";
         confirmButton.interactable = true;
     }
 }

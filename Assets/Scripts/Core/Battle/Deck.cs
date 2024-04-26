@@ -28,9 +28,7 @@ public class Deck : MonoBehaviour
         {
             // empty deck, reshuffle own cards back in (except top card)
             var d = GameMaster.GetInstance().discard;
-            IEnumerable<Card> discardedCards = d.Items
-                .Where(c => c.entity == e && c != d.Peek() && c is Card)
-                .Select(c => c as Card);
+            var discardedCards = d.RemoveCardsFromEntity(e);
             foreach (var dCard in discardedCards)
             {
                 dCard.transform.SetParent(transform, false);
