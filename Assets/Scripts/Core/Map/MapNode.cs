@@ -19,12 +19,21 @@ public class MapNode : MonoBehaviour
 
     void OnMouseDown()
     {
+        if(IsValid())
+        {
+            Visit();
+        }
+    }
+
+    public bool IsValid()
+    {
         var pd = PlayerData.GetInstance();
         if ((pd.CurrentNode == null && this.IsStartingNode) ||
             (pd.CurrentNode != null && pd.CurrentNode.ConnectedNodes.Contains(this)))
         {
-            Visit();
+            return true;
         }
+        return false;
     }
 
     public bool AddConnection(MapNode m)
