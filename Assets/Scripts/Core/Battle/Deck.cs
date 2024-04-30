@@ -11,9 +11,58 @@ public class Deck : MonoBehaviour
     public Entity e;
     public Color[] colors;
 
+    void Awake()
+    {
+        BattleEventBus.getInstance().endBattleEvent.AddListener(OnEndBattle);
+    }
+
+    void OnEndBattle(GameMaster gm)
+    {
+        // return cards from this entity's deck back to the deck
+        var d = GameMaster.GetInstance().discard;
+        var cards = d.RemoveCardsFromEntity(e, true);
+        foreach (var c in e.hand.hand)
+        {
+            if (c is not Card)
+            {
+                e.hand.RemoveCard(c);
+            }
+        }
+        cards = cards.Concat(e.hand.hand.Select(p => p as Card)).ToList();
+        e.hand.hand = new();
+        foreach (var c in cards)
+        {
+            c.transform.SetParent(transform, false);
+            c.gameObject.SetActive(false);
+            m_Cards.Add(c);
+        }
+    }
+
     public void Populate(List<Card> cards)
     {
         m_Cards = cards;
+    }
+
+    public int size()
+    {
+        return m_Cards.Count;
+    }
+
+
+    public Card get(int index)
+    {
+        return m_Cards[index];
+    }
+
+    public void Add(Card c)
+    {
+        m_Cards.Add(c);
+    }
+    public Card Remove(int id)
+    {
+        Card c = m_Cards[id];
+        m_Cards.RemoveAt(id);
+        return c;
     }
 
     public Card Draw()
@@ -28,7 +77,7 @@ public class Deck : MonoBehaviour
         {
             // empty deck, reshuffle own cards back in (except top card)
             var d = GameMaster.GetInstance().discard;
-            var discardedCards = d.RemoveCardsFromEntity(e);
+            var discardedCards = d.RemoveCardsFromEntity(e, false);
             foreach (var dCard in discardedCards)
             {
                 dCard.transform.SetParent(transform, false);

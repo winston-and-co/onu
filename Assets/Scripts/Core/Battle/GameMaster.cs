@@ -22,6 +22,8 @@ public class GameMaster : MonoBehaviour
 
     public Entity victor;
 
+    bool cardNotResolved;
+
     void Awake()
     {
         // https://gamedevbeginner.com/singletons-in-unity-the-right-way/
@@ -36,7 +38,7 @@ public class GameMaster : MonoBehaviour
         bus.cardTryPlayedEvent.AddListener(OnTryPlayCard);
         bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
         bus.tryEndTurnEvent.AddListener(TryEndTurn);
-        bus.entityDamageEvent.AddListener(CheckVictory);
+        bus.entityDamageEvent.AddListener(OnEntityDamage);
     }
 
     void Start()
@@ -100,19 +102,15 @@ public class GameMaster : MonoBehaviour
                 break;
             }
         }
-        if (!hasPlayable)
+        do
         {
-            Card cardDrawn;
-            do
+            var cardDrawn = current_turn_entity.Draw();
+            if (current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, cardDrawn))
             {
-                cardDrawn = current_turn_entity.Draw();
+                hasPlayable = true;
             }
-            while (!current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, cardDrawn));
         }
-        else
-        {
-            current_turn_entity.Draw();
-        }
+        while (!hasPlayable);
     }
 
     void TryEndTurn(Entity e)
@@ -133,6 +131,8 @@ public class GameMaster : MonoBehaviour
     void OnTryPlayCard(Entity e, Playable card)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
+        if (e == null || card == null) return;
+        if (e != current_turn_entity) return;
         if (card.IsPlayable())
         {
             PlayCard(e, card);
@@ -145,6 +145,7 @@ public class GameMaster : MonoBehaviour
 
     void PlayCard(Entity e, Playable c)
     {
+        cardNotResolved = true;
         Entity target;
         if (e.e_name.ToLower().Equals("player"))
         {
@@ -160,6 +161,7 @@ public class GameMaster : MonoBehaviour
             case Card top:
                 if (c.Value.IsNull) goto default;
 
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 e.SpendMana(cost);
                 if (top.Value == 0)
                     e.Heal(c.Value.OrIfNull(0));
@@ -167,18 +169,19 @@ public class GameMaster : MonoBehaviour
                     target.Damage(c.Value.OrIfNull(0));
 
                 e.hand.RemoveCard(c);
-                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 break;
             case IActionCard:
             case null:
             default:
+                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 target.Damage(c.Value.OrIfNull(0));
                 e.hand.RemoveCard(c);
-                BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 break;
         }
 
         BattleEventBus.getInstance().afterCardPlayedEvent.Invoke(e, c);
+        cardNotResolved = false;
+        CheckVictory();
     }
 
     void OnTryUseActionCard(Entity e, IActionCard ac)
@@ -196,27 +199,33 @@ public class GameMaster : MonoBehaviour
         BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
     }
 
-    void CheckVictory(Entity e, int _)
+    void OnEntityDamage(Entity e, int _)
     {
-        if (e.hp <= 0)
+        CheckVictory();
+    }
+
+    void CheckVictory()
+    {
+        if (cardNotResolved) return;
+        if (player.hp <= 0)
         {
-            if (e == player)
-            {
-                victor = enemy;
-                BattleEventBus.getInstance().endBattleEvent.Invoke(this);
-            }
-            else if (e == enemy)
-            {
-                victor = player;
-                BattleEventBus.getInstance().endBattleEvent.Invoke(this);
-            }
+            victor = enemy;
         }
+        else if (enemy.hp <= 0)
+        {
+            victor = player;
+        }
+        else
+        {
+            return;
+        }
+        BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
+        current_turn_entity = null;
+        BattleEventBus.getInstance().endBattleEvent.Invoke(this);
     }
 
     public bool PlayerWon()
     {
         return victor == player;
     }
-
-
 }

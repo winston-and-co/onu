@@ -8,7 +8,7 @@ public class CardHandLayout : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.getInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        BattleEventBus.getInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
         BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
     }
 
@@ -28,7 +28,7 @@ public class CardHandLayout : MonoBehaviour
         }
     }
 
-    void OnCardPlayed(Entity e, Playable _)
+    void AfterCardPlayed(Entity e, Playable _)
     {
         if (!e.hand == hand)
         {

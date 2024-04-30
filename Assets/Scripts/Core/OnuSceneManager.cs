@@ -101,8 +101,11 @@ public class OnuSceneManager : MonoBehaviour
         var gm = GameMaster.GetInstance();
         gm.player = pd.Player;
         // enemy
+        // https://stackoverflow.com/questions/3132126/how-do-i-select-a-random-value-from-an-enumeration
         var eg = EnemyGenerator.GetInstance();
-        var enemy = eg.Generate(EnemyCharacter.Ken);
+        System.Array enemyCharacters = System.Enum.GetValues(typeof(EnemyCharacter));
+        var ec = (EnemyCharacter)enemyCharacters.GetValue(Random.Range(0, enemyCharacters.Length));
+        var enemy = eg.Generate(ec);
         gm.enemy = enemy;
     }
     void CleanBattleScene()

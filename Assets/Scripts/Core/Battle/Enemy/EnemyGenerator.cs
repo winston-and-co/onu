@@ -2,7 +2,8 @@ using UnityEngine;
 
 public enum EnemyCharacter
 {
-    Ken
+    Ken,
+    LightweightLarry,
 }
 
 public class EnemyGenerator : MonoBehaviour
@@ -33,6 +34,9 @@ public class EnemyGenerator : MonoBehaviour
             case EnemyCharacter.Ken:
                 Ken(enemy);
                 break;
+            case EnemyCharacter.LightweightLarry:
+                LightweightLarry(enemy);
+                break;
             default:
                 throw new System.NotImplementedException("Fell through player entity initialization with invalid EnemyCharacter value.");
         }
@@ -62,7 +66,31 @@ public class EnemyGenerator : MonoBehaviour
 
         // sprite
         var r = enemy.GetComponentInChildren<SpriteRenderer>();
-        var sprite = Resources.Load<Sprite>("Sprites/Alpha/ken");
+        var sprite = Resources.Load<Sprite>("Sprites/Alpha/Enemy/ken");
+        r.sprite = sprite;
+    }
+
+    void LightweightLarry(Entity enemy)
+    {
+        enemy.e_name = "Lightweight Larry";
+        enemy.isPlayer = false;
+        // base stats
+        enemy.maxHP = 80;
+        enemy.hp = enemy.maxHP;
+        enemy.maxMana = 15;
+        enemy.mana = enemy.maxMana;
+        enemy.startingHandSize = 7;
+        enemy.gameRules = new();
+
+        // base deck
+        var dg = DeckGenerator.GetInstance();
+        if (dg == null) throw new System.Exception("Deck generator not found.");
+        var deck = dg.Generate(DeckType.Standard, enemy);
+        enemy.deck = deck;
+
+        // sprite
+        var r = enemy.GetComponentInChildren<SpriteRenderer>();
+        var sprite = Resources.Load<Sprite>("Sprites/Alpha/Enemy/lightweight_larry");
         r.sprite = sprite;
     }
 }
