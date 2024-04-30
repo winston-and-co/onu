@@ -12,11 +12,6 @@ public class DefaultRuleset : Ruleset
 
     public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
-        if (e == null || c == null) return (false, 0);
-
-        // must be their turn
-        if (e != gm.current_turn_entity) return (false, 0);
-
         var discard = gm.discard;
         var topCard = discard.Peek();
         // first card

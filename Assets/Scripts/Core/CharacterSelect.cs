@@ -55,9 +55,6 @@ public class CharacterSelect : MonoBehaviour
         player.mana = player.maxMana;
         player.startingHandSize = 7;
         player.gameRules = new();
-        player.gameRules.Add(new RuleCards.Purple());
-        player.gameRules.Add(new RuleCards.Teal());
-        player.gameRules.Add(new RuleCards.Orange());
 
         // base deck
         var dg = DeckGenerator.GetInstance();

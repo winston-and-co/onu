@@ -76,7 +76,6 @@ public class CardSprite : MonoBehaviour
             var secondFromTop = items[items.Count - 2];
             foreach (var r in secondFromTop.GetComponentsInChildren<Renderer>())
             {
-                print(r.name);
                 r.enabled = false;
             }
             var tmp = secondFromTop.GetComponentInChildren<TextMeshPro>();

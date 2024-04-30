@@ -39,15 +39,25 @@ public class Pile : MonoBehaviour
         card.gameObject.transform.localPosition = Vector3.zero;
     }
 
-    public List<Card> RemoveCardsFromEntity(Entity e)
+    /// <summary>
+    /// Removes cards that belonged to given entity.
+    /// </summary>
+    /// <param name="includeTop">Whether the top card should also be removed</param>
+    /// <returns>
+    /// A list containing the removed cards.
+    /// </returns>
+    public List<Card> RemoveCardsFromEntity(Entity e, bool includeTop)
     {
-        IEnumerable<Card> cards = pile
-            .Where(c => c.entity == e && c != Peek() && c is Card)
-            .Select(c => c as Card);
         List<Card> res = new();
-        foreach (var c in cards)
+        foreach (var c in pile)
         {
-            res.Add(c);
+            if (c.entity == e && (includeTop || c != Peek()) && c is Card)
+            {
+                res.Add(c as Card);
+            }
+        }
+        foreach (var c in res)
+        {
             pile.Remove(c);
         }
         return res;
