@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5734043393291610152}
   - component: {fileID: 5699542559416705474}
   - component: {fileID: 8131236610007650695}
-  - component: {fileID: 1515218315674033812}
   - component: {fileID: 8103286495105271251}
   m_Layer: 5
   m_Name: add_colorless
@@ -195,8 +194,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1515218315674033812}
-        m_TargetAssemblyTypeName: ColorlessFiveOptionCard, Assembly-CSharp
+      - m_Target: {fileID: 8103286495105271251}
+        m_TargetAssemblyTypeName: ColorlessOptionCard, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -207,18 +206,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1515218315674033812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389656555645120446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbeadb59fc680934fb708e4d6cafbb5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8103286495105271251
 MonoBehaviour:
   m_ObjectHideFlags: 0
