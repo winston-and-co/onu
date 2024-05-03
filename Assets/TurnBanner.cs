@@ -23,6 +23,8 @@ public class TurnBanner : MonoBehaviour
     // Call this method when it's a player's turn
     public void ShowPlayerTurn(Entity e)
     {
+        turnBanner.SetActive(true);
+
         turnBannerText.text = $"{e.e_name}'s turn"; // Update the text
 
         var pos = turnBanner.transform.position;
@@ -35,7 +37,7 @@ public class TurnBanner : MonoBehaviour
         StartTextEffects();
 
         // Optional: hide the banner after some time
-        //Invoke("HideBanner", 3.0f); // Wait 3 seconds before hiding
+        Invoke("HideBanner", 1.4f); // Wait 3 seconds before hiding
     }
 
     void StartTextEffects()
