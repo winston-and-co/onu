@@ -6,6 +6,7 @@ public class RandomActionCardOption : MonoBehaviour
 {
     public void Play()
     {
-
+        GetComponentInParent<BathroomOptions>().OptionPicked(gameObject);
+        
     }
 }

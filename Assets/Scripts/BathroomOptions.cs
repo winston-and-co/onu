@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,20 @@ using static TreeEditor.TreeEditorHelper;
 public class BathroomOptions : MonoBehaviour
 {
 
-    public List<BathroomOptionCard> options;
+    public List<GameObject> prefabs;
+    private List<BathroomOptionCard> options = new List<BathroomOptionCard>();
+
+    public void Start()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            int idx = UnityEngine.Random.Range(0, prefabs.Count);
+            GameObject spawned = GameObject.Instantiate(prefabs[idx]);
+            spawned.transform.parent = transform;
+            options.Add(spawned.GetComponent<BathroomOptionCard>());
+            spawned.transform.localPosition = new Vector3(200*i - 200,0,0);
+        }
+    }
     // Start is called before the first frame update
     public void OptionPicked(GameObject go)
     {
