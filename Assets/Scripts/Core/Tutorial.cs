@@ -10,7 +10,7 @@ public class Tutorial : MonoBehaviour
     public void Start()
     {
         parts = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i< gameObject.transform.childCount; i++)
+        for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             parts[i] = gameObject.transform.GetChild(i).gameObject;
         }
@@ -24,9 +24,5 @@ public class Tutorial : MonoBehaviour
         {
             parts[index].SetActive(true);
         }
-
-        
-
-
     }
 }
