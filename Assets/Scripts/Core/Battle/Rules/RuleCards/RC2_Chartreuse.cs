@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Chartreuse : Ruleset
+    public class Chartreuse : RulesetBase
     {
         public override string Name => "RC2_Chartreuse";
 

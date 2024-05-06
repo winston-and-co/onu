@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Orange : Ruleset
+    public class Orange : RulesetBase
     {
         public override string Name => "RC3_Orange";
 
