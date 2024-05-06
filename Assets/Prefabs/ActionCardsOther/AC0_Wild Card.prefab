@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6452353215286056222}
-  - component: {fileID: 6446634874283241831}
+  - component: {fileID: -4631355713922565407}
   - component: {fileID: 4535161893565731347}
   m_Layer: 0
-  m_Name: AC0_Wild
+  m_Name: AC0_Wild Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: -8.156296, y: 0.8771961}
   m_SizeDelta: {x: 4.4, y: 6.8}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6446634874283241831
+--- !u!114 &-4631355713922565407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,16 +47,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 710982165802018158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da674d3f2504cb144a6d4587db57f6c5, type: 3}
+  m_Script: {fileID: 11500000, guid: cfeffda49d2500947b4968c16aa83f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Value:
     Value: 0
-    IsNull: 1
+    IsNull: 0
   _color: {r: 0, g: 0, b: 0, a: 0}
   entity: {fileID: 0}
-  GM: {fileID: 0}
-  wildPromptPrefab: {fileID: 4893273125176196827, guid: 89158ea664cd3af49bef402f1b2bb1a1, type: 3}
 --- !u!61 &4535161893565731347
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -207,8 +205,10 @@ MonoBehaviour:
   flipped: 0
   spriteRenderer: {fileID: 7426147858913187955}
   front: {fileID: 21300000, guid: d2801498c5df4bc45b4b364297133d8f, type: 3}
-  back: {fileID: 21300000, guid: d2801498c5df4bc45b4b364297133d8f, type: 3}
+  back: {fileID: 21300000, guid: ecca4599c860fae4abefb50a65009149, type: 3}
   textMeshPro: {fileID: 0}
-  playable: {fileID: 6446634874283241831}
+  playable: {fileID: -4631355713922565407}
+  cardInHandScale: {x: 0.3, y: 0.3, z: 1}
+  cardInPileScale: {x: 0.2, y: 0.2, z: 1}
   enlargedScale: {x: 0.31, y: 0.31, z: 0.31}
   originalScale: {x: 0.29, y: 0.29, z: 0.29}

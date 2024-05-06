@@ -1,5 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using ActionCards;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
@@ -17,6 +19,15 @@ public class PlayerData : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        GameObject acContainer = new()
+        {
+            name = "ActionCards"
+        };
+        acContainer.transform.SetParent(transform);
+        acContainer.SetActive(false);
+
+        AddActionCard("AC0_Wild");
     }
 
     /// <summary>
@@ -36,4 +47,22 @@ public class PlayerData : MonoBehaviour
     }
 
     public Entity Player;
+
+    readonly List<ActionCardBase> actionCards = new();
+    public ReadOnlyCollection<ActionCardBase> ActionCards => actionCards.AsReadOnly();
+
+    public void AddActionCard(string actionCardName)
+    {
+        var go = Instantiate(Resources.Load<GameObject>($"Prefabs/ActionCards/{actionCardName}"));
+        go.transform.SetParent(transform.GetChild(0));
+        var ac = go.GetComponent<ActionCardBase>();
+        actionCards.Add(ac);
+    }
+
+    public bool RemoveActionCard(ActionCardBase actionCard)
+    {
+        var res = actionCards.Remove(actionCard);
+        Destroy(actionCard);
+        return res;
+    }
 }

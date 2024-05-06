@@ -170,7 +170,7 @@ public class GameMaster : MonoBehaviour
 
                 e.hand.RemoveCard(c);
                 break;
-            case IActionCard:
+            case IUsable:
             case null:
             default:
                 BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
@@ -184,7 +184,7 @@ public class GameMaster : MonoBehaviour
         CheckVictory();
     }
 
-    void OnTryUseActionCard(Entity e, IActionCard ac)
+    void OnTryUseActionCard(Entity e, IUsable ac)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         if (ac.IsUsable())
@@ -193,7 +193,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    void UseActionCard(Entity e, IActionCard ac)
+    void UseActionCard(Entity e, IUsable ac)
     {
         ac.Use();
         BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
