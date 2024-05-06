@@ -79,7 +79,10 @@ public class CardSprite : MonoBehaviour
                 r.enabled = false;
             }
             var tmp = secondFromTop.GetComponentInChildren<TextMeshPro>();
-            tmp.enabled = false;
+            if (tmp != null)
+            {
+                tmp.enabled = false;
+            }
         }
         GetComponentInParent<BoxCollider2D>().enabled = false;
     }
