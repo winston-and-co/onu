@@ -147,7 +147,7 @@ public class GameMaster : MonoBehaviour
     {
         cardNotResolved = true;
         Entity target;
-        if (e.e_name.ToLower().Equals("player"))
+        if (e == player)
         {
             target = enemy;
         }
