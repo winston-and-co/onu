@@ -16,12 +16,12 @@ public class CharacterSelectButton : MonoBehaviour, IPointerClickHandler
         var preview = cs.PreviewPlayerCharacter(character);
 
         statsPanel.SetActive(true);
-        statsTextBody.text = $@"Character 1
+        statsTextBody.text = $@"{preview.e_name}
 
 Max HP: {preview.maxHP}
 Max Mana: {preview.maxMana}
 
-Starting Hand Size: 7
+Starting Hand Size: {preview.startingHandSize}
 
 Deck:
 2x 0 RBGY

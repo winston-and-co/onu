@@ -47,19 +47,6 @@ public class OnuSceneManager : MonoBehaviour
 
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        // scene initialization
-        switch (scene.name)
-        {
-            case "Map":
-                InitMapScene();
-                break;
-            case "Battle":
-                InitBattleScene();
-                break;
-            default:
-                break;
-        }
-
         // scene cleanup
         if (lastSceneName != scene.name)
         {
@@ -76,6 +63,21 @@ public class OnuSceneManager : MonoBehaviour
             }
         }
 
+        // scene initialization
+        switch (scene.name)
+        {
+            case "Map":
+                InitMapScene();
+                break;
+            case "Battle":
+                InitBattleScene();
+                break;
+            case "Boss":
+                InitBossScene();
+                break;
+            default:
+                break;
+        }
         lastSceneName = scene.name;
     }
 
@@ -101,11 +103,13 @@ public class OnuSceneManager : MonoBehaviour
         var gm = GameMaster.GetInstance();
         gm.player = pd.Player;
         // enemy
-        // https://stackoverflow.com/questions/3132126/how-do-i-select-a-random-value-from-an-enumeration
+        Entity enemy;
         var eg = EnemyGenerator.GetInstance();
-        System.Array enemyCharacters = System.Enum.GetValues(typeof(EnemyCharacter));
-        var ec = (EnemyCharacter)enemyCharacters.GetValue(Random.Range(0, enemyCharacters.Length));
-        var enemy = eg.Generate(ec);
+        var floor = pd.CurrentNodeLocation.Item1; // 0-index
+        if (floor < 5)
+            enemy = eg.RandomFromPool(EnemyPool.Easy1);
+        else
+            enemy = eg.RandomFromPool(EnemyPool.Hard1);
         gm.enemy = enemy;
     }
     void CleanBattleScene()
@@ -115,6 +119,23 @@ public class OnuSceneManager : MonoBehaviour
         pd.Player.gameObject.SetActive(false);
         if (pd.Player.deck == null) throw new System.Exception();
         pd.Player.deck.gameObject.SetActive(false);
+    }
+
+    void InitBossScene()
+    {
+        // player
+        var pd = PlayerData.GetInstance();
+        if (pd.Player == null) throw new System.Exception();
+        pd.Player.gameObject.SetActive(true);
+        if (pd.Player.deck == null) throw new System.Exception();
+        pd.Player.deck.gameObject.SetActive(true);
+        var gm = GameMaster.GetInstance();
+        gm.player = pd.Player;
+        // enemy
+        Entity enemy;
+        var eg = EnemyGenerator.GetInstance();
+        enemy = eg.RandomFromPool(EnemyPool.Boss1);
+        gm.enemy = enemy;
     }
 
     public void ChangeScene(Scene scene)
