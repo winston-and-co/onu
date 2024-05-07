@@ -1637,8 +1637,6 @@ MonoBehaviour:
   nodes: []
   nodeTypes:
   - {fileID: 8934911948521868273, guid: ce49434049827694f89a2b66d422f2c9, type: 3}
-  - {fileID: 3948948740939598390, guid: 80b588a9cd55477498eb6a85796c05e1, type: 3}
-  - {fileID: 2540803680939426725, guid: 02eee68b05af7094bb517f6d930883b9, type: 3}
   spawnRegion: {x: -5, y: 5}
   minDistance: 2
   positions: []

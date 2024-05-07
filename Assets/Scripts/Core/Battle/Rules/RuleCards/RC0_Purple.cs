@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Purple : Ruleset
+    public class Purple : RulesetBase
     {
         public override string Name => "RC0_Purple";
 

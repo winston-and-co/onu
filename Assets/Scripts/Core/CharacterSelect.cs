@@ -55,6 +55,11 @@ public class CharacterSelect : MonoBehaviour
         player.mana = player.maxMana;
         player.startingHandSize = 7;
         player.gameRules = new();
+        // player.gameRules.Add(new RuleCards.Purple());
+        // player.gameRules.Add(new RuleCards.Chartreuse());
+
+        // PlayerData.GetInstance().AddActionCard("AC0_Wild");
+        // PlayerData.GetInstance().AddActionCard("AC0_Wild");
 
         // base deck
         var dg = DeckGenerator.GetInstance();

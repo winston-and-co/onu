@@ -30,8 +30,6 @@ public class BattleEventBus
 
     public ActionCardTryUseEvent actionCardTryUseEvent = new();
     public ActionCardUsedEvent actionCardUsedEvent = new();
-    public ActionCardObtainedEvent actionCardObtainedEvent = new();
-    public ActionCardDiscardedEvent actionCardDiscardedEvent = new();
 
     public StartBattleEvent startBattleEvent = new();
     public StartTurnEvent startTurnEvent = new();
@@ -65,7 +63,5 @@ public class EntityManaSpentEvent : UnityEvent<Entity, int> { }
 public class EntityRefreshEvent : UnityEvent<Entity> { }
 
 // Action Cards
-public class ActionCardTryUseEvent : UnityEvent<Entity, IActionCard> { }
-public class ActionCardUsedEvent : UnityEvent<Entity, IActionCard> { }
-public class ActionCardObtainedEvent : UnityEvent<Entity, IActionCard> { }
-public class ActionCardDiscardedEvent : UnityEvent<Entity, IActionCard> { }
+public class ActionCardTryUseEvent : UnityEvent<Entity, ActionCardBase> { }
+public class ActionCardUsedEvent : UnityEvent<Entity, ActionCardBase> { }

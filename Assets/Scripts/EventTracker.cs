@@ -110,8 +110,6 @@ public class EventTracker : MonoBehaviour
 
         bus.actionCardTryUseEvent.AddListener((_, _) => Print("actionCardTryUseEvent"));
         bus.actionCardUsedEvent.AddListener((_, _) => Print("actionCardUsedEvent"));
-        bus.actionCardObtainedEvent.AddListener((_, _) => Print("actionCardObtainedEvent"));
-        bus.actionCardDiscardedEvent.AddListener((_, _) => Print("actionCardDiscardedEvent"));
 
         bus.startBattleEvent.AddListener((_) => Print("startBattleEvent"));
         bus.startTurnEvent.AddListener((_) => Print("startTurnEvent"));

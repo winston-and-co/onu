@@ -5,22 +5,22 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
-public class GameRulesController : Ruleset
+public class GameRulesController : IRuleset
 {
-    private readonly HashSet<Ruleset> rules = new() { new DefaultRuleset() };
-    public HashSet<Ruleset> Rules { get => rules; }
+    private readonly HashSet<RulesetBase> rules = new() { new DefaultRuleset() };
+    public HashSet<RulesetBase> Rules { get => rules; }
 
-    public bool Add(Ruleset ruleset)
+    public bool Add(RulesetBase ruleset)
     {
         return rules.Add(ruleset);
     }
-    public bool Remove(Ruleset ruleset)
+    public bool Remove(RulesetBase ruleset)
     {
         return rules.Remove(ruleset);
     }
 
     /// <param name="depth">Unused</param>
-    public override RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth = 0)
+    public RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth = 0)
     {
         var res = rules
             .Select(r => r.ColorsMatch(gm, e, color, target, 0))
@@ -33,7 +33,7 @@ public class GameRulesController : Ruleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public override RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
+    public RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
     {
         var res = rules
             .Select(r => r.CardIsPlayable(gm, e, c))
@@ -46,7 +46,7 @@ public class GameRulesController : Ruleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public override RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+    public RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
     {
         var res = rules
             .Select(r => r.CardManaCost(gm, e, c))
@@ -59,7 +59,7 @@ public class GameRulesController : Ruleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public override RuleResult<bool> CanDraw(GameMaster gm, Entity e)
+    public RuleResult<bool> CanDraw(GameMaster gm, Entity e)
     {
         var res = rules
             .Select(r => r.CanDraw(gm, e))

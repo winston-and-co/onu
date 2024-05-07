@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultRuleset : Ruleset
+public class DefaultRuleset : RulesetBase
 {
     public override string Name => "DefaultRuleset";
 
