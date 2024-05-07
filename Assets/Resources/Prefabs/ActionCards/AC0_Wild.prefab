@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 5797359494317665229}
   - component: {fileID: 1064485561874919919}
   - component: {fileID: 8848767291991583471}
+  - component: {fileID: -6088372048560526753}
   m_Layer: 0
   m_Name: AC0_Wild
   m_TagString: Untagged
@@ -172,3 +173,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 110, y: 170}
   m_EdgeRadius: 0
+--- !u!114 &-6088372048560526753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6384726088324911719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00d525f528f3ba409bef3f672d9b128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: Wild
+  Body: When played, choose a Color to transform into.
