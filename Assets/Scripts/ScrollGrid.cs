@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class ScrollGrid : MonoBehaviour
 {
     [SerializeField] List<GameObject> Items;
-
-    public int spacingBetween = 30;
-    public int columns = 5;
-    public ScrollRect scrollRect;
+    public bool IsOpen = false;
+    public int Spacing = 30;
+    public int NumColumns = 5;
+    public ScrollRect ScrollRect;
 
     void Awake()
     {
-        if (scrollRect == null && !TryGetComponent(out scrollRect))
+        if (ScrollRect == null && !TryGetComponent(out ScrollRect))
         {
             throw new System.NullReferenceException("ScrollRect component is missing.");
         }
@@ -28,17 +28,17 @@ public class ScrollGrid : MonoBehaviour
     {
         Items = items;
         float maxWidth = 0;
-        float rowYPos = spacingBetween;
-        for (int row = 0; row < Items.Count / columns + 1; row++)
+        float rowYPos = Spacing;
+        for (int row = 0; row < Items.Count / NumColumns + 1; row++)
         {
             // rows
             float rowWidth = 0;
             float rowHeight = 0;
-            for (int col = 0; col < columns; col++)
+            for (int col = 0; col < NumColumns; col++)
             {
-                if (row * columns + col >= Items.Count) break;
+                if (row * NumColumns + col >= Items.Count) break;
                 // cols
-                var item = Items[row * columns + col];
+                var item = Items[row * NumColumns + col];
                 var rt = item.GetComponent<RectTransform>();
                 rt.anchorMin = new Vector2(0, 1);
                 rt.anchorMax = new Vector2(0, 1);
@@ -46,20 +46,20 @@ public class ScrollGrid : MonoBehaviour
                 float xPos;
                 if (col == 0)
                 {
-                    xPos = spacingBetween;
+                    xPos = Spacing;
                 }
                 else
                 {
-                    var prevItem = Items[row * columns + col - 1];
+                    var prevItem = Items[row * NumColumns + col - 1];
                     var prevRt = prevItem.GetComponent<RectTransform>();
-                    xPos = prevRt.anchoredPosition.x + prevRt.rect.width + spacingBetween;
+                    xPos = prevRt.anchoredPosition.x + prevRt.rect.width + Spacing;
                 }
-                rt.SetParent(scrollRect.content);
+                rt.SetParent(ScrollRect.content);
                 rt.anchoredPosition = new Vector2(xPos, -rowYPos);
-                rowWidth += spacingBetween + rt.rect.width;
-                if (spacingBetween + rt.rect.height > rowHeight)
+                rowWidth += Spacing + rt.rect.width;
+                if (Spacing + rt.rect.height > rowHeight)
                 {
-                    rowHeight = spacingBetween + rt.rect.height;
+                    rowHeight = Spacing + rt.rect.height;
                 }
             }
             rowYPos += rowHeight;
@@ -69,14 +69,19 @@ public class ScrollGrid : MonoBehaviour
             }
         }
         var sizeVertical = rowYPos;
-        scrollRect.content.SetSizeWithCurrentAnchors(
+        ScrollRect.content.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Vertical,
             sizeVertical
         );
-        var sizeHorizontal = maxWidth + spacingBetween
-            + scrollRect.GetComponentInChildren<Scrollbar>()
+        var sizeHorizontal = maxWidth + Spacing
+            + ScrollRect.GetComponentInChildren<Scrollbar>(true)
                         .GetComponent<RectTransform>().rect.width;
-        scrollRect.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(
+        var srrt = ScrollRect.GetComponent<RectTransform>();
+        srrt.SetSizeWithCurrentAnchors(
+            RectTransform.Axis.Vertical,
+            sizeVertical
+        );
+        srrt.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Horizontal,
             sizeHorizontal
         );
@@ -85,10 +90,12 @@ public class ScrollGrid : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        IsOpen = true;
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+        IsOpen = false;
     }
 }

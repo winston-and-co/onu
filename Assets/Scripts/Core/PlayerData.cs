@@ -19,15 +19,6 @@ public class PlayerData : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        GameObject acContainer = new()
-        {
-            name = "ActionCards"
-        };
-        acContainer.transform.SetParent(transform);
-        acContainer.SetActive(false);
-
-        AddActionCard("AC0_Wild");
     }
 
     /// <summary>
@@ -49,20 +40,42 @@ public class PlayerData : MonoBehaviour
     public Entity Player;
 
     readonly List<ActionCardBase> actionCards = new();
+    /// <summary>
+    /// Holds a list of prefabs.
+    /// </summary>
     public ReadOnlyCollection<ActionCardBase> ActionCards => actionCards.AsReadOnly();
 
-    public void AddActionCard(string actionCardName)
+    public List<ActionCardBase> InstantiateActionCards()
     {
-        var go = Instantiate(Resources.Load<GameObject>($"Prefabs/ActionCards/{actionCardName}"));
-        go.transform.SetParent(transform.GetChild(0));
-        var ac = go.GetComponent<ActionCardBase>();
-        actionCards.Add(ac);
+        List<ActionCardBase> spawned = new();
+        for (int i = 0; i < actionCards.Count; i++)
+        {
+            var obj = Instantiate(actionCards[i]);
+            obj.PlayerDataIndex = i;
+            spawned.Add(obj);
+        }
+        return spawned;
     }
 
-    public bool RemoveActionCard(ActionCardBase actionCard)
+    /// <summary>
+    /// Add an Action Card by name. Checks if the prefab exists.
+    /// </summary>
+    /// <param name="actionCardName">Name of the prefab</param>
+    /// <returns>Whether it was successful</returns>
+    public bool AddActionCard(string actionCardName)
     {
-        var res = actionCards.Remove(actionCard);
-        Destroy(actionCard);
-        return res;
+        var res = Resources.Load<ActionCardBase>($"Prefabs/ActionCards/{actionCardName}");
+        if (res == null) return false;
+        actionCards.Add(res);
+        return true;
+    }
+
+    /// <summary>
+    /// Remove an Action Card by index
+    /// </summary>
+    /// <param name="actionCard">The index to remove at</param>
+    public void RemoveActionCardAt(int idx)
+    {
+        actionCards.RemoveAt(idx);
     }
 }

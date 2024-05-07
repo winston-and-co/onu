@@ -184,19 +184,27 @@ public class GameMaster : MonoBehaviour
         CheckVictory();
     }
 
-    void OnTryUseActionCard(Entity e, IUsable ac)
+    void OnTryUseActionCard(Entity e, ActionCardBase ac)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        if (ac.IsUsable())
+        if (ac is IUsable usable)
         {
-            UseActionCard(e, ac);
+            if (usable.IsUsable())
+            {
+                UseActionCard(e, ac);
+            }
         }
     }
 
-    void UseActionCard(Entity e, IUsable ac)
+    void UseActionCard(Entity e, ActionCardBase ac)
     {
-        ac.Use();
-        BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
+        if (ac is IUsable usable)
+        {
+            usable.Use();
+            BattleEventBus.getInstance().actionCardUsedEvent.Invoke(e, ac);
+            // TODO: Move this to an event handler in PlayerData if a non-battle event bus is created
+            PlayerData.GetInstance().RemoveActionCardAt(ac.PlayerDataIndex);
+        }
     }
 
     void OnEntityDamage(Entity e, int _)

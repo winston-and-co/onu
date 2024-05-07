@@ -1,17 +1,25 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ActionCardPouch : MonoBehaviour
+public class ActionCardPouch : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] ActionCardPicker picker;
 
-    bool isOpen = false;
-
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (isOpen)
+        if (picker.IsOpen)
             picker.Hide();
         else
             picker.Show();
-        isOpen = !isOpen;
+    }
+
+    public void SafeShow()
+    {
+        if (!picker.IsOpen) picker.Show();
+    }
+
+    public void SafeHide()
+    {
+        if (picker.IsOpen) picker.Hide();
     }
 }

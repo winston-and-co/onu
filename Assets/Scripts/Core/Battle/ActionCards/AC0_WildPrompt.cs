@@ -33,8 +33,6 @@ namespace ActionCards
 
         void OnClick(Color color)
         {
-            // must stop blocking before OnColorSelected
-            Hide();
             wild.OnColorSelected(color);
         }
 

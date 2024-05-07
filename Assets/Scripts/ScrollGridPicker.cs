@@ -44,14 +44,17 @@ public class ScrollGridPicker : ScrollGrid
             outline = Instantiate(outlinePrefab);
         }
         outline.GetComponent<Image>().color = outlineColor;
-        outline.transform.SetParent(base.scrollRect.content);
+        outline.transform.SetParent(base.ScrollRect.content);
         outline.transform.SetAsFirstSibling();
     }
 
     public new void Hide()
     {
+        if (outline != null)
+        {
+            Destroy(outline);
+        }
         base.Hide();
-        Destroy(outline);
     }
 
     void ShowOutline(GameObject target)

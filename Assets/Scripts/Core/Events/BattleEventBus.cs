@@ -63,5 +63,5 @@ public class EntityManaSpentEvent : UnityEvent<Entity, int> { }
 public class EntityRefreshEvent : UnityEvent<Entity> { }
 
 // Action Cards
-public class ActionCardTryUseEvent : UnityEvent<Entity, IUsable> { }
-public class ActionCardUsedEvent : UnityEvent<Entity, IUsable> { }
+public class ActionCardTryUseEvent : UnityEvent<Entity, ActionCardBase> { }
+public class ActionCardUsedEvent : UnityEvent<Entity, ActionCardBase> { }

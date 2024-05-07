@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ActionCards;
 using Blockers;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class ActionCardPicker : ScrollGridPicker
 {
+    List<GameObject> spawned;
+
     void Awake()
     {
         base.OnItemPicked.AddListener(OnActionCardPicked);
@@ -23,14 +26,18 @@ public class ActionCardPicker : ScrollGridPicker
     public new void Show()
     {
         UIPopupBlocker.StartBlocking();
-        base.SetItems(PlayerData.GetInstance().ActionCards
-            .Select(ac => ac.gameObject).ToList());
+        spawned = PlayerData.GetInstance().InstantiateActionCards()
+            .Select(obj => obj.gameObject)
+            .ToList();
+        base.SetItems(spawned);
         base.Show();
     }
 
     public new void Hide()
     {
-        UIPopupBlocker.StopBlocking();
         base.Hide();
+        foreach (var go in spawned)
+            Destroy(go);
+        UIPopupBlocker.StopBlocking();
     }
 }
