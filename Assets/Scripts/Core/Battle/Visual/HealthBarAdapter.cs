@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +18,7 @@ public class HealthBarAdapter : MonoBehaviour
     {
         entity = isPlayerAdapter ? gm.player : gm.enemy;
         bar.Initialize(entity.maxHP);
+        bar.UpdateHealthBar(entity.hp);
         hpText.SetText($"{entity.hp} / {entity.maxHP}");
     }
 

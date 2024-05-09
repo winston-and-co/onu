@@ -31,7 +31,7 @@ public class OnuSceneManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "MainMenu")
         {
-            SceneManager.LoadSceneAsync("MainMenu");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

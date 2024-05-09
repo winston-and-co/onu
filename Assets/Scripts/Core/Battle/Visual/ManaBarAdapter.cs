@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,13 +11,14 @@ public class ManaBarAdapter : MonoBehaviour
     void Awake()
     {
         BattleEventBus.getInstance().startBattleEvent.AddListener(OnStartBattle);
-        BattleEventBus.getInstance().entityHealthChangedEvent.AddListener(OnEntityManaChanged);
+        BattleEventBus.getInstance().entityManaChangedEvent.AddListener(OnEntityManaChanged);
     }
 
     void OnStartBattle(GameMaster gm)
     {
         entity = isPlayerAdapter ? gm.player : gm.enemy;
         bar.Initialize(entity.maxMana);
+        bar.UpdateHealthBar(entity.mana);
         manaText.SetText($"{entity.mana} / {entity.maxMana}");
     }
 

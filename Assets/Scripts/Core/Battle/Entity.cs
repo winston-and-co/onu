@@ -7,7 +7,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public bool isPlayer;
-    public GameRulesController gameRules;
+    public GameRulesController gameRules = new();
     public Deck deck;
     public Hand hand;
 
