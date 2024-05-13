@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Cards;
 
 public class Hand : MonoBehaviour
 {
-    public List<Playable> hand;
-    public Entity e;
+    public List<AbstractCard> hand;
+    public AbstractEntity e;
 
     private void Awake()
     {
-        Playable[] c = GetComponentsInChildren<Playable>();
+        AbstractCard[] c = GetComponentsInChildren<AbstractCard>();
 
         for (int i = 0; i < c.Length; i++)
         {
@@ -19,19 +20,19 @@ public class Hand : MonoBehaviour
         }
     }
 
-    public void AddCard(Playable c)
+    public void AddCard(AbstractCard c)
     {
         hand.Add(c);
         c.gameObject.SetActive(true);
         c.gameObject.transform.SetParent(transform, false);
     }
 
-    public void RemoveCard(Playable c)
+    public void RemoveCard(AbstractCard c)
     {
         hand.Remove(c);
     }
 
-    public Playable GetCard(int index)
+    public AbstractCard GetCard(int index)
     {
         return hand[index];
     }

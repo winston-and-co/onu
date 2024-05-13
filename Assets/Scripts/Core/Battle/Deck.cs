@@ -1,14 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Cards;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private List<Card> m_Cards = null;
+    [SerializeField] private List<AbstractCard> m_Cards = null;
     public GameObject card_prefab;
-    public Entity e;
+    public AbstractEntity e;
     public Color[] colors;
 
     void Awake()
@@ -23,12 +23,12 @@ public class Deck : MonoBehaviour
         var cards = d.RemoveCardsFromEntity(e, true);
         foreach (var c in e.hand.hand)
         {
-            if (c is not Card)
+            if (c is not AbstractCard)
             {
                 e.hand.RemoveCard(c);
             }
         }
-        cards = cards.Concat(e.hand.hand.Select(p => p as Card)).ToList();
+        cards = cards.Concat(e.hand.hand.Select(p => p as AbstractCard)).ToList();
         e.hand.hand = new();
         foreach (var c in cards)
         {
@@ -38,7 +38,7 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public void Populate(List<Card> cards)
+    public void Populate(List<AbstractCard> cards)
     {
         m_Cards = cards;
     }
@@ -49,28 +49,28 @@ public class Deck : MonoBehaviour
     }
 
 
-    public Card get(int index)
+    public AbstractCard get(int index)
     {
         return m_Cards[index];
     }
 
-    public void Add(Card c)
+    public void Add(AbstractCard c)
     {
         m_Cards.Add(c);
     }
-    public Card Remove(int id)
+    public AbstractCard Remove(int id)
     {
-        Card c = m_Cards[id];
+        AbstractCard c = m_Cards[id];
         m_Cards.RemoveAt(id);
         return c;
     }
 
-    public Card Draw()
+    public AbstractCard Draw()
     {
         // TODO: When no cards in deck, maybe reshuffle cards from discard pile
         // Should probably keep track of who's cards are who's since separate
         // decks
-        Card c = m_Cards[0];
+        AbstractCard c = m_Cards[0];
         m_Cards.RemoveAt(0);
 
         if (m_Cards.Count == 0)
@@ -102,7 +102,7 @@ public class Deck : MonoBehaviour
         {
             n--;
             int k = rng.Next(n + 1);
-            Card value = m_Cards[k];
+            AbstractCard value = m_Cards[k];
             m_Cards[k] = m_Cards[n];
             m_Cards[n] = value;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ManaBarAdapter : MonoBehaviour
 {
     [SerializeField] bool isPlayerAdapter;
-    public Entity entity;
+    public AbstractEntity entity;
     public TMP_Text manaText;
     public Microlight.MicroBar.MicroBar bar;
 
@@ -22,7 +22,7 @@ public class ManaBarAdapter : MonoBehaviour
         manaText.SetText($"{entity.mana} / {entity.maxMana}");
     }
 
-    void OnEntityManaChanged(Entity e, int _)
+    void OnEntityManaChanged(AbstractEntity e, int _)
     {
         if (e == entity)
         {

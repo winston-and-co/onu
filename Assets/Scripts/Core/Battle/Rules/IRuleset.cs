@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cards;
 
 /// <summary>
 /// Defines rules that other implementations of Ruleset can override. Returned
@@ -19,7 +20,7 @@ public interface IRuleset
     /// Check whether a card's color matches a target color;
     /// </summary>
     /// <returns></returns>
-    public RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth);
+    public RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth);
 
     /// <summary>
     /// Check whether a card is playable given current game state.
@@ -27,7 +28,7 @@ public interface IRuleset
     /// <returns>
     /// <c>RuleResult</c> whether the card is playable.
     /// </returns>
-    public RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c);
+    public RuleResult<bool> CardIsPlayable(GameMaster gm, AbstractEntity e, AbstractCard c);
 
     /// <summary>
     /// Check the cost of playing a card given current game state.
@@ -38,7 +39,7 @@ public interface IRuleset
     /// <returns>
     /// <c>RuleResult</c> cost of card if played.
     /// </returns>
-    public RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c);
+    public RuleResult<int> CardManaCost(GameMaster gm, AbstractEntity e, AbstractCard c);
 
     /// <summary>
     /// Check whether an entity can draw given current game state.
@@ -46,7 +47,7 @@ public interface IRuleset
     /// <returns>
     /// <c>RuleResult</c> whether the entity can draw.
     /// </returns>
-    public RuleResult<bool> CanDraw(GameMaster gm, Entity e);
+    public RuleResult<bool> CanDraw(GameMaster gm, AbstractEntity e);
 }
 
 /// <summary>

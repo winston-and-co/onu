@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthBarAdapter : MonoBehaviour
 {
     [SerializeField] bool isPlayerAdapter;
-    public Entity entity;
+    public AbstractEntity entity;
     public TMP_Text hpText;
     public Microlight.MicroBar.MicroBar bar;
 
@@ -22,7 +22,7 @@ public class HealthBarAdapter : MonoBehaviour
         hpText.SetText($"{entity.hp} / {entity.maxHP}");
     }
 
-    void OnEntityHealthChanged(Entity e, int _)
+    void OnEntityHealthChanged(AbstractEntity e, int _)
     {
         if (e == entity)
         {

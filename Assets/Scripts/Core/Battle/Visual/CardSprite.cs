@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cards;
 
 public class CardSprite : MonoBehaviour
 {
-    [SerializeField] bool EnableMouseEvents;
-    public bool flipped;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Sprite front;
-    [SerializeField] Sprite back;
-    [SerializeField] TextMeshPro textMeshPro;
-    public Playable playable;
+    public bool MouseEventsEnabled;
+    public bool Flipped;
+    public SpriteRenderer SpriteRenderer;
+    public Sprite Front;
+    public Sprite Back;
+    public TextMeshPro CardText;
+    public AbstractCard Card;
 
     protected int Order;
     private int lastOrder;
@@ -22,50 +21,47 @@ public class CardSprite : MonoBehaviour
     public Vector3 enlargedScale = new Vector3(1.2f, 1.2f, 1.2f);
     public Vector3 originalScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-    void OnEnable()
-    {
-        if (spriteRenderer == null) throw new System.NullReferenceException();
-
-        SetupCard();
-    }
-
-    void SetupCard()
-    {
-        if (!flipped)
-        {
-            spriteRenderer.sprite = front;
-            spriteRenderer.color = playable.Color;
-            if (textMeshPro != null)
-            {
-                textMeshPro.text = playable.Value.ToString();
-                textMeshPro.color = Color.white.WithAlpha(1.0f);
-                // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
-                textMeshPro.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
-                textMeshPro.outlineColor = Color.black;
-                textMeshPro.outlineWidth = 0.2f;
-            }
-        }
-        else
-        {
-            spriteRenderer.sprite = back;
-            spriteRenderer.color = Color.white;
-            if (textMeshPro != null)
-            {
-                textMeshPro.text = null;
-            }
-        }
-    }
-
     void Awake()
     {
         BattleEventBus.getInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
         BattleEventBus.getInstance().cardDrawEvent.AddListener(OnCardDrawn);
+
+        if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer)) throw new System.NullReferenceException();
+
+        // SetupCard();
     }
 
-    void AfterCardPlayed(Entity _, Playable p)
+    public void SetupCard()
     {
-        if (p != playable) return;
-        flipped = false;
+        if (!Flipped)
+        {
+            SpriteRenderer.sprite = Front;
+            SpriteRenderer.color = Card.Color;
+            if (CardText != null)
+            {
+                CardText.text = Card.Value.HasValue ? Card.Value.ToString() : "";
+                CardText.color = Color.white.WithAlpha(1.0f);
+                // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
+                CardText.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
+                CardText.outlineColor = Color.black;
+                CardText.outlineWidth = 0.2f;
+            }
+        }
+        else
+        {
+            SpriteRenderer.sprite = Back;
+            SpriteRenderer.color = Color.white;
+            if (CardText != null)
+            {
+                CardText.text = null;
+            }
+        }
+    }
+
+    void AfterCardPlayed(AbstractEntity _, AbstractCard p)
+    {
+        if (p != Card) return;
+        Flipped = false;
         SetupCard();
         var rt = GetComponentsInParent<RectTransform>()[1];
         rt.localScale = cardInPileScale;
@@ -87,9 +83,9 @@ public class CardSprite : MonoBehaviour
         GetComponentInParent<BoxCollider2D>().enabled = false;
     }
 
-    void OnCardDrawn(Entity e, Card c)
+    void OnCardDrawn(AbstractEntity e, AbstractCard c)
     {
-        if (c != playable) return;
+        if (c != Card) return;
 
         var rt = GetComponentsInParent<RectTransform>()[1];
         rt.localScale = cardInHandScale;
@@ -104,15 +100,15 @@ public class CardSprite : MonoBehaviour
 
     public void Flip()
     {
-        flipped = !flipped;
+        Flipped = !Flipped;
         SetupCard();
     }
 
     public void MouseEnter()
     {
-        if (EnableMouseEvents)
+        if (MouseEventsEnabled)
         {
-            lastOrder = spriteRenderer.sortingOrder;
+            lastOrder = SpriteRenderer.sortingOrder;
             transform.localScale = enlargedScale;
             SetOrder(9999);
         }
@@ -120,7 +116,7 @@ public class CardSprite : MonoBehaviour
 
     public void MouseLeave()
     {
-        if (EnableMouseEvents)
+        if (MouseEventsEnabled)
         {
             transform.localScale = originalScale;
             SetOrder(lastOrder);
@@ -129,10 +125,10 @@ public class CardSprite : MonoBehaviour
 
     public void SetOrder(int order)
     {
-        if (spriteRenderer != null)
-            spriteRenderer.sortingOrder = order;
-        if (textMeshPro != null)
-            textMeshPro.sortingOrder = order + 1;
+        if (SpriteRenderer != null)
+            SpriteRenderer.sortingOrder = order;
+        if (CardText != null)
+            CardText.sortingOrder = order + 1;
         Order = order;
     }
 }

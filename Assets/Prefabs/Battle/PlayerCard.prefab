@@ -273,14 +273,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bd0b4cdaa6cb444aad16c29aab019a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnableMouseEvents: 1
-  flipped: 0
-  spriteRenderer: {fileID: 1447437960867306658}
-  front: {fileID: 21300000, guid: 90ba6b13c12beb645b1a7809cd3b4b08, type: 3}
-  back: {fileID: 21300000, guid: b5001fca2b8fea243838f0d044fd54ee, type: 3}
-  textMeshPro: {fileID: 3379011113209444705}
-  playable: {fileID: 8123059603341046139}
-  enlargedScale: {x: 1.2, y: 1.2, z: 1}
+  MouseEventsEnabled: 0
+  Flipped: 0
+  SpriteRenderer: {fileID: 0}
+  Front: {fileID: 21300000, guid: 90ba6b13c12beb645b1a7809cd3b4b08, type: 3}
+  Back: {fileID: 21300000, guid: b5001fca2b8fea243838f0d044fd54ee, type: 3}
+  CardText: {fileID: 3379011113209444705}
+  Card: {fileID: 8123059603341046139}
+  cardInHandScale: {x: 0.3, y: 0.3, z: 1}
+  cardInPileScale: {x: 0.2, y: 0.2, z: 1}
+  enlargedScale: {x: 1.2, y: 1.2, z: 1.2}
   originalScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1257537865484679012
 GameObject:
@@ -374,14 +376,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1257537865484679012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe189fdcb8fada04f8e19a51b569278f, type: 3}
+  m_Script: {fileID: 11500000, guid: ea242366fd4800240960b0bdd1b3fd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cost: 0
   Value:
     Value: 0
     IsNull: 0
   _color: {r: 0, g: 0, b: 0, a: 0}
-  entity: {fileID: 0}
-  m_PlayEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  Entity: {fileID: 0}

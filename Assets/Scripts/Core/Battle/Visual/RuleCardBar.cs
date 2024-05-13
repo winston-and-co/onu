@@ -3,7 +3,7 @@ using UnityEngine;
 public class RuleCardBar : MonoBehaviour
 {
     [SerializeField] bool isPlayer;
-    public Entity entity;
+    public AbstractEntity entity;
     [SerializeField] GameObject root;
     [SerializeField] bool towardRight;
 

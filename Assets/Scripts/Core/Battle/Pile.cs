@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using UnityEngine;
+using Cards;
 
 public class Pile : MonoBehaviour
 {
-    private List<Playable> pile;
-    public ReadOnlyCollection<Playable> Items => pile.AsReadOnly();
+    private List<AbstractCard> pile;
+    public ReadOnlyCollection<AbstractCard> Items => pile.AsReadOnly();
 
     void OnEnable()
     {
@@ -16,13 +14,13 @@ public class Pile : MonoBehaviour
         pile = new();
     }
 
-    void OnCardPlayed(Entity e, Playable card)
+    void OnCardPlayed(AbstractEntity e, AbstractCard card)
     {
         AddToTop(card);
     }
 
     ///<returns>Top of pile, or <c>null</c> if empty.</returns>
-    public Playable Peek()
+    public AbstractCard Peek()
     {
         if (pile.Count == 0)
         {
@@ -31,7 +29,7 @@ public class Pile : MonoBehaviour
         return pile[pile.Count - 1];
     }
 
-    void AddToTop(Playable card)
+    void AddToTop(AbstractCard card)
     {
         pile.Add(card);
         // awful practice, decouple
@@ -46,14 +44,14 @@ public class Pile : MonoBehaviour
     /// <returns>
     /// A list containing the removed cards.
     /// </returns>
-    public List<Card> RemoveCardsFromEntity(Entity e, bool includeTop)
+    public List<AbstractCard> RemoveCardsFromEntity(AbstractEntity e, bool includeTop)
     {
-        List<Card> res = new();
+        List<AbstractCard> res = new();
         foreach (var c in pile)
         {
-            if (c.entity == e && (includeTop || c != Peek()) && c is Card)
+            if (c.Entity == e && (includeTop || c != Peek()) && c is AbstractCard)
             {
-                res.Add(c as Card);
+                res.Add(c as AbstractCard);
             }
         }
         foreach (var c in res)

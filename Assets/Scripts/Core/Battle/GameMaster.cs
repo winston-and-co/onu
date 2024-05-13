@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cards;
 using ActionCards;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,16 +12,16 @@ public class GameMaster : MonoBehaviour
     public static GameMaster GetInstance() => INSTANCE;
 
     public Pile discard;
-    public Entity player;
-    public Entity enemy;
+    public AbstractEntity player;
+    public AbstractEntity enemy;
 
     int turn = 0;
-    Entity[] order;
-    public Entity current_turn_entity;
+    AbstractEntity[] order;
+    public AbstractEntity current_turn_entity;
 
     public int turnNumber;
 
-    public Entity victor;
+    public AbstractEntity victor;
 
     bool cardNotResolved;
 
@@ -44,7 +45,7 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
         // Init combat
-        order = new Entity[2];
+        order = new AbstractEntity[2];
         order[0] = player;
         order[1] = enemy;
 
@@ -94,7 +95,7 @@ public class GameMaster : MonoBehaviour
         // else
         //   draw one card
         bool hasPlayable = false;
-        foreach (Playable c in current_turn_entity.hand.hand)
+        foreach (AbstractCard c in current_turn_entity.hand.hand)
         {
             if (current_turn_entity.gameRules.CardIsPlayable(this, current_turn_entity, c))
             {
@@ -113,14 +114,14 @@ public class GameMaster : MonoBehaviour
         while (!hasPlayable);
     }
 
-    void TryEndTurn(Entity e)
+    void TryEndTurn(AbstractEntity e)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         BattleEventBus.getInstance().endTurnEvent.Invoke(current_turn_entity);
         StartNextTurn();
     }
 
-    bool IsEntityTurn(Entity e)
+    bool IsEntityTurn(AbstractEntity e)
     {
         return e == current_turn_entity;
     }
@@ -128,7 +129,7 @@ public class GameMaster : MonoBehaviour
     /*
      * Validate card being played
      */
-    void OnTryPlayCard(Entity e, Playable card)
+    void OnTryPlayCard(AbstractEntity e, AbstractCard card)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         if (e == null || card == null) return;
@@ -143,10 +144,10 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    void PlayCard(Entity e, Playable c)
+    void PlayCard(AbstractEntity e, AbstractCard c)
     {
         cardNotResolved = true;
-        Entity target;
+        AbstractEntity target;
         if (e == player)
         {
             target = enemy;
@@ -158,23 +159,22 @@ public class GameMaster : MonoBehaviour
         int cost = e.gameRules.CardManaCost(this, e, c);
         switch (discard.Peek())
         {
-            case Card top:
-                if (c.Value.IsNull) goto default;
+            case AbstractCard top:
+                if (!c.Value.HasValue) goto default;
 
                 BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
                 e.SpendMana(cost);
                 if (top.Value == 0)
-                    e.Heal(c.Value.OrIfNull(0));
+                    e.Heal(c.Value ?? 0);
                 else
-                    target.Damage(c.Value.OrIfNull(0));
+                    target.Damage(c.Value ?? 0);
 
                 e.hand.RemoveCard(c);
                 break;
-            case IUsable:
             case null:
             default:
                 BattleEventBus.getInstance().cardPlayedEvent.Invoke(e, c);
-                target.Damage(c.Value.OrIfNull(0));
+                target.Damage(c.Value ?? 0);
                 e.hand.RemoveCard(c);
                 break;
         }
@@ -184,7 +184,7 @@ public class GameMaster : MonoBehaviour
         CheckVictory();
     }
 
-    void OnTryUseActionCard(Entity e, ActionCardBase ac)
+    void OnTryUseActionCard(AbstractEntity e, AbstractActionCard ac)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         if (ac is IUsable usable)
@@ -196,7 +196,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    void UseActionCard(Entity e, ActionCardBase ac)
+    void UseActionCard(AbstractEntity e, AbstractActionCard ac)
     {
         if (ac is IUsable usable)
         {
@@ -207,7 +207,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    void OnEntityDamage(Entity e, int _)
+    void OnEntityDamage(AbstractEntity e, int _)
     {
         CheckVictory();
     }

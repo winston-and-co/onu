@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cards;
 using ActionCards;
 using UnityEngine;
 using UnityEngine.Events;
@@ -39,29 +40,29 @@ public class BattleEventBus
 }
 
 // Game rules
-public class CardTryPlayedEvent : UnityEvent<Entity, Playable> { }
-public class CardPlayedEvent : UnityEvent<Entity, Playable> { }
-public class AfterCardPlayedEvent : UnityEvent<Entity, Playable> { }
-public class CardIllegalEvent : UnityEvent<Entity, Playable> { }
-public class CardDrawEvent : UnityEvent<Entity, Card> { }
-public class CardNoDrawEvent : UnityEvent<Entity, Card> { }
-public class CardTryDrawEvent : UnityEvent<Entity, Card> { }
+public class CardTryPlayedEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class CardPlayedEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class AfterCardPlayedEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class CardIllegalEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class CardDrawEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class CardNoDrawEvent : UnityEvent<AbstractEntity, AbstractCard> { }
+public class CardTryDrawEvent : UnityEvent<AbstractEntity, AbstractCard> { }
 
 // Game flow
 public class StartBattleEvent : UnityEvent<GameMaster> { }
-public class StartTurnEvent : UnityEvent<Entity> { }
-public class EndTurnEvent : UnityEvent<Entity> { }
-public class TryEndTurnEvent : UnityEvent<Entity> { }
+public class StartTurnEvent : UnityEvent<AbstractEntity> { }
+public class EndTurnEvent : UnityEvent<AbstractEntity> { }
+public class TryEndTurnEvent : UnityEvent<AbstractEntity> { }
 public class EndBattleEvent : UnityEvent<GameMaster> { }
 
 // Combat
-public class EntityHealthChangedEvent : UnityEvent<Entity, int> { }
-public class EntityDamageEvent : UnityEvent<Entity, int> { }
-public class EntityHealEvent : UnityEvent<Entity, int> { }
-public class EntityManaChangedEvent : UnityEvent<Entity, int> { }
-public class EntityManaSpentEvent : UnityEvent<Entity, int> { }
-public class EntityRefreshEvent : UnityEvent<Entity> { }
+public class EntityHealthChangedEvent : UnityEvent<AbstractEntity, int> { }
+public class EntityDamageEvent : UnityEvent<AbstractEntity, int> { }
+public class EntityHealEvent : UnityEvent<AbstractEntity, int> { }
+public class EntityManaChangedEvent : UnityEvent<AbstractEntity, int> { }
+public class EntityManaSpentEvent : UnityEvent<AbstractEntity, int> { }
+public class EntityRefreshEvent : UnityEvent<AbstractEntity> { }
 
 // Action Cards
-public class ActionCardTryUseEvent : UnityEvent<Entity, ActionCardBase> { }
-public class ActionCardUsedEvent : UnityEvent<Entity, ActionCardBase> { }
+public class ActionCardTryUseEvent : UnityEvent<AbstractEntity, AbstractActionCard> { }
+public class ActionCardUsedEvent : UnityEvent<AbstractEntity, AbstractActionCard> { }

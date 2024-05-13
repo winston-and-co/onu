@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cards;
 
 public class CardHandLayout : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class CardHandLayout : MonoBehaviour
         }
     }
 
-    void AfterCardPlayed(Entity e, Playable _)
+    void AfterCardPlayed(AbstractEntity e, AbstractCard _)
     {
         if (!e.hand == hand)
         {
@@ -36,7 +37,7 @@ public class CardHandLayout : MonoBehaviour
         }
         ArrangeCards();
     }
-    void OnCardDrawn(Entity e, Playable _)
+    void OnCardDrawn(AbstractEntity e, AbstractCard _)
     {
         if (!e.hand == hand)
         {

@@ -21,7 +21,7 @@ public class TurnBanner : MonoBehaviour
     }
 
     // Call this method when it's a player's turn
-    public void ShowPlayerTurn(Entity e)
+    public void ShowPlayerTurn(AbstractEntity e)
     {
         turnBanner.SetActive(true);
 

@@ -13,7 +13,7 @@ public class TurnButton : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
-    void OnTurnStart(Entity e)
+    void OnTurnStart(AbstractEntity e)
     {
         if (e != PlayerData.GetInstance().Player) return;
         GetComponent<Button>().interactable = true;

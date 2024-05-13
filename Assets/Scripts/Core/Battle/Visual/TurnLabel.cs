@@ -13,7 +13,7 @@ public class TurnLabel : MonoBehaviour
         BattleEventBus.getInstance().startTurnEvent.AddListener(OnTurnStart);
     }
 
-    public void OnTurnStart(Entity e)
+    public void OnTurnStart(AbstractEntity e)
     {
 
         turnLabelText.SetText(e.e_name);

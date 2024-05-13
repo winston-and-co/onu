@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cards;
 
 public class LoseTwoCardOption : MonoBehaviour
 {
     public void Play()
     {
-        Entity p = PlayerData.GetInstance().Player;
+        AbstractEntity p = PlayerData.GetInstance().Player;
         Deck d = p.deck;
 
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
         {
-            Card c = d.Remove(0);
+            AbstractCard c = d.Remove(0);
             Destroy(c.gameObject);
         }
     }

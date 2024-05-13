@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using Cards;
 
 public class GameRulesController : IRuleset
 {
@@ -20,7 +21,7 @@ public class GameRulesController : IRuleset
     }
 
     /// <param name="depth">Unused</param>
-    public RuleResult<bool> ColorsMatch(GameMaster gm, Entity e, Color color, Color target, int depth = 0)
+    public RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth = 0)
     {
         var res = rules
             .Select(r => r.ColorsMatch(gm, e, color, target, 0))
@@ -33,7 +34,7 @@ public class GameRulesController : IRuleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public RuleResult<bool> CardIsPlayable(GameMaster gm, Entity e, Playable c)
+    public RuleResult<bool> CardIsPlayable(GameMaster gm, AbstractEntity e, AbstractCard c)
     {
         var res = rules
             .Select(r => r.CardIsPlayable(gm, e, c))
@@ -46,7 +47,7 @@ public class GameRulesController : IRuleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public RuleResult<int> CardManaCost(GameMaster gm, Entity e, Playable c)
+    public RuleResult<int> CardManaCost(GameMaster gm, AbstractEntity e, AbstractCard c)
     {
         var res = rules
             .Select(r => r.CardManaCost(gm, e, c))
@@ -59,7 +60,7 @@ public class GameRulesController : IRuleset
         return (res[0].Result, int.MaxValue);
     }
 
-    public RuleResult<bool> CanDraw(GameMaster gm, Entity e)
+    public RuleResult<bool> CanDraw(GameMaster gm, AbstractEntity e)
     {
         var res = rules
             .Select(r => r.CanDraw(gm, e))

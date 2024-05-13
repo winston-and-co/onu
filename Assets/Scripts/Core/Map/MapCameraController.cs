@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MapCameraController : MonoBehaviour
 {
-    public float panSpeed = 20f;
+    public float panSpeed = 30f;
     public float panBorderThickness = 10f;
     [SerializeField] public Vector2 panLimitMin;
     [SerializeField] public Vector2 panLimitMax;
@@ -14,23 +14,24 @@ public class MapCameraController : MonoBehaviour
         cam = Camera.main;
     }
 
-    void Update()
+    void OnGUI()
     {
         Vector3 pos = transform.position;
+        pos.y += Input.mouseScrollDelta.y * panSpeed * Time.deltaTime * 10;
 
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+        if (Input.GetKey(KeyCode.W))
         {
             pos.y += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness)
+        if (Input.GetKey(KeyCode.S))
         {
             pos.y -= panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        if (Input.GetKey(KeyCode.D) || Input.mousePosition.x >= Screen.width - panBorderThickness)
         {
             pos.x += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
+        if (Input.GetKey(KeyCode.A) || Input.mousePosition.x <= panBorderThickness)
         {
             pos.x -= panSpeed * Time.deltaTime;
         }
