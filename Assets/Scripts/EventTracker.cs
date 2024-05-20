@@ -24,7 +24,7 @@ public class EventTracker : MonoBehaviour
     public void StartTracker2()
     {
         MethodInfo printMethod = GetType().GetMethod(nameof(Print), BindingFlags.Static | BindingFlags.NonPublic);
-        BattleEventBus bus = BattleEventBus.getInstance();
+        BattleEventBus bus = BattleEventBus.GetInstance();
         FieldInfo[] events = bus.GetType().GetFields();
 
         foreach (var ev in events)
@@ -94,7 +94,7 @@ public class EventTracker : MonoBehaviour
     public void StartTracker()
     {
         // gotta be a better way to do this with reflection but im too lazy to figure that out
-        var bus = BattleEventBus.getInstance();
+        var bus = BattleEventBus.GetInstance();
         bus.cardTryPlayedEvent.AddListener((_, _) => Print("tryPlayEvent"));
         bus.cardPlayedEvent.AddListener((_, _) => Print("cardPlayedEvent"));
         bus.cardIllegalEvent.AddListener((_, _) => Print("cardIllegalEvent"));

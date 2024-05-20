@@ -19,9 +19,9 @@ public class SingletonsManager : MonoBehaviour
         SpawnSingletons();
     }
 
-    [SerializeField] OnuSceneManager onuSceneManagerPrefab;
-    [SerializeField] PlayerData playerDataPrefab;
-    [SerializeField] PrefabHelper prefabHelperPrefab;
+    [SerializeField] GameObject onuSceneManagerPrefab;
+    [SerializeField] GameObject playerDataPrefab;
+    [SerializeField] GameObject prefabHelperPrefab;
 
     void SpawnSingletons()
     {

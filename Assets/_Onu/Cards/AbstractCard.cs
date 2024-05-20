@@ -21,7 +21,7 @@ namespace Cards
                 }
             }
         }
-        protected CardSprite SpriteController;
+        public CardSprite SpriteController;
         public AbstractEntity Entity;
 
         public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled)
@@ -47,12 +47,12 @@ namespace Cards
 
         public virtual bool IsPlayable()
         {
-            return Entity.gameRules.CardIsPlayable(GameMaster.GetInstance(), Entity, this).Result;
+            return Entity.gameRulesController.CardIsPlayable(GameMaster.GetInstance(), Entity, this).Result;
         }
 
         public void OnMouseDown()
         {
-            BattleEventBus.getInstance().cardTryPlayedEvent.Invoke(Entity, this);
+            BattleEventBus.GetInstance().cardTryPlayedEvent.Invoke(Entity, this);
         }
 
         public void OnMouseEnter()

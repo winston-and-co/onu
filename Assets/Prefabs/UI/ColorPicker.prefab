@@ -575,3 +575,7 @@ MonoBehaviour:
   OnColorPicked:
     m_PersistentCalls:
       m_Calls: []
+  redBtn: {fileID: 3726484434909641583}
+  blueBtn: {fileID: 7498632860275093002}
+  greenBtn: {fileID: 113894598732967444}
+  yellowBtn: {fileID: 4783160952632301244}

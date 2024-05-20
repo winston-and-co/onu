@@ -21,6 +21,8 @@ public class ActionCardPicker : ScrollGridPicker
         {
             usable.TryUse();
         }
+        foreach (var s in spawned)
+            Destroy(s);
     }
 
     public new void Show()
@@ -36,8 +38,6 @@ public class ActionCardPicker : ScrollGridPicker
     public new void Hide()
     {
         base.Hide();
-        foreach (var go in spawned)
-            Destroy(go);
         UIPopupBlocker.StopBlocking();
     }
 }

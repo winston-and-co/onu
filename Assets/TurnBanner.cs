@@ -17,7 +17,7 @@ public class TurnBanner : MonoBehaviour
 
         tbpos = turnBanner.transform;
 
-        BattleEventBus.getInstance().startTurnEvent.AddListener(ShowPlayerTurn);
+        BattleEventBus.GetInstance().startTurnEvent.AddListener(ShowPlayerTurn);
     }
 
     // Call this method when it's a player's turn

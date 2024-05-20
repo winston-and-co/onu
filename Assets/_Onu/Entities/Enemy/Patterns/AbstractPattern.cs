@@ -8,7 +8,7 @@ public abstract class AbstractPattern : MonoBehaviour
     void Awake()
     {
         entity = GetComponent<EnemyEntity>();
-        var bus = BattleEventBus.getInstance();
+        var bus = BattleEventBus.GetInstance();
         bus.startTurnEvent.AddListener(OnTurnStart);
     }
 
@@ -21,7 +21,7 @@ public abstract class AbstractPattern : MonoBehaviour
     IEnumerator DoTurnWrapper()
     {
         yield return DoTurn();
-        BattleEventBus.getInstance().tryEndTurnEvent.Invoke(entity);
+        BattleEventBus.GetInstance().tryEndTurnEvent.Invoke(entity);
     }
 
     protected abstract IEnumerator DoTurn();

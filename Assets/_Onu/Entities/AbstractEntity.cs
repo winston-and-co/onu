@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 using Cards;
+using RuleCards;
 
-public class AbstractEntity : MonoBehaviour
+public abstract class AbstractEntity : MonoBehaviour
 {
     public bool isPlayer;
-    public GameRulesController gameRules = new();
+    public GameRulesController gameRulesController;
     public Deck deck;
     public Hand hand;
 
@@ -34,7 +35,9 @@ public class AbstractEntity : MonoBehaviour
         entity.mana = entity.maxMana;
         entity.startingHandSize = startingHandSize;
         entity.isPlayer = isPlayer;
-        entity.gameRules = new();
+        // RULE CARDS
+        entity.gameRulesController = new(entity);
+        entity.gameRulesController.AddRuleCard(DefaultRuleset.New());
         // HAND
         Hand hand = entity.GetComponentInChildren<Hand>();
         hand.e = entity;
@@ -44,7 +47,7 @@ public class AbstractEntity : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.getInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+        BattleEventBus.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
     }
 
     void Start()
@@ -66,7 +69,7 @@ public class AbstractEntity : MonoBehaviour
     {
         hp -= amount;
         hp = Math.Max(0, hp);
-        var bus = BattleEventBus.getInstance();
+        var bus = BattleEventBus.GetInstance();
         bus.entityDamageEvent.Invoke(this, amount);
         bus.entityHealthChangedEvent.Invoke(this, amount);
     }
@@ -76,7 +79,7 @@ public class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         hp += amount;
         hp = Math.Min(maxHP, hp);
-        var bus = BattleEventBus.getInstance();
+        var bus = BattleEventBus.GetInstance();
         bus.entityHealEvent.Invoke(this, amount);
         bus.entityHealthChangedEvent.Invoke(this, amount);
     }
@@ -86,15 +89,15 @@ public class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         mana -= amount;
         mana = Math.Max(0, mana);
-        BattleEventBus.getInstance().entityManaSpentEvent.Invoke(this, amount);
-        BattleEventBus.getInstance().entityManaChangedEvent.Invoke(this, amount);
+        BattleEventBus.GetInstance().entityManaSpentEvent.Invoke(this, amount);
+        BattleEventBus.GetInstance().entityManaChangedEvent.Invoke(this, amount);
     }
 
     public void RestoreMana(int amount)
     {
         mana += amount;
         mana = Math.Min(maxMana, mana);
-        BattleEventBus.getInstance().entityManaChangedEvent.Invoke(this, amount);
+        BattleEventBus.GetInstance().entityManaChangedEvent.Invoke(this, amount);
     }
 
     /// <summary>
@@ -103,11 +106,11 @@ public class AbstractEntity : MonoBehaviour
     /// <returns>The card drawn or <c>null</c> if this entity cannot draw.</returns>
     public AbstractCard Draw()
     {
-        if (gameRules.CanDraw(GameMaster.GetInstance(), this))
+        if (gameRulesController.CanDraw(GameMaster.GetInstance(), this))
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
-            BattleEventBus.getInstance().cardDrawEvent.Invoke(this, drawn);
+            BattleEventBus.GetInstance().cardDrawEvent.Invoke(this, drawn);
             return drawn;
         }
         return null;
@@ -121,6 +124,6 @@ public class AbstractEntity : MonoBehaviour
         {
             Draw();
         }
-        BattleEventBus.getInstance().entityRefreshEvent.Invoke(this);
+        BattleEventBus.GetInstance().entityRefreshEvent.Invoke(this);
     }
 }

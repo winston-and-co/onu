@@ -7,11 +7,11 @@ using UnityEngine.Events;
 
 public class BattleEventBus
 {
-    private static BattleEventBus EVENTBUS;
+    private static BattleEventBus INSTANCE;
 
-    public static BattleEventBus getInstance()
+    public static BattleEventBus GetInstance()
     {
-        return EVENTBUS ?? (EVENTBUS = new BattleEventBus());
+        return INSTANCE ?? (INSTANCE = new BattleEventBus());
     }
 
     public CardTryPlayedEvent cardTryPlayedEvent = new();

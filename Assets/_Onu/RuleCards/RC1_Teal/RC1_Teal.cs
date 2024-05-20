@@ -3,9 +3,21 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Teal : RulesetBase
+    public class Teal : AbstractRuleCard
     {
-        public override string Name => "RC1_Teal";
+        public override int Id => 1;
+        public override string Name => "Teal";
+
+        public static Teal New()
+        {
+            var teal = New<Teal>() as Teal;
+            teal.tooltips.Add(new()
+            {
+                Title = teal.Name,
+                Body = "Blue and Green are the same Color.",
+            });
+            return teal;
+        }
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {
@@ -16,11 +28,11 @@ namespace RuleCards
 
                 Color opp = color == CardColor.Blue ? CardColor.Green : CardColor.Blue;
 
-                if (depth == e.gameRules.Rules.Count)
+                if (depth == e.gameRulesController.Rules.Count)
                 {
                     return (target == opp, 10);
                 }
-                var otherRulesets = e.gameRules.Rules.Where((r) => r.Name != Name);
+                var otherRulesets = e.gameRulesController.Rules.Where((r) => r.Name != Name);
                 foreach (var r in otherRulesets)
                 {
                     var res = r.ColorsMatch(gm, e, opp, target, depth + 1);

@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpriteLoader
 {
     /// <summary>
-    /// Returns the sprite from given asset version and sprite name.
+    /// Returns the sprite from given sprite name and asset version or null if not found.
     /// </summary>
     public static Sprite LoadSprite(string spriteName, AssetVersion version = AssetVersion.Alpha)
     {
@@ -13,7 +13,7 @@ public class SpriteLoader
     }
 
     /// <summary>
-    /// Returns the sprite found using the Resources API.
+    /// Returns the sprite found using the Resources API or null if not found.
     /// </summary>
     public static Sprite Load(string path)
     {

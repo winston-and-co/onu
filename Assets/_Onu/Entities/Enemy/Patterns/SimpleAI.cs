@@ -35,7 +35,7 @@ public class SimpleAI : AbstractPattern
             if (chancePickCard > stupidity)
             {
                 var cardPicked = legalCards[Random.Range(0, legalCards.Count)];
-                BattleEventBus.getInstance().cardTryPlayedEvent.Invoke(entity, cardPicked);
+                BattleEventBus.GetInstance().cardTryPlayedEvent.Invoke(entity, cardPicked);
                 return true;
             }
         }

@@ -1,9 +1,15 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour
 {
-    static PlayerEntity preview;
+    PlayerPreview preview;
+
+    [SerializeField] GameObject previewPanel;
+    [SerializeField] TMP_Text statsTextBody;
+    [SerializeField] Button confirmButton;
 
     public void ConfirmSelection()
     {
@@ -14,25 +20,26 @@ public class CharacterSelect : MonoBehaviour
         var pd = PlayerData.GetInstance();
         if (pd.Player == null)
         {
-            pd.Player = preview;
+            pd.Player = preview.ToPlayerEntity();
             DontDestroyOnLoad(pd.Player);
         }
     }
 
-    public PlayerEntity PreviewPlayerCharacter(PlayerCharacter character)
+    public void PreviewPlayerCharacter(PlayerCharacter character)
     {
-        PlayerData.GetInstance().ActionCards.Clear();
-        PlayerEntity player;
-        switch (character)
+        PlayerPreview preview = character switch
         {
-            case PlayerCharacter.Character1:
-                player = PlayerFactory.MakePlayer(PlayerCharacter.Character1);
-                PlayerData.GetInstance().AddActionCard("Wild");
-                break;
-            default:
-                throw new ArgumentException();
-        }
-        preview = player;
-        return player;
+            PlayerCharacter.Character1 => PlayerPreviewFactory.MakePlayerPreview(PlayerCharacter.Character1),
+            _ => throw new ArgumentException(),
+        };
+        this.preview = preview;
+        OnPreview();
+    }
+
+    void OnPreview()
+    {
+        previewPanel.SetActive(true);
+        statsTextBody.text = preview.ToString();
+        confirmButton.interactable = true;
     }
 }

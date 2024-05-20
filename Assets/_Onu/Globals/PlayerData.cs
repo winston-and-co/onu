@@ -46,7 +46,7 @@ public class PlayerData : MonoBehaviour
         List<AbstractActionCard> spawned = new();
         for (int i = 0; i < ActionCards.Count; i++)
         {
-            var ac = ActionCardHelper.CreateActionCard(ActionCards[i]);
+            var ac = ActionCardFactory.MakeActionCard(ActionCards[i]);
             ac.PlayerDataIndex = i;
             spawned.Add(ac);
         }
@@ -60,7 +60,7 @@ public class PlayerData : MonoBehaviour
     /// <returns>Whether it was successful</returns>
     public bool AddActionCard(string actionCardName)
     {
-        if (ActionCardHelper.CheckExists(actionCardName))
+        if (ActionCardFactory.CheckExists(actionCardName))
         {
             ActionCards.Add(actionCardName);
             return true;

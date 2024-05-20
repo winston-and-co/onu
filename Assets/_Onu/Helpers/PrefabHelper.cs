@@ -5,6 +5,8 @@ public enum PrefabType
     Card,
     Deck,
     Entity,
+    RewardItem,
+    Tooltip,
     UI_ColorPicker,
 }
 
@@ -14,6 +16,8 @@ public class PrefabHelper : MonoBehaviour
     [SerializeField] GameObject deckPrefab;
     [SerializeField] GameObject colorPickerPrefab;
     [SerializeField] GameObject entityPrefab;
+    [SerializeField] GameObject rewardItemPrefab;
+    [SerializeField] GameObject tooltipPrefab;
 
     static PrefabHelper Instance;
     public static PrefabHelper GetInstance() => Instance;
@@ -42,6 +46,8 @@ public class PrefabHelper : MonoBehaviour
             PrefabType.Card => cardPrefab,
             PrefabType.Deck => deckPrefab,
             PrefabType.Entity => entityPrefab,
+            PrefabType.RewardItem => rewardItemPrefab,
+            PrefabType.Tooltip => tooltipPrefab,
             PrefabType.UI_ColorPicker => colorPickerPrefab,
             _ => throw new System.ArgumentException(),
         };
@@ -54,14 +60,7 @@ public class PrefabHelper : MonoBehaviour
     /// <exception cref="System.ArgumentException"></exception>
     public GameObject GetInstantiatedPrefab(PrefabType type)
     {
-        return type switch
-        {
-            PrefabType.Card => Instantiate(cardPrefab),
-            PrefabType.Deck => Instantiate(deckPrefab),
-            PrefabType.Entity => Instantiate(entityPrefab),
-            PrefabType.UI_ColorPicker => Instantiate(colorPickerPrefab),
-            _ => throw new System.ArgumentException(),
-        };
+        return Instantiate(GetPrefab(type));
     }
 
     /// <summary>

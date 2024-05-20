@@ -3,9 +3,21 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Orange : RulesetBase
+    public class Orange : AbstractRuleCard
     {
-        public override string Name => "RC3_Orange";
+        public override int Id => 3;
+        public override string Name => "Orange";
+
+        public static Orange New()
+        {
+            var orange = New<Orange>() as Orange;
+            orange.tooltips.Add(new()
+            {
+                Title = orange.Name,
+                Body = "Yellow and Red are the same Color.",
+            });
+            return orange;
+        }
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {
@@ -16,11 +28,11 @@ namespace RuleCards
 
                 Color opp = color == CardColor.Yellow ? CardColor.Red : CardColor.Yellow;
 
-                if (depth == e.gameRules.Rules.Count)
+                if (depth == e.gameRulesController.Rules.Count)
                 {
                     return (target == opp, 10);
                 }
-                var otherRulesets = e.gameRules.Rules.Where((r) => r.Name != Name);
+                var otherRulesets = e.gameRulesController.Rules.Where((r) => r.Name != Name);
                 foreach (var r in otherRulesets)
                 {
                     var res = r.ColorsMatch(gm, e, opp, target, depth + 1);

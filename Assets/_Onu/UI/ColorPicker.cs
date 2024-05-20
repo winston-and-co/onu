@@ -7,22 +7,13 @@ public class ColorPicker : MonoBehaviour
 {
     public UnityEvent<Color> OnColorPicked = new();
 
-    Button redBtn;
-    Button blueBtn;
-    Button greenBtn;
-    Button yellowBtn;
+    [SerializeField] Button redBtn;
+    [SerializeField] Button blueBtn;
+    [SerializeField] Button greenBtn;
+    [SerializeField] Button yellowBtn;
 
     void Start()
     {
-        var redT = gameObject.transform.Find("OptionRed");
-        redBtn = redT.GetComponent<Button>();
-        var blueT = gameObject.transform.Find("OptionBlue");
-        blueBtn = blueT.GetComponent<Button>();
-        var greenT = gameObject.transform.Find("OptionGreen");
-        greenBtn = greenT.GetComponent<Button>();
-        var yellowT = gameObject.transform.Find("OptionYellow");
-        yellowBtn = yellowT.GetComponent<Button>();
-
         redBtn.onClick.AddListener(() => OnClick(CardColor.Red));
         blueBtn.onClick.AddListener(() => OnClick(CardColor.Blue));
         greenBtn.onClick.AddListener(() => OnClick(CardColor.Green));

@@ -4,9 +4,21 @@ using UnityEngine;
 
 namespace RuleCards
 {
-    public class Purple : RulesetBase
+    public class Purple : AbstractRuleCard
     {
-        public override string Name => "RC0_Purple";
+        public override int Id => 0;
+        public override string Name => "Purple";
+
+        public static Purple New()
+        {
+            var purple = New<Purple>() as Purple;
+            purple.tooltips.Add(new()
+            {
+                Title = purple.Name,
+                Body = "Red and Blue are the same Color.",
+            });
+            return purple;
+        }
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {
@@ -17,11 +29,11 @@ namespace RuleCards
 
                 Color opp = color == CardColor.Red ? CardColor.Blue : CardColor.Red;
 
-                if (depth == e.gameRules.Rules.Count)
+                if (depth == e.gameRulesController.Rules.Count)
                 {
                     return (target == opp, 10);
                 }
-                var otherRulesets = e.gameRules.Rules.Where((r) => r.Name != Name);
+                var otherRulesets = e.gameRulesController.Rules.Where((r) => r.Name != Name);
                 foreach (var r in otherRulesets)
                 {
                     var res = r.ColorsMatch(gm, e, opp, target, depth + 1);

@@ -37,7 +37,7 @@ public class TooltipOwner : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             var topRightCornerWorldPos = v[2];
             var topLeftCornerWorldPos = v[1];
             Vector2 tooltipTargetCanvasPos;
-            var tooltipInstance = Instantiate(Resources.Load<GameObject>("Prefabs/Tooltip"));
+            var tooltipInstance = PrefabHelper.GetInstance().GetInstantiatedPrefab(PrefabType.Tooltip);
             tooltipInstance.transform.SetParent(canvas.transform);
             var tooltipRt = tooltipInstance.GetComponent<RectTransform>();
             // Check if tooltip will be off screen
