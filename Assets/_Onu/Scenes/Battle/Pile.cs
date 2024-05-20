@@ -10,7 +10,7 @@ public class Pile : MonoBehaviour
 
     void OnEnable()
     {
-        BattleEventBus.GetInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        EventQueue.GetInstance().cardPlayedEvent.AddListener(OnCardPlayed);
         pile = new();
     }
 

@@ -8,7 +8,7 @@ public class DefeatScreen : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.GetInstance().endBattleEvent.AddListener(OnEndBattle);
+        EventQueue.GetInstance().endBattleEvent.AddListener(OnEndBattle);
         gameObject.SetActive(false);
 
         nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(Scene.Map));

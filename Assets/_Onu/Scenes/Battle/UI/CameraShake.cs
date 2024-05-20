@@ -26,7 +26,7 @@ public class CameraShake : MonoBehaviour
 
     private void Awake()
     {
-        BattleEventBus.GetInstance().entityDamageEvent.AddListener(OnDamage);
+        EventQueue.GetInstance().entityDamageEvent.AddListener(OnDamage);
     }
 
     void OnDamage(AbstractEntity e, int dmg)

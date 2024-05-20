@@ -47,7 +47,7 @@ public abstract class AbstractEntity : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+        EventQueue.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
     }
 
     void Start()
@@ -69,7 +69,7 @@ public abstract class AbstractEntity : MonoBehaviour
     {
         hp -= amount;
         hp = Math.Max(0, hp);
-        var bus = BattleEventBus.GetInstance();
+        var bus = EventQueue.GetInstance();
         bus.entityDamageEvent.Invoke(this, amount);
         bus.entityHealthChangedEvent.Invoke(this, amount);
     }
@@ -79,7 +79,7 @@ public abstract class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         hp += amount;
         hp = Math.Min(maxHP, hp);
-        var bus = BattleEventBus.GetInstance();
+        var bus = EventQueue.GetInstance();
         bus.entityHealEvent.Invoke(this, amount);
         bus.entityHealthChangedEvent.Invoke(this, amount);
     }
@@ -89,15 +89,15 @@ public abstract class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         mana -= amount;
         mana = Math.Max(0, mana);
-        BattleEventBus.GetInstance().entityManaSpentEvent.Invoke(this, amount);
-        BattleEventBus.GetInstance().entityManaChangedEvent.Invoke(this, amount);
+        EventQueue.GetInstance().entityManaSpentEvent.Invoke(this, amount);
+        EventQueue.GetInstance().entityManaChangedEvent.Invoke(this, amount);
     }
 
     public void RestoreMana(int amount)
     {
         mana += amount;
         mana = Math.Min(maxMana, mana);
-        BattleEventBus.GetInstance().entityManaChangedEvent.Invoke(this, amount);
+        EventQueue.GetInstance().entityManaChangedEvent.Invoke(this, amount);
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
-            BattleEventBus.GetInstance().cardDrawEvent.Invoke(this, drawn);
+            EventQueue.GetInstance().cardDrawEvent.Invoke(this, drawn);
             return drawn;
         }
         return null;
@@ -124,6 +124,6 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             Draw();
         }
-        BattleEventBus.GetInstance().entityRefreshEvent.Invoke(this);
+        EventQueue.GetInstance().entityRefreshEvent.Invoke(this);
     }
 }

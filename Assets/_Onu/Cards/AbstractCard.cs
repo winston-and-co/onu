@@ -52,7 +52,7 @@ namespace Cards
 
         public void OnMouseDown()
         {
-            BattleEventBus.GetInstance().cardTryPlayedEvent.Invoke(Entity, this);
+            EventQueue.GetInstance().cardTryPlayedEvent.Invoke(Entity, this);
         }
 
         public void OnMouseEnter()

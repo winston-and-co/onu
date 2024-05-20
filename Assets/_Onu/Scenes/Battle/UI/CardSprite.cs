@@ -23,8 +23,8 @@ public class CardSprite : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
-        BattleEventBus.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
+        EventQueue.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+        EventQueue.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
 
         if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer)) throw new System.NullReferenceException();
 

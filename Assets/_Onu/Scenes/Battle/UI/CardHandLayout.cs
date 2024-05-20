@@ -9,8 +9,8 @@ public class CardHandLayout : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
-        BattleEventBus.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
+        EventQueue.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+        EventQueue.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
     }
 
 

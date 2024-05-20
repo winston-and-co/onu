@@ -40,7 +40,7 @@ namespace ActionCards
 
         public override void TryUse()
         {
-            BattleEventBus.GetInstance().actionCardTryUseEvent.Invoke(GameMaster.GetInstance().player, this);
+            EventQueue.GetInstance().actionCardTryUseEvent.Invoke(GameMaster.GetInstance().player, this);
         }
 
         public override void Use(Action onResolved)
@@ -66,7 +66,7 @@ namespace ActionCards
                 var cp = colorPickerInstance.GetComponent<ColorPicker>();
                 cp.Hide();
                 var gm = GameMaster.GetInstance();
-                BattleEventBus.GetInstance().cardTryPlayedEvent.Invoke(gm.player, cardInstance);
+                EventQueue.GetInstance().cardTryPlayedEvent.Invoke(gm.player, cardInstance);
                 cardInstance.Color = color;
                 cardInstance.SpriteController.SpriteRenderer.color = Color.white;
                 onResolved();

@@ -13,7 +13,7 @@ public class Deck : MonoBehaviour
 
     void Awake()
     {
-        BattleEventBus.GetInstance().endBattleEvent.AddListener(OnEndBattle);
+        EventQueue.GetInstance().endBattleEvent.AddListener(OnEndBattle);
     }
 
     void OnEndBattle(GameMaster gm)

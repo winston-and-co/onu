@@ -35,7 +35,7 @@ public class GameMaster : MonoBehaviour
         }
         else INSTANCE = this;
 
-        BattleEventBus bus = BattleEventBus.GetInstance();
+        EventQueue bus = EventQueue.GetInstance();
         bus.cardTryPlayedEvent.AddListener(OnTryPlayCard);
         bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
         bus.tryEndTurnEvent.AddListener(TryEndTurn);
@@ -57,7 +57,7 @@ public class GameMaster : MonoBehaviour
         victor = null;
 
         // Begin combat
-        BattleEventBus.GetInstance().startBattleEvent.Invoke(this);
+        EventQueue.GetInstance().startBattleEvent.Invoke(this);
 
         player.deck.Shuffle();
         for (int i = 0; i < player.startingHandSize; i++)
@@ -88,7 +88,7 @@ public class GameMaster : MonoBehaviour
             turnNumber++;
         }
 
-        BattleEventBus.GetInstance().startTurnEvent.Invoke(current_turn_entity);
+        EventQueue.GetInstance().startTurnEvent.Invoke(current_turn_entity);
 
         // if your hand contains no playable cards
         //   draw cards until you draw a playable one
@@ -117,7 +117,7 @@ public class GameMaster : MonoBehaviour
     void TryEndTurn(AbstractEntity e)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        BattleEventBus.GetInstance().endTurnEvent.Invoke(current_turn_entity);
+        EventQueue.GetInstance().endTurnEvent.Invoke(current_turn_entity);
         StartNextTurn();
     }
 
@@ -140,7 +140,7 @@ public class GameMaster : MonoBehaviour
         }
         else
         {
-            BattleEventBus.GetInstance().cardIllegalEvent.Invoke(e, card);
+            EventQueue.GetInstance().cardIllegalEvent.Invoke(e, card);
         }
     }
 
@@ -162,7 +162,7 @@ public class GameMaster : MonoBehaviour
             case AbstractCard top:
                 if (!c.Value.HasValue) goto default;
 
-                BattleEventBus.GetInstance().cardPlayedEvent.Invoke(e, c);
+                EventQueue.GetInstance().cardPlayedEvent.Invoke(e, c);
                 e.SpendMana(cost);
                 if (top.Value == 0)
                     e.Heal(c.Value ?? 0);
@@ -173,13 +173,13 @@ public class GameMaster : MonoBehaviour
                 break;
             case null:
             default:
-                BattleEventBus.GetInstance().cardPlayedEvent.Invoke(e, c);
+                EventQueue.GetInstance().cardPlayedEvent.Invoke(e, c);
                 target.Damage(c.Value ?? 0);
                 e.hand.RemoveCard(c);
                 break;
         }
 
-        BattleEventBus.GetInstance().afterCardPlayedEvent.Invoke(e, c);
+        EventQueue.GetInstance().afterCardPlayedEvent.Invoke(e, c);
         cardNotResolved = false;
         CheckVictory();
     }
@@ -202,7 +202,7 @@ public class GameMaster : MonoBehaviour
         {
             usable.Use(() =>
             {
-                BattleEventBus.GetInstance().actionCardUsedEvent.Invoke(e, ac);
+                EventQueue.GetInstance().actionCardUsedEvent.Invoke(e, ac);
                 // TODO: Move this to an event handler in PlayerData if a non-battle event bus is created
                 PlayerData.GetInstance().RemoveActionCardAt(ac.PlayerDataIndex);
             });
@@ -229,9 +229,9 @@ public class GameMaster : MonoBehaviour
         {
             return;
         }
-        BattleEventBus.GetInstance().endTurnEvent.Invoke(current_turn_entity);
+        EventQueue.GetInstance().endTurnEvent.Invoke(current_turn_entity);
         current_turn_entity = null;
-        BattleEventBus.GetInstance().endBattleEvent.Invoke(this);
+        EventQueue.GetInstance().endBattleEvent.Invoke(this);
     }
 
     public bool PlayerWon()
