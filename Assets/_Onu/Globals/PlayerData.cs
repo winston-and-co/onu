@@ -20,6 +20,10 @@ public class PlayerData : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        ActionCardsParent = new GameObject("ActionCards");
+        ActionCardsParent.transform.SetParent(gameObject.transform);
+        ActionCardsParent.SetActive(false);
     }
 
     /// <summary>
@@ -40,42 +44,39 @@ public class PlayerData : MonoBehaviour
 
     public AbstractEntity Player;
 
-    public readonly List<string> ActionCards = new();
-
-    public List<AbstractActionCard> InstantiateActionCards()
+    public GameObject ActionCardsParent;
+    List<AbstractActionCard> _actionCards = new();
+    public List<AbstractActionCard> ActionCards
     {
-        List<AbstractActionCard> spawned = new();
-        for (int i = 0; i < ActionCards.Count; i++)
+        get => _actionCards;
+        set
         {
-            var ac = ActionCardFactory.MakeActionCard(ActionCards[i]);
-            ac.PlayerDataIndex = i;
-            spawned.Add(ac);
+            _actionCards = new();
+            foreach (var ac in value)
+            {
+                AddActionCard(ac);
+            }
         }
-        return spawned;
     }
 
     /// <summary>
-    /// Add an Action Card by name. Checks if it is a valid name.
+    /// Adds an Action Card instance. Sets PlayerData.ActionCards object as parent object.
     /// </summary>
-    /// <param name="actionCardName">Name of the Action Card without id (e.g. "Wild")</param>
-    /// <returns>Whether it was successful</returns>
-    public bool AddActionCard(string actionCardName)
+    public void AddActionCard(AbstractActionCard actionCard)
     {
-        if (ActionCardFactory.CheckExists(actionCardName))
-        {
-            ActionCards.Add(actionCardName);
-            return true;
-        }
-        return false;
+        _actionCards.Add(actionCard);
+        actionCard.gameObject.SetActive(true);
+        actionCard.transform.SetParent(ActionCardsParent.transform);
     }
 
     /// <summary>
-    /// Remove an Action Card by index.
+    /// Removes an Action Card instance.
     /// </summary>
-    /// <param name="actionCard">The index to remove at</param>
-    public void RemoveActionCardAt(int idx)
+    public void RemoveActionCard(AbstractActionCard actionCard)
     {
-        ActionCards.RemoveAt(idx);
+        int i = _actionCards.IndexOf(actionCard);
+        _actionCards.RemoveAt(i);
+        Destroy(actionCard.gameObject);
     }
 
     /// <summary>

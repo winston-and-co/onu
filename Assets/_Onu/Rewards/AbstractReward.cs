@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class AbstractReward : MonoBehaviour, IPointerClickHandler
 {
-    protected TooltipOwner tooltips;
+    public TooltipOwner Tooltips;
 
     public static AbstractReward New<T>(string label, string spriteName) => New(typeof(T), label, spriteName);
     public static AbstractReward New(System.Type rewardType, string label, string spriteName)
@@ -16,7 +16,7 @@ public abstract class AbstractReward : MonoBehaviour, IPointerClickHandler
         image.sprite = SpriteLoader.LoadSprite(spriteName);
         TMP_Text tmp = go.GetComponentInChildren<TMP_Text>();
         tmp.text = label;
-        reward.tooltips = go.AddComponent<TooltipOwner>();
+        reward.Tooltips = go.AddComponent<TooltipOwner>();
         return reward;
     }
 

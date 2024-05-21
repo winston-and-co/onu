@@ -8,8 +8,9 @@ namespace RuleCards
     {
         public abstract int Id { get; }
         public abstract string Name { get; }
-        public string SpriteName;
-        protected TooltipOwner tooltips;
+        public abstract string Description { get; }
+        public abstract string SpriteName { get; }
+        public TooltipOwner Tooltips;
 
         public static AbstractRuleCard New<T>() => New(typeof(T));
         public static AbstractRuleCard New(System.Type ruleCardType)
@@ -20,7 +21,6 @@ namespace RuleCards
             RectTransform rt = go.AddComponent<RectTransform>();
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100f);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 155f);
-            rc.SpriteName = $"RC{rc.Id}_{rc.Name}";
             Sprite sprite = SpriteLoader.LoadSprite(rc.SpriteName);
             go.AddComponent<CanvasRenderer>();
             if (sprite != null)
@@ -32,7 +32,12 @@ namespace RuleCards
             rt.anchoredPosition = new Vector2(0, 0);
             BoxCollider2D bc = go.AddComponent<BoxCollider2D>();
             bc.size = new Vector2(100f, 155f);
-            rc.tooltips = go.AddComponent<TooltipOwner>();
+            rc.Tooltips = go.AddComponent<TooltipOwner>();
+            rc.Tooltips.Add(new()
+            {
+                Title = rc.Name,
+                Body = rc.Description,
+            });
             return rc;
         }
 

@@ -35,6 +35,5 @@ public class ColorPicker : MonoBehaviour
     {
         Blockers.UIPopupBlocker.StopBlocking();
         gameObject.SetActive(false);
-        Destroy(this);
     }
 }

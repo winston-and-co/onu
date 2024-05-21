@@ -21,6 +21,14 @@ public class CharacterSelect : MonoBehaviour
         if (pd.Player == null)
         {
             pd.Player = preview.ToPlayerEntity();
+            foreach (var rc in preview.StarterRuleCardInstances)
+            {
+                PlayerData.GetInstance().AddRuleCard(rc);
+            }
+            foreach (var ac in preview.StarterActionCardInstances)
+            {
+                PlayerData.GetInstance().AddActionCard(ac);
+            }
             DontDestroyOnLoad(pd.Player);
         }
     }

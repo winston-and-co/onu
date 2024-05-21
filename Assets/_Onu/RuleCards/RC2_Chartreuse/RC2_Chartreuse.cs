@@ -7,17 +7,10 @@ namespace RuleCards
     {
         public override int Id => 2;
         public override string Name => "Chartreuse";
+        public override string Description => "Green and Yellow are the same Color.";
+        public override string SpriteName => "RC2_Chartreuse";
 
-        public static Chartreuse New()
-        {
-            var chartreuse = New<Chartreuse>() as Chartreuse;
-            chartreuse.tooltips.Add(new()
-            {
-                Title = chartreuse.Name,
-                Body = "Green and Yellow are the same Color.",
-            });
-            return chartreuse;
-        }
+        public static Chartreuse New() => New<Chartreuse>() as Chartreuse;
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {

@@ -10,6 +10,7 @@ public class RuleCardReward : AbstractReward
         rc.gameObject.SetActive(false);
         var reward = New<RuleCardReward>(rc.Name, rc.SpriteName) as RuleCardReward;
         reward.ruleCard = rc;
+        reward.Tooltips.Copy(rc.Tooltips);
         return reward;
     }
 

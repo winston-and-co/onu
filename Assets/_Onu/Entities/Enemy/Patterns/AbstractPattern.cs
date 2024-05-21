@@ -21,6 +21,7 @@ public abstract class AbstractPattern : MonoBehaviour
     IEnumerator DoTurnWrapper()
     {
         yield return DoTurn();
+        print("here");
         EventQueue.GetInstance().tryEndTurnEvent.AddToBack(entity);
     }
 

@@ -7,10 +7,23 @@ using Cards;
 using RuleCards;
 using UnityEngine;
 
+class AbstractRuleCardComparer : IEqualityComparer<AbstractRuleCard>
+{
+    public bool Equals(AbstractRuleCard x, AbstractRuleCard y)
+    {
+        return x.Id == y.Id;
+    }
+
+    public int GetHashCode(AbstractRuleCard obj)
+    {
+        return obj.Id;
+    }
+}
+
 public class GameRulesController : IRuleset
 {
     readonly GameObject ruleCardsContainer;
-    public readonly HashSet<AbstractRuleCard> Rules = new();
+    public readonly HashSet<AbstractRuleCard> Rules = new(new AbstractRuleCardComparer());
 
     public GameRulesController(AbstractEntity entity)
     {
@@ -21,13 +34,23 @@ public class GameRulesController : IRuleset
 
     public bool AddRuleCard(AbstractRuleCard ruleCard)
     {
-        var res = Rules.Add(ruleCard);
-        ruleCard.transform.SetParent(ruleCardsContainer.transform);
-        return res;
+        var success = Rules.Add(ruleCard);
+        if (success)
+        {
+            ruleCard.gameObject.SetActive(true);
+            ruleCard.transform.SetParent(ruleCardsContainer.transform);
+        }
+        else
+        {
+            UnityEngine.Object.Destroy(ruleCard.gameObject);
+        }
+        return success;
     }
     public bool RemoveRuleCard(AbstractRuleCard ruleCard)
     {
-        return Rules.Remove(ruleCard);
+        var success = Rules.Remove(ruleCard);
+        UnityEngine.Object.Destroy(ruleCard.gameObject);
+        return success;
     }
 
     public void ReturnToContainer()

@@ -20,6 +20,11 @@ public class RuleCardFactory
         return MakeRuleCard((RuleCard)Enum.Parse(typeof(RuleCard), ruleCardName));
     }
 
+    public static AbstractRuleCard MakeRuleCard(int id)
+    {
+        return MakeRuleCard((RuleCard)id);
+    }
+
     public static AbstractRuleCard MakeRandom()
     {
         var values = Enum.GetValues(typeof(RuleCard));
@@ -29,6 +34,11 @@ public class RuleCardFactory
     public static bool CheckExists(string ruleCardName)
     {
         return Enum.IsDefined(typeof(RuleCard), ruleCardName);
+    }
+
+    public static bool CheckExists(int id)
+    {
+        return Enum.IsDefined(typeof(RuleCard), id);
     }
 }
 

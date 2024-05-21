@@ -8,6 +8,7 @@ public class ActionCardFactory
         return actionCard switch
         {
             ActionCard.Wild => Wild.New(),
+            ActionCard.Draw2 => Draw2.New(),
             _ => throw new ArgumentException(),
         };
     }
@@ -15,6 +16,11 @@ public class ActionCardFactory
     public static AbstractActionCard MakeActionCard(string actionCardName)
     {
         return MakeActionCard((ActionCard)Enum.Parse(typeof(ActionCard), actionCardName));
+    }
+
+    public static AbstractActionCard MakeActionCard(int id)
+    {
+        return MakeActionCard((ActionCard)id);
     }
 
     public static AbstractActionCard MakeRandom()
@@ -27,9 +33,15 @@ public class ActionCardFactory
     {
         return Enum.IsDefined(typeof(ActionCard), actionCardName);
     }
+
+    public static bool CheckExists(int id)
+    {
+        return Enum.IsDefined(typeof(ActionCard), id);
+    }
 }
 
 public enum ActionCard
 {
-    Wild
+    Wild,
+    Draw2,
 }

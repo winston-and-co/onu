@@ -9,10 +9,10 @@ namespace ActionCards
     {
         public abstract int Id { get; }
         public abstract string Name { get; }
-        public string SpriteName;
+        public abstract string Description { get; }
+        public abstract string SpriteName { get; }
         public bool IsUIObject;
-        protected TooltipOwner tooltips;
-        public List<string> TooltipBodyLines;
+        public TooltipOwner Tooltips;
         public int PlayerDataIndex { get; set; } = -1;
 
         public static AbstractActionCard New<T>(bool isUIObject) => New(typeof(T), isUIObject);
@@ -24,7 +24,6 @@ namespace ActionCards
             RectTransform rt = go.AddComponent<RectTransform>();
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 110f);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 170f);
-            ac.SpriteName = $"AC{ac.Id}_{ac.Name}";
             Sprite sprite = SpriteLoader.LoadSprite(ac.SpriteName);
             if (isUIObject)
             {
@@ -48,14 +47,22 @@ namespace ActionCards
             BoxCollider2D bc = go.AddComponent<BoxCollider2D>();
             bc.size = new Vector2(110f, 170f);
             ac.IsUIObject = isUIObject;
-            ac.tooltips = go.AddComponent<TooltipOwner>();
+            ac.Tooltips = go.AddComponent<TooltipOwner>();
+            ac.Tooltips.Add(new()
+            {
+                Title = ac.Name,
+                Body = ac.Description,
+            });
             return ac;
         }
 
         public abstract bool IsUsable();
 
-        public abstract void TryUse();
+        public virtual void TryUse()
+        {
+            EventQueue.GetInstance().actionCardTryUseEvent.AddToBack(GameMaster.GetInstance().Player, this);
+        }
 
-        public abstract void Use(Action onResolved);
+        public abstract void Use(Action resolve);
     }
 }

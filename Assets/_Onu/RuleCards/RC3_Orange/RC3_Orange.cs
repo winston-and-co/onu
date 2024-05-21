@@ -7,17 +7,10 @@ namespace RuleCards
     {
         public override int Id => 3;
         public override string Name => "Orange";
+        public override string Description => "Yellow and Red are the same Color";
+        public override string SpriteName => "RC3_Orange";
 
-        public static Orange New()
-        {
-            var orange = New<Orange>() as Orange;
-            orange.tooltips.Add(new()
-            {
-                Title = orange.Name,
-                Body = "Yellow and Red are the same Color.",
-            });
-            return orange;
-        }
+        public static Orange New() => New<Orange>() as Orange;
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {

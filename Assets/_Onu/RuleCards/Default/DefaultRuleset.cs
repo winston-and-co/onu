@@ -6,7 +6,9 @@ namespace RuleCards
     public class DefaultRuleset : AbstractRuleCard
     {
         public override int Id => -1;
-        public override string Name => "DefaultRuleset";
+        public override string Name => "";
+        public override string Description => "";
+        public override string SpriteName => "";
 
         public static DefaultRuleset New() => New<DefaultRuleset>() as DefaultRuleset;
 

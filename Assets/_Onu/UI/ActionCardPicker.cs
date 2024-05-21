@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ActionCardPicker : ScrollGridPicker
 {
-    List<GameObject> spawned;
+    List<GameObject> options;
 
     void Awake()
     {
@@ -18,23 +18,18 @@ public class ActionCardPicker : ScrollGridPicker
         Hide();
         AbstractActionCard actionCard = go.GetComponent<AbstractActionCard>();
         actionCard.TryUse();
-        foreach (var s in spawned)
-            Destroy(s);
     }
 
     public new void Show()
     {
-        UIPopupBlocker.StartBlocking();
-        spawned = PlayerData.GetInstance().InstantiateActionCards()
-            .Select(obj => obj.gameObject)
-            .ToList();
-        base.SetItems(spawned);
+        options = PlayerData.GetInstance().ActionCards.Select(v => v.gameObject).ToList();
+        base.SetItems(options);
         base.Show();
     }
 
     public new void Hide()
     {
         base.Hide();
-        UIPopupBlocker.StopBlocking();
+        options.ForEach(v => v.transform.SetParent(PlayerData.GetInstance().ActionCardsParent.transform));
     }
 }

@@ -12,7 +12,7 @@ public struct Tooltip
 
 public class TooltipOwner : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    readonly List<Tooltip> tooltips = new();
+    List<Tooltip> tooltips = new();
     readonly List<GameObject> instances = new();
 
     public void Add(Tooltip tooltip)
@@ -23,6 +23,11 @@ public class TooltipOwner : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void Clear()
     {
         tooltips.Clear();
+    }
+
+    public void Copy(TooltipOwner tooltipOwner)
+    {
+        tooltips = tooltipOwner.tooltips;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

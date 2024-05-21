@@ -8,18 +8,16 @@ namespace ActionCards
     {
         public override int Id => 0;
         public override string Name => "Wild";
-        [SerializeField] WildCard wildCardPrefab;
+        public override string Description => "Can change to any Color";
+        public override string SpriteName => "AC0_Wild";
+
         [SerializeField] WildCard cardInstance;
         [SerializeField] GameObject colorPickerInstance;
 
         public static Wild New()
         {
             var wild = New<Wild>(true) as Wild;
-            wild.tooltips.Add(new()
-            {
-                Title = wild.Name,
-                Body = "Can change to any Color.",
-            });
+            wild.Tooltips.Add(Keywords.Stacking);
             return wild;
         }
 
@@ -27,6 +25,7 @@ namespace ActionCards
         {
             if (cardInstance != null) Destroy(cardInstance);
             cardInstance = WildCard.New(PlayerData.GetInstance().Player);
+            cardInstance.gameObject.SetActive(false);
             var gm = GameMaster.GetInstance();
             cardInstance.Entity = gm.Player;
             if (gm.CurrentEntity == gm.Player
@@ -38,19 +37,11 @@ namespace ActionCards
             return false;
         }
 
-        public override void TryUse()
-        {
-            EventQueue.GetInstance().actionCardTryUseEvent.AddToBack(GameMaster.GetInstance().Player, this);
-        }
-
         public override void Use(Action onResolved)
         {
             var canvas = FindObjectOfType<Canvas>();
             var canvasRt = canvas.GetComponent<RectTransform>();
-            if (colorPickerInstance == null)
-            {
-                colorPickerInstance = PrefabHelper.GetInstance().GetInstantiatedPrefab(PrefabType.UI_ColorPicker);
-            }
+            colorPickerInstance = PrefabHelper.GetInstance().GetInstantiatedPrefab(PrefabType.UI_ColorPicker);
             var rt = colorPickerInstance.GetComponent<RectTransform>();
             rt.SetParent(canvasRt);
             rt.anchoredPosition = new Vector2(0, 0);
@@ -59,17 +50,19 @@ namespace ActionCards
             cp.Show();
         }
 
-        public UnityAction<Color> OnColorSelected(Action onResolved)
+        public UnityAction<Color> OnColorSelected(Action resolve)
         {
             return (Color color) =>
             {
                 var cp = colorPickerInstance.GetComponent<ColorPicker>();
                 cp.Hide();
+                Destroy(cp.gameObject);
                 var gm = GameMaster.GetInstance();
+                cardInstance.gameObject.SetActive(true);
                 EventQueue.GetInstance().cardTryPlayedEvent.AddToBack(gm.Player, cardInstance);
                 cardInstance.Color = color;
                 cardInstance.SpriteController.SpriteRenderer.color = Color.white;
-                onResolved();
+                resolve();
             };
         }
     }

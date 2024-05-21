@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ActionCards;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,6 +7,8 @@ public class ScrollGridPicker : ScrollGrid
 {
     public UnityEvent<GameObject> OnItemPicked;
 
+    [SerializeField] GameObject pickerCloserPrefab;
+    GameObject pickerCloser;
     [SerializeField] GameObject outlinePrefab;
     [SerializeField] Color outlineColor;
     GameObject outline;
@@ -39,6 +40,13 @@ public class ScrollGridPicker : ScrollGrid
     public new void Show()
     {
         base.Show();
+        Blockers.UIPopupBlocker.StartBlocking();
+        pickerCloser = Instantiate(pickerCloserPrefab);
+        pickerCloser.transform.SetParent(transform.parent);
+        ((RectTransform)pickerCloser.transform).offsetMin = new(0, 0);
+        ((RectTransform)pickerCloser.transform).offsetMax = new(0, 0);
+        pickerCloser.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        pickerCloser.GetComponent<PickerCloser>().OnPointerClickEvent.AddListener((_) => Hide());
         if (outline == null)
         {
             outline = Instantiate(outlinePrefab);
@@ -50,10 +58,13 @@ public class ScrollGridPicker : ScrollGrid
 
     public new void Hide()
     {
+        Destroy(pickerCloser);
         if (outline != null)
         {
             Destroy(outline);
+            outline = null;
         }
+        Blockers.UIPopupBlocker.StopBlocking();
         base.Hide();
     }
 

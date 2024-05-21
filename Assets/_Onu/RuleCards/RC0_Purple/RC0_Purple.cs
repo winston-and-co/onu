@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,17 +7,10 @@ namespace RuleCards
     {
         public override int Id => 0;
         public override string Name => "Purple";
+        public override string Description => "Red and Blue are the same Color.";
+        public override string SpriteName => "RC0_Purple";
 
-        public static Purple New()
-        {
-            var purple = New<Purple>() as Purple;
-            purple.tooltips.Add(new()
-            {
-                Title = purple.Name,
-                Body = "Red and Blue are the same Color.",
-            });
-            return purple;
-        }
+        public static Purple New() => New<Purple>() as Purple;
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {

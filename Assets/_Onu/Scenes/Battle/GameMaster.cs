@@ -19,8 +19,6 @@ public class GameMaster : MonoBehaviour
 
     public AbstractEntity Victor;
 
-    bool cardNotResolved;
-
     void Awake()
     {
         // https://gamedevbeginner.com/singletons-in-unity-the-right-way/
@@ -137,65 +135,38 @@ public class GameMaster : MonoBehaviour
 
     void PlayCard(AbstractEntity e, AbstractCard c)
     {
-        cardNotResolved = true;
-        AbstractEntity target;
-        if (e == Player)
+        AbstractEntity target = (e == Player) ? Enemy : Player;
+        int cost = e.gameRulesController.CardManaCost(this, e, c);
+        EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
+        e.SpendMana(cost);
+        AbstractCard top = DiscardPile.Peek();
+        if (top != null && top.Value == 0)
         {
-            target = Enemy;
+            e.Heal(c.Value ?? 0);
         }
         else
         {
-            target = Player;
+            target.Damage(c.Value ?? 0);
         }
-        int cost = e.gameRulesController.CardManaCost(this, e, c);
-        switch (DiscardPile.Peek())
-        {
-            case AbstractCard top:
-                if (!c.Value.HasValue) goto default;
-
-                EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
-                e.SpendMana(cost);
-                if (top.Value == 0)
-                    e.Heal(c.Value ?? 0);
-                else
-                    target.Damage(c.Value ?? 0);
-
-                e.hand.RemoveCard(c);
-                break;
-            case null:
-            default:
-                EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
-                target.Damage(c.Value ?? 0);
-                e.hand.RemoveCard(c);
-                break;
-        }
-
-        cardNotResolved = false;
-        CheckVictory();
+        e.hand.RemoveCard(c);
     }
 
     void OnTryUseActionCard(AbstractEntity e, AbstractActionCard ac)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        if (ac is IUsable usable)
+        if (ac.IsUsable())
         {
-            if (usable.IsUsable())
-            {
-                UseActionCard(e, ac);
-            }
+            UseActionCard(e, ac);
         }
     }
 
     void UseActionCard(AbstractEntity e, AbstractActionCard ac)
     {
-        if (ac is IUsable usable)
+        ac.Use(() =>
         {
-            usable.Use(() =>
-            {
-                EventQueue.GetInstance().actionCardUsedEvent.AddToBack(e, ac);
-                PlayerData.GetInstance().RemoveActionCardAt(ac.PlayerDataIndex);
-            });
-        }
+            EventQueue.GetInstance().actionCardUsedEvent.AddToBack(e, ac);
+            PlayerData.GetInstance().RemoveActionCard(ac);
+        });
     }
 
     void OnEntityHealthChanged(AbstractEntity _, int __)
@@ -205,7 +176,6 @@ public class GameMaster : MonoBehaviour
 
     void CheckVictory()
     {
-        if (cardNotResolved) return;
         if (Player.hp <= 0)
         {
             Victor = Enemy;

@@ -1,14 +1,30 @@
 using System;
+using System.Linq;
+using ActionCards;
+using RuleCards;
 
 public class PlayerPreview
 {
     public string Name;
-    public string[] StarterRuleCards;
-    public string[] StarterActionCards;
+    public RuleCard[] StarterRuleCards;
+    public AbstractRuleCard[] StarterRuleCardInstances;
+    public ActionCard[] StarterActionCards;
+    public AbstractActionCard[] StarterActionCardInstances;
     public DeckType Deck;
     public int MaxHP;
     public int MaxMana;
     public int StartingHandSize;
+
+    public PlayerPreview(string name, RuleCard[] starterRuleCards, ActionCard[] starterActionCards, DeckType deck, int maxHP, int maxMana, int startingHandSize)
+    {
+        Name = name;
+        StarterRuleCards = starterRuleCards;
+        StarterActionCards = starterActionCards;
+        Deck = deck;
+        MaxHP = maxHP;
+        MaxMana = maxMana;
+        StartingHandSize = startingHandSize;
+    }
 
     public override string ToString()
     {
@@ -24,22 +40,22 @@ Deck: {Enum.GetName(typeof(DeckType), Deck)}
         if (StarterRuleCards.Length > 0)
         {
             ret += "\nRule Cards:";
-            foreach (string rc in StarterRuleCards)
+            StarterRuleCardInstances = StarterRuleCards.Select(v => RuleCardFactory.MakeRuleCard(v)).ToArray();
+            foreach (var rc in StarterRuleCardInstances)
             {
-                if (!RuleCardFactory.CheckExists(rc))
-                    throw new ArgumentException();
-                ret += $"\n{rc}";
+                rc.gameObject.SetActive(false);
+                ret += $"\n{rc.Name}";
             }
             ret += "\n";
         }
         if (StarterActionCards.Length > 0)
         {
             ret += "\nAction Cards:";
-            foreach (string ac in StarterActionCards)
+            StarterActionCardInstances = StarterActionCards.Select(v => ActionCardFactory.MakeActionCard(v)).ToArray();
+            foreach (var ac in StarterActionCardInstances)
             {
-                if (!ActionCardFactory.CheckExists(ac))
-                    throw new ArgumentException();
-                ret += $"\n{ac}";
+                ac.gameObject.SetActive(false);
+                ret += $"\n{ac.Name}";
             }
         }
         return ret;
@@ -54,18 +70,6 @@ Deck: {Enum.GetName(typeof(DeckType), Deck)}
             maxMana: MaxMana,
             startingHandSize: StartingHandSize
         );
-        foreach (string rc in StarterRuleCards)
-        {
-            if (!RuleCardFactory.CheckExists(rc))
-                throw new ArgumentException();
-            p.gameRulesController.AddRuleCard(RuleCardFactory.MakeRuleCard(rc));
-        }
-        foreach (string ac in StarterActionCards)
-        {
-            if (!ActionCardFactory.CheckExists(ac))
-                throw new ArgumentException();
-            PlayerData.GetInstance().AddActionCard(ac);
-        }
         return p;
     }
 }
