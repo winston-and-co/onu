@@ -19,7 +19,7 @@ public class Deck : MonoBehaviour
     void OnEndBattle(GameMaster gm)
     {
         // return cards from this entity's deck back to the deck
-        var d = GameMaster.GetInstance().discard;
+        var d = GameMaster.GetInstance().DiscardPile;
         var cards = d.RemoveCardsFromEntity(e, true);
         foreach (var c in e.hand.hand)
         {
@@ -67,16 +67,13 @@ public class Deck : MonoBehaviour
 
     public AbstractCard Draw()
     {
-        // TODO: When no cards in deck, maybe reshuffle cards from discard pile
-        // Should probably keep track of who's cards are who's since separate
-        // decks
         AbstractCard c = m_Cards[0];
         m_Cards.RemoveAt(0);
 
         if (m_Cards.Count == 0)
         {
             // empty deck, reshuffle own cards back in (except top card)
-            var d = GameMaster.GetInstance().discard;
+            var d = GameMaster.GetInstance().DiscardPile;
             var discardedCards = d.RemoveCardsFromEntity(e, false);
             foreach (var dCard in discardedCards)
             {

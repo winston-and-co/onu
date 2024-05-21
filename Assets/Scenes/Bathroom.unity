@@ -607,9 +607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onuSceneManagerPrefab: {fileID: 3367878685800053349, guid: f384a1edc27348845a63084ad7405e33, type: 3}
   playerDataPrefab: {fileID: 6390295585823882978, guid: 29a7417b4802c1742b83fffa4f1d8f16, type: 3}
-  deckGeneratorPrefab: {fileID: 2840278048075522237, guid: e778b5aa4bb97d64e8c09cc0ed750233, type: 3}
-  enemyGeneratorPrefab: {fileID: 2623748461647231642, guid: 8ebde46d85a838a4093a2f89898672c2, type: 3}
   prefabHelperPrefab: {fileID: 1542042649354975507, guid: 8c75b91e23ed7d946989367376dc410c, type: 3}
+  eventTrackerPrefab: {fileID: 0}
 --- !u!4 &516359517
 Transform:
   m_ObjectHideFlags: 0
@@ -1047,7 +1046,6 @@ GameObject:
   - component: {fileID: 1676711990}
   - component: {fileID: 1676711989}
   - component: {fileID: 1676711988}
-  - component: {fileID: 1676711987}
   m_Layer: 5
   m_Name: LeaveButton
   m_TagString: Untagged
@@ -1075,19 +1073,6 @@ RectTransform:
   m_AnchoredPosition: {x: -151, y: 517}
   m_SizeDelta: {x: 273.2535, y: 112.7941}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1676711987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676711985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 143b50d1e08a27c4aa56caa002601b7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: 0
 --- !u!114 &1676711988
 MonoBehaviour:
   m_ObjectHideFlags: 0

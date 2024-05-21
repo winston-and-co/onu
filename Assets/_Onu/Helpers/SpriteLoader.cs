@@ -13,7 +13,7 @@ public class SpriteLoader
     }
 
     /// <summary>
-    /// Returns the sprite found using the Resources API or null if not found.
+    /// Usually you should use LoadSprite. Returns the sprite found using the Resources API or null if not found.
     /// </summary>
     public static Sprite Load(string path)
     {

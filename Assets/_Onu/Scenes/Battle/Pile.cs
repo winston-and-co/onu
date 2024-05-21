@@ -32,9 +32,6 @@ public class Pile : MonoBehaviour
     void AddToTop(AbstractCard card)
     {
         pile.Add(card);
-        // awful practice, decouple
-        card.gameObject.transform.SetParent(gameObject.transform, false);
-        card.gameObject.transform.localPosition = Vector3.zero;
     }
 
     /// <summary>

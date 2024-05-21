@@ -47,17 +47,14 @@ public class EventQueue
 
     public CardTryPlayedEvent cardTryPlayedEvent = new();
     public CardPlayedEvent cardPlayedEvent = new();
-    public AfterCardPlayedEvent afterCardPlayedEvent = new();
-    public CardIllegalEvent cardIllegalEvent = new();
     public CardDrawEvent cardDrawEvent = new();
     public CardNoDrawEvent cardNoDrawEvent = new();
     public CardTryDrawEvent cardTryDrawEvent = new();
 
-    public EntityDamageEvent entityDamageEvent = new();
-    public EntityHealEvent entityHealEvent = new();
     public EntityHealthChangedEvent entityHealthChangedEvent = new();
-    public EntityManaSpentEvent entityManaSpentEvent = new();
+    public EntityMaxHealthChanged entityMaxHealthChangedEvent = new();
     public EntityManaChangedEvent entityManaChangedEvent = new();
+    public EntityMaxManaChangedEvent entityMaxManaChangedEvent = new();
     public EntityRefreshEvent entityRefreshEvent = new();
 
     public ActionCardTryUseEvent actionCardTryUseEvent = new();
@@ -73,8 +70,6 @@ public class EventQueue
 // Game rules
 public class CardTryPlayedEvent : GameEvent<AbstractEntity, AbstractCard> { }
 public class CardPlayedEvent : GameEvent<AbstractEntity, AbstractCard> { }
-public class AfterCardPlayedEvent : GameEvent<AbstractEntity, AbstractCard> { }
-public class CardIllegalEvent : GameEvent<AbstractEntity, AbstractCard> { }
 public class CardDrawEvent : GameEvent<AbstractEntity, AbstractCard> { }
 public class CardNoDrawEvent : GameEvent<AbstractEntity, AbstractCard> { }
 public class CardTryDrawEvent : GameEvent<AbstractEntity, AbstractCard> { }
@@ -86,12 +81,13 @@ public class EndTurnEvent : GameEvent<AbstractEntity> { }
 public class TryEndTurnEvent : GameEvent<AbstractEntity> { }
 public class EndBattleEvent : GameEvent<GameMaster> { }
 
-// Combat
+// Stats
 public class EntityHealthChangedEvent : GameEvent<AbstractEntity, int> { }
-public class EntityDamageEvent : GameEvent<AbstractEntity, int> { }
-public class EntityHealEvent : GameEvent<AbstractEntity, int> { }
+public class EntityMaxHealthChanged : GameEvent<AbstractEntity, int> { }
 public class EntityManaChangedEvent : GameEvent<AbstractEntity, int> { }
-public class EntityManaSpentEvent : GameEvent<AbstractEntity, int> { }
+public class EntityMaxManaChangedEvent : GameEvent<AbstractEntity, int> { }
+
+// Game
 public class EntityRefreshEvent : GameEvent<AbstractEntity> { }
 
 // Action Cards

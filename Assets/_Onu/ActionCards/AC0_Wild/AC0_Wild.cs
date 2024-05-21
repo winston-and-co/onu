@@ -28,9 +28,9 @@ namespace ActionCards
             if (cardInstance != null) Destroy(cardInstance);
             cardInstance = WildCard.New(PlayerData.GetInstance().Player);
             var gm = GameMaster.GetInstance();
-            cardInstance.Entity = gm.player;
-            if (gm.current_turn_entity == gm.player
-            && gm.player.gameRulesController.CardIsPlayable(gm, gm.player, cardInstance))
+            cardInstance.Entity = gm.Player;
+            if (gm.CurrentEntity == gm.Player
+            && gm.Player.gameRulesController.CardIsPlayable(gm, gm.Player, cardInstance))
             {
                 return true;
             }
@@ -40,7 +40,7 @@ namespace ActionCards
 
         public override void TryUse()
         {
-            EventQueue.GetInstance().actionCardTryUseEvent.Invoke(GameMaster.GetInstance().player, this);
+            EventQueue.GetInstance().actionCardTryUseEvent.AddToBack(GameMaster.GetInstance().Player, this);
         }
 
         public override void Use(Action onResolved)
@@ -66,7 +66,7 @@ namespace ActionCards
                 var cp = colorPickerInstance.GetComponent<ColorPicker>();
                 cp.Hide();
                 var gm = GameMaster.GetInstance();
-                EventQueue.GetInstance().cardTryPlayedEvent.Invoke(gm.player, cardInstance);
+                EventQueue.GetInstance().cardTryPlayedEvent.AddToBack(gm.Player, cardInstance);
                 cardInstance.Color = color;
                 cardInstance.SpriteController.SpriteRenderer.color = Color.white;
                 onResolved();

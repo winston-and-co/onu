@@ -101,7 +101,7 @@ public class OnuSceneManager : MonoBehaviour
         if (pd.Player.deck == null) throw new System.Exception();
         pd.Player.deck.gameObject.SetActive(true);
         var gm = GameMaster.GetInstance();
-        gm.player = pd.Player;
+        gm.Player = pd.Player;
         // enemy
         EnemyEntity enemy;
         var floor = pd.CurrentNodeLocation.Item1; // 0-index
@@ -109,7 +109,7 @@ public class OnuSceneManager : MonoBehaviour
             enemy = EnemyFactory.RandomFromPool(EnemyPool.Easy1);
         else
             enemy = EnemyFactory.RandomFromPool(EnemyPool.Hard1);
-        gm.enemy = enemy;
+        gm.Enemy = enemy;
     }
     void CleanBattleScene()
     {
@@ -129,11 +129,11 @@ public class OnuSceneManager : MonoBehaviour
         if (pd.Player.deck == null) throw new System.Exception();
         pd.Player.deck.gameObject.SetActive(true);
         var gm = GameMaster.GetInstance();
-        gm.player = pd.Player;
+        gm.Player = pd.Player;
         // enemy
         EnemyEntity enemy;
         enemy = EnemyFactory.RandomFromPool(EnemyPool.Boss1);
-        gm.enemy = enemy;
+        gm.Enemy = enemy;
     }
 
     public void ChangeScene(Scene scene)

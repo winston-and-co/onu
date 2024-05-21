@@ -17,7 +17,7 @@ namespace RuleCards
 
         public override RuleResult<bool> CardIsPlayable(GameMaster gm, AbstractEntity e, AbstractCard c)
         {
-            var discard = gm.discard;
+            var discard = gm.DiscardPile;
             var topCard = discard.Peek();
             // first card
             if (topCard == null) return (true, 0);
@@ -40,7 +40,7 @@ namespace RuleCards
 
         public override RuleResult<int> CardManaCost(GameMaster gm, AbstractEntity e, AbstractCard c)
         {
-            var topCard = gm.discard.Peek();
+            var topCard = gm.DiscardPile.Peek();
             if (topCard != null && !e.gameRulesController.ColorsMatch(gm, e, c.Color, topCard.Color))
             {
                 return (c.Cost, 0);

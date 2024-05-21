@@ -47,3 +47,4 @@ MonoBehaviour:
   onuSceneManagerPrefab: {fileID: 6500310687141077306, guid: dd6d0096d31166e4eab180c237ede863, type: 3}
   playerDataPrefab: {fileID: 9180944248164513390, guid: 55427dadf09418048859b9cf1cba9265, type: 3}
   prefabHelperPrefab: {fileID: 2236185122093085229, guid: 2cfa8c1b81ef1ae44adcd01db05c3397, type: 3}
+  eventTrackerPrefab: {fileID: 214900607692661360, guid: 84cf844ef7268664a82c729a1154bc8e, type: 3}

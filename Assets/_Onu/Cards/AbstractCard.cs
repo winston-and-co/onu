@@ -21,7 +21,7 @@ namespace Cards
                 }
             }
         }
-        public CardSprite SpriteController;
+        public CardSpriteController SpriteController;
         public AbstractEntity Entity;
 
         public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled)
@@ -35,7 +35,7 @@ namespace Cards
             card.Value = value;
             card.Cost = card.Value ?? 0;
             card.Entity = cardOwner;
-            card.SpriteController = card.GetComponentInChildren<CardSprite>();
+            card.SpriteController = card.GetComponent<CardSpriteController>();
             card.SpriteController.Front = SpriteLoader.LoadSprite(frontSprite);
             card.SpriteController.Back = SpriteLoader.LoadSprite(backSprite);
             card.SpriteController.MouseEventsEnabled = mouseEventsEnabled;
@@ -45,23 +45,14 @@ namespace Cards
             return card;
         }
 
+        public void Play()
+        {
+            EventQueue.GetInstance().cardTryPlayedEvent.AddToBack(Entity, this);
+        }
+
         public virtual bool IsPlayable()
         {
             return Entity.gameRulesController.CardIsPlayable(GameMaster.GetInstance(), Entity, this).Result;
-        }
-
-        public void OnMouseDown()
-        {
-            EventQueue.GetInstance().cardTryPlayedEvent.Invoke(Entity, this);
-        }
-
-        public void OnMouseEnter()
-        {
-            SpriteController.MouseEnter();
-        }
-        public void OnMouseExit()
-        {
-            SpriteController.MouseLeave();
         }
     }
 }

@@ -15,7 +15,7 @@ public class RuleCardBar : MonoBehaviour
 
     void DisplayRuleCards(GameMaster gm)
     {
-        entity = isPlayer ? gm.player : gm.enemy;
+        entity = isPlayer ? gm.Player : gm.Enemy;
         var rcs = entity.gameRulesController.Rules;
         int i = 0;
         foreach (var rc in rcs)

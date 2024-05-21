@@ -1,15 +1,19 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ConfirmCharSelectButton : MonoBehaviour, IPointerClickHandler
+public class ConfirmCharSelectButton : MonoBehaviour
 {
+    void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(OnClick);
+    }
+
     void Start()
     {
         GetComponent<Button>().interactable = false;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    void OnClick()
     {
         var cs = FindObjectOfType<CharacterSelect>();
         cs.ConfirmSelection();

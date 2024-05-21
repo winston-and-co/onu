@@ -9,14 +9,12 @@ public class CardHandLayout : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().afterCardPlayedEvent.AddListener(AfterCardPlayed);
+        EventQueue.GetInstance().cardPlayedEvent.AddListener(OnCardPlayed);
         EventQueue.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
     }
 
-
     void ArrangeCards()
     {
-        int numberOfCards = hand.GetCardCount();
         for (int i = 0; i < hand.GetCardCount(); i++)
         {
             Vector3 position = root.GetComponent<RectTransform>().position + new Vector3(i * spacing, 0, 0);
@@ -24,12 +22,12 @@ public class CardHandLayout : MonoBehaviour
             GameObject card = GetCardAtIndex(i);
             card.transform.position = position;
 
-            CardSprite spriteController = card.GetComponentInChildren<CardSprite>();
+            CardSpriteController spriteController = card.GetComponentInChildren<CardSpriteController>();
             spriteController.SetOrder(i);
         }
     }
 
-    void AfterCardPlayed(AbstractEntity e, AbstractCard _)
+    void OnCardPlayed(AbstractEntity e, AbstractCard _)
     {
         if (!e.hand == hand)
         {
@@ -37,6 +35,7 @@ public class CardHandLayout : MonoBehaviour
         }
         ArrangeCards();
     }
+
     void OnCardDrawn(AbstractEntity e, AbstractCard _)
     {
         if (!e.hand == hand)

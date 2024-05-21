@@ -15,12 +15,9 @@ public class ActionCardPicker : ScrollGridPicker
 
     void OnActionCardPicked(GameObject go)
     {
-        AbstractActionCard actionCard = go.GetComponent<AbstractActionCard>();
         Hide();
-        if (actionCard is IUsable usable)
-        {
-            usable.TryUse();
-        }
+        AbstractActionCard actionCard = go.GetComponent<AbstractActionCard>();
+        actionCard.TryUse();
         foreach (var s in spawned)
             Destroy(s);
     }

@@ -10,7 +10,7 @@ namespace ActionCards
         public override bool IsUsable()
         {
             var gm = GameMaster.GetInstance();
-            if (gm.current_turn_entity == gm.player)
+            if (gm.CurrentEntity == gm.Player)
             {
                 return true;
             }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Blockers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,15 +12,19 @@ public class VictoryScreen : MonoBehaviour
     void Awake()
     {
         EventQueue.GetInstance().endBattleEvent.AddListener(OnEndBattle);
-        gameObject.SetActive(false);
+        Hide();
+        nextButton.onClick.AddListener(OnClickNext);
+    }
 
-        nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(Scene.Map));
-        // Show();
+    void OnClickNext()
+    {
+        Hide();
+        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
     }
 
     void OnEndBattle(GameMaster gm)
     {
-        if (gm.victor == gm.player)
+        if (gm.Victor == gm.Player)
         {
             Show();
         }
@@ -28,14 +33,23 @@ public class VictoryScreen : MonoBehaviour
     void Show()
     {
         gameObject.SetActive(true);
+        UIPopupBlocker.StartBlocking();
         GenerateRewards();
+    }
+
+    void Hide()
+    {
+        gameObject.SetActive(false);
+        UIPopupBlocker.StopBlocking();
     }
 
     void GenerateRewards()
     {
+        var maxManaReward = ManaReward.New();
+        AddToRewardsList(maxManaReward);
         int numActionCards = Random.Range(0, 100) switch
         {
-            >= 0 and < 70 => 10,
+            >= 0 and < 70 => 1,
             >= 70 and < 90 => 2,
             >= 90 and < 98 => 3,
             _ => 4,
@@ -44,6 +58,18 @@ public class VictoryScreen : MonoBehaviour
         {
             var actionCardReward = ActionCardReward.New();
             AddToRewardsList(actionCardReward);
+        }
+        int numRuleCards = Random.Range(0, 100) switch
+        {
+            >= 0 and < 70 => 1,
+            >= 70 and < 90 => 2,
+            >= 90 and < 98 => 3,
+            _ => 4,
+        };
+        for (int i = 0; i < numRuleCards; i++)
+        {
+            var ruleCardReward = RuleCardReward.New();
+            AddToRewardsList(ruleCardReward);
         }
     }
 

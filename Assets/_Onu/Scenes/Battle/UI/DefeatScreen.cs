@@ -17,7 +17,7 @@ public class DefeatScreen : MonoBehaviour
 
     void OnEndBattle(GameMaster gm)
     {
-        if (gm.victor != gm.player)
+        if (gm.Victor != gm.Player)
         {
             // TODO: Back to menu?
         }

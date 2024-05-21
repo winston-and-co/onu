@@ -22,6 +22,7 @@ public class SingletonsManager : MonoBehaviour
     [SerializeField] GameObject onuSceneManagerPrefab;
     [SerializeField] GameObject playerDataPrefab;
     [SerializeField] GameObject prefabHelperPrefab;
+    [SerializeField] GameObject eventTrackerPrefab;
 
     void SpawnSingletons()
     {
@@ -32,5 +33,7 @@ public class SingletonsManager : MonoBehaviour
         if (go == null) Instantiate(playerDataPrefab);
         go = GameObject.Find(prefabHelperPrefab.name);
         if (go == null) Instantiate(prefabHelperPrefab);
+        go = GameObject.Find(eventTrackerPrefab.name);
+        if (go == null) Instantiate(eventTrackerPrefab);
     }
 }

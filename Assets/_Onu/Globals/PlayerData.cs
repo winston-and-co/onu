@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ActionCards;
+using RuleCards;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -69,11 +70,27 @@ public class PlayerData : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove an Action Card by index
+    /// Remove an Action Card by index.
     /// </summary>
     /// <param name="actionCard">The index to remove at</param>
     public void RemoveActionCardAt(int idx)
     {
         ActionCards.RemoveAt(idx);
+    }
+
+    /// <summary>
+    /// Calls matching method in player entity's GameRulesController.
+    /// </summary>
+    public bool AddRuleCard(AbstractRuleCard ruleCard)
+    {
+        return Player.gameRulesController.AddRuleCard(ruleCard);
+    }
+
+    /// <summary>
+    /// Calls matching method in player entity's GameRulesController.
+    /// </summary>
+    public bool RemoveRuleCard(AbstractRuleCard ruleCard)
+    {
+        return Player.gameRulesController.RemoveRuleCard(ruleCard);
     }
 }

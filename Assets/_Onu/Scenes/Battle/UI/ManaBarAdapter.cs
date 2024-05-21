@@ -16,7 +16,7 @@ public class ManaBarAdapter : MonoBehaviour
 
     void OnStartBattle(GameMaster gm)
     {
-        entity = isPlayerAdapter ? gm.player : gm.enemy;
+        entity = isPlayerAdapter ? gm.Player : gm.Enemy;
         bar.Initialize(entity.maxMana);
         bar.UpdateHealthBar(entity.mana);
         manaText.SetText($"{entity.mana} / {entity.maxMana}");

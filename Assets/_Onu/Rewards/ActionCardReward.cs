@@ -2,20 +2,19 @@ using ActionCards;
 
 public class ActionCardReward : AbstractReward
 {
-    public AbstractActionCard ActionCard;
+    string actionCardName;
 
     public static ActionCardReward New()
     {
         AbstractActionCard ac = ActionCardFactory.MakeRandom();
-        ActionCardReward reward = New(typeof(ActionCardReward), ac.Name, ac.SpriteName) as ActionCardReward;
-        reward.ActionCard = ac;
-        print("here");
+        ActionCardReward reward = New<ActionCardReward>(ac.Name, ac.SpriteName) as ActionCardReward;
+        reward.actionCardName = ac.Name;
         Destroy(ac.gameObject);
         return reward;
     }
 
     public override void Collect()
     {
-        print(ActionCard.Name);
+        PlayerData.GetInstance().AddActionCard(actionCardName);
     }
 }

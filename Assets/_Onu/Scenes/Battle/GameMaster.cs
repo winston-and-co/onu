@@ -1,27 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cards;
 using ActionCards;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
     private static GameMaster INSTANCE;
     public static GameMaster GetInstance() => INSTANCE;
 
-    public Pile discard;
-    public AbstractEntity player;
-    public AbstractEntity enemy;
+    public Pile DiscardPile;
+    public AbstractEntity Player;
+    public AbstractEntity Enemy;
 
     int turn = 0;
     AbstractEntity[] order;
-    public AbstractEntity current_turn_entity;
+    public AbstractEntity CurrentEntity;
 
-    public int turnNumber;
+    public int TurnNumber;
 
-    public AbstractEntity victor;
+    public AbstractEntity Victor;
 
     bool cardNotResolved;
 
@@ -35,39 +31,43 @@ public class GameMaster : MonoBehaviour
         }
         else INSTANCE = this;
 
-        EventQueue bus = EventQueue.GetInstance();
-        bus.cardTryPlayedEvent.AddListener(OnTryPlayCard);
-        bus.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
-        bus.tryEndTurnEvent.AddListener(TryEndTurn);
-        bus.entityDamageEvent.AddListener(OnEntityDamage);
+        if (DiscardPile == null)
+        {
+            DiscardPile = FindObjectOfType<Pile>();
+        }
+
+        EventQueue eq = EventQueue.GetInstance();
+        eq.cardTryPlayedEvent.AddListener(OnTryPlayCard);
+        eq.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
+        eq.tryEndTurnEvent.AddListener(TryEndTurn);
+        eq.entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
     }
 
     void Start()
     {
         // Init combat
         order = new AbstractEntity[2];
-        order[0] = player;
-        order[1] = enemy;
+        order[0] = Player;
+        order[1] = Enemy;
 
-        player.mana = player.maxMana;
-        enemy.hp = enemy.maxHP;
-        enemy.mana = enemy.maxMana;
+        Player.mana = Player.maxMana;
+        Enemy.hp = Enemy.maxHP;
+        Enemy.mana = Enemy.maxMana;
 
-        turnNumber = 0;
-        victor = null;
+        TurnNumber = 0;
+        Victor = null;
 
         // Begin combat
-        EventQueue.GetInstance().startBattleEvent.Invoke(this);
-
-        player.deck.Shuffle();
-        for (int i = 0; i < player.startingHandSize; i++)
+        EventQueue.GetInstance().startBattleEvent.AddToBack(this);
+        Player.deck.Shuffle();
+        for (int i = 0; i < Player.startingHandSize; i++)
         {
-            player.Draw();
+            Player.Draw();
         }
-        enemy.deck.Shuffle();
-        for (int i = 0; i < enemy.startingHandSize; i++)
+        Enemy.deck.Shuffle();
+        for (int i = 0; i < Enemy.startingHandSize; i++)
         {
-            enemy.Draw();
+            Enemy.Draw();
         }
 
         StartTurn(0); // player
@@ -81,23 +81,23 @@ public class GameMaster : MonoBehaviour
 
     void StartTurn(int turn)
     {
-        current_turn_entity = order[turn];
+        CurrentEntity = order[turn];
 
-        if (current_turn_entity == player)
+        if (CurrentEntity == Player)
         {
-            turnNumber++;
+            TurnNumber++;
         }
 
-        EventQueue.GetInstance().startTurnEvent.Invoke(current_turn_entity);
+        EventQueue.GetInstance().startTurnEvent.AddToBack(CurrentEntity);
 
         // if your hand contains no playable cards
         //   draw cards until you draw a playable one
         // else
         //   draw one card
         bool hasPlayable = false;
-        foreach (AbstractCard c in current_turn_entity.hand.hand)
+        foreach (AbstractCard c in CurrentEntity.hand.hand)
         {
-            if (current_turn_entity.gameRulesController.CardIsPlayable(this, current_turn_entity, c))
+            if (CurrentEntity.gameRulesController.CardIsPlayable(this, CurrentEntity, c))
             {
                 hasPlayable = true;
                 break;
@@ -105,8 +105,8 @@ public class GameMaster : MonoBehaviour
         }
         do
         {
-            var cardDrawn = current_turn_entity.Draw();
-            if (current_turn_entity.gameRulesController.CardIsPlayable(this, current_turn_entity, cardDrawn))
+            var cardDrawn = CurrentEntity.Draw();
+            if (CurrentEntity.gameRulesController.CardIsPlayable(this, CurrentEntity, cardDrawn))
             {
                 hasPlayable = true;
             }
@@ -117,13 +117,8 @@ public class GameMaster : MonoBehaviour
     void TryEndTurn(AbstractEntity e)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        EventQueue.GetInstance().endTurnEvent.Invoke(current_turn_entity);
+        EventQueue.GetInstance().endTurnEvent.AddToBack(CurrentEntity);
         StartNextTurn();
-    }
-
-    bool IsEntityTurn(AbstractEntity e)
-    {
-        return e == current_turn_entity;
     }
 
     /*
@@ -133,14 +128,10 @@ public class GameMaster : MonoBehaviour
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         if (e == null || card == null) return;
-        if (e != current_turn_entity) return;
+        if (e != CurrentEntity) return;
         if (card.IsPlayable())
         {
             PlayCard(e, card);
-        }
-        else
-        {
-            EventQueue.GetInstance().cardIllegalEvent.Invoke(e, card);
         }
     }
 
@@ -148,21 +139,21 @@ public class GameMaster : MonoBehaviour
     {
         cardNotResolved = true;
         AbstractEntity target;
-        if (e == player)
+        if (e == Player)
         {
-            target = enemy;
+            target = Enemy;
         }
         else
         {
-            target = player;
+            target = Player;
         }
         int cost = e.gameRulesController.CardManaCost(this, e, c);
-        switch (discard.Peek())
+        switch (DiscardPile.Peek())
         {
             case AbstractCard top:
                 if (!c.Value.HasValue) goto default;
 
-                EventQueue.GetInstance().cardPlayedEvent.Invoke(e, c);
+                EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
                 e.SpendMana(cost);
                 if (top.Value == 0)
                     e.Heal(c.Value ?? 0);
@@ -173,13 +164,12 @@ public class GameMaster : MonoBehaviour
                 break;
             case null:
             default:
-                EventQueue.GetInstance().cardPlayedEvent.Invoke(e, c);
+                EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
                 target.Damage(c.Value ?? 0);
                 e.hand.RemoveCard(c);
                 break;
         }
 
-        EventQueue.GetInstance().afterCardPlayedEvent.Invoke(e, c);
         cardNotResolved = false;
         CheckVictory();
     }
@@ -202,14 +192,13 @@ public class GameMaster : MonoBehaviour
         {
             usable.Use(() =>
             {
-                EventQueue.GetInstance().actionCardUsedEvent.Invoke(e, ac);
-                // TODO: Move this to an event handler in PlayerData if a non-battle event bus is created
+                EventQueue.GetInstance().actionCardUsedEvent.AddToBack(e, ac);
                 PlayerData.GetInstance().RemoveActionCardAt(ac.PlayerDataIndex);
             });
         }
     }
 
-    void OnEntityDamage(AbstractEntity e, int _)
+    void OnEntityHealthChanged(AbstractEntity _, int __)
     {
         CheckVictory();
     }
@@ -217,25 +206,25 @@ public class GameMaster : MonoBehaviour
     void CheckVictory()
     {
         if (cardNotResolved) return;
-        if (player.hp <= 0)
+        if (Player.hp <= 0)
         {
-            victor = enemy;
+            Victor = Enemy;
         }
-        else if (enemy.hp <= 0)
+        else if (Enemy.hp <= 0)
         {
-            victor = player;
+            Victor = Player;
         }
         else
         {
             return;
         }
-        EventQueue.GetInstance().endTurnEvent.Invoke(current_turn_entity);
-        current_turn_entity = null;
-        EventQueue.GetInstance().endBattleEvent.Invoke(this);
+        EventQueue.GetInstance().endTurnEvent.AddToBack(CurrentEntity);
+        CurrentEntity = null;
+        EventQueue.GetInstance().endBattleEvent.AddToBack(this);
     }
 
     public bool PlayerWon()
     {
-        return victor == player;
+        return Victor == Player;
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Cards
 {
@@ -19,8 +20,9 @@ namespace Cards
             var rt = card.GetComponent<RectTransform>();
             rt.localScale = new(0.15f, 0.15f);
             card.SpriteController.Flip();
-            card.SpriteController.cardInHandScale = new(0.15f, 0.15f);
-            card.SpriteController.cardInPileScale = new(0.2f, 0.2f);
+            card.SpriteController.CardInHandScale = new(0.15f, 0.15f);
+            card.SpriteController.CardInPileScale = new(0.2f, 0.2f);
+            card.SpriteController.HandSortingLayer = "EnemyHand";
             return card;
         }
     }

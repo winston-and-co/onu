@@ -8,7 +8,7 @@ public class PlayerLabel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string e = GameMaster.GetInstance().enemy.e_name;   
+        string e = GameMaster.GetInstance().Enemy.e_name;
         GetComponent<TextMeshProUGUI>().text = e;
     }
 
@@ -16,6 +16,6 @@ public class PlayerLabel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

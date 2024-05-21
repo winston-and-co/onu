@@ -19,6 +19,7 @@ public class Bathroom : MonoBehaviour
         options.gameObject.SetActive(false);
         options.OptionPickedEvent.AddListener(OnOptionPicked);
         leaveButton.gameObject.SetActive(false);
+        leaveButton.onClick.AddListener(OnLeaveBathroom);
         fadeToBlack.color = new Vector4(0, 0, 0, 0);
         fadeToBlack.gameObject.SetActive(false);
         healText.alpha = 0f;
@@ -45,6 +46,11 @@ public class Bathroom : MonoBehaviour
         usingBathroom = true;
         fadeToBlack.gameObject.SetActive(true);
         StartCoroutine(UseBRHelper());
+    }
+
+    void OnLeaveBathroom()
+    {
+        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
     }
 
     void OnOptionPicked()

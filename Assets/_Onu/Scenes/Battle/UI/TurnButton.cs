@@ -21,8 +21,8 @@ public class TurnButton : MonoBehaviour
 
     void OnClick()
     {
-        if (GameMaster.GetInstance().current_turn_entity != PlayerData.GetInstance().Player) return;
+        if (GameMaster.GetInstance().CurrentEntity != PlayerData.GetInstance().Player) return;
         GetComponent<Button>().interactable = false;
-        EventQueue.GetInstance().tryEndTurnEvent.Invoke(PlayerData.GetInstance().Player);
+        EventQueue.GetInstance().tryEndTurnEvent.AddToBack(PlayerData.GetInstance().Player);
     }
 }

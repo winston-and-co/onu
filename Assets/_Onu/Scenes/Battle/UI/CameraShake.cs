@@ -26,10 +26,15 @@ public class CameraShake : MonoBehaviour
 
     private void Awake()
     {
-        EventQueue.GetInstance().entityDamageEvent.AddListener(OnDamage);
+        EventQueue.GetInstance().entityHealthChangedEvent.AddListener(OnHealthChanged);
     }
 
-    void OnDamage(AbstractEntity e, int dmg)
+    void OnHealthChanged(AbstractEntity _, int value)
+    {
+        if (value < 0) OnDamage(-value);
+    }
+
+    void OnDamage(int dmg)
     {
         StartCoroutine(Shake(0.02f * dmg, 0.01f * dmg)); // TODO: Adjust based on damage
     }

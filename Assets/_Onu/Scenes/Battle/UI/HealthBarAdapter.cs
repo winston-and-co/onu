@@ -16,7 +16,7 @@ public class HealthBarAdapter : MonoBehaviour
 
     void OnStartBattle(GameMaster gm)
     {
-        entity = isPlayerAdapter ? gm.player : gm.enemy;
+        entity = isPlayerAdapter ? gm.Player : gm.Enemy;
         bar.Initialize(entity.maxHP);
         bar.UpdateHealthBar(entity.hp);
         hpText.SetText($"{entity.hp} / {entity.maxHP}");

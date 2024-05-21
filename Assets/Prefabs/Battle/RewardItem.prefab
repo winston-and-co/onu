@@ -145,8 +145,6 @@ GameObject:
   - component: {fileID: 5512774752590057809}
   - component: {fileID: 6135717510795543970}
   - component: {fileID: 1666352527823178919}
-  - component: {fileID: 8785633350670966803}
-  - component: {fileID: -5366918317039533517}
   m_Layer: 0
   m_Name: RewardItem
   m_TagString: Untagged
@@ -213,32 +211,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8785633350670966803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857100085499147140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1181a82fb6c21543be89f497931e4f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActionCard: {fileID: 0}
---- !u!114 &-5366918317039533517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857100085499147140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1181a82fb6c21543be89f497931e4f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActionCard: {fileID: 0}
 --- !u!1 &9020102727172832369
 GameObject:
   m_ObjectHideFlags: 0
