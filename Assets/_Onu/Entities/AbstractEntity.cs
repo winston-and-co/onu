@@ -20,6 +20,8 @@ public abstract class AbstractEntity : MonoBehaviour
 
     public string e_name;
 
+    public bool skipped;
+
     public static AbstractEntity New(string name, string entityName, System.Type entityType, int maxHP, int maxMana, int startingHandSize, bool isPlayer)
     {
         PrefabHelper ph = PrefabHelper.GetInstance();
@@ -47,7 +49,7 @@ public abstract class AbstractEntity : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().cardPlayedEvent.AddListener(OnCardPlayed);
+        EventManager.cardPlayedEvent.AddListener(OnCardPlayed);
     }
 
     void Start()
@@ -69,8 +71,7 @@ public abstract class AbstractEntity : MonoBehaviour
     {
         hp -= amount;
         hp = Math.Max(0, hp);
-        var eq = EventQueue.GetInstance();
-        eq.entityHealthChangedEvent.AddToFront(this, -amount);
+        EventManager.entityHealthChangedEvent.AddToBack(this, -amount);
     }
 
     public void Heal(int amount)
@@ -78,19 +79,14 @@ public abstract class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         hp += amount;
         hp = Math.Min(maxHP, hp);
-        var eq = EventQueue.GetInstance();
-        eq.entityHealthChangedEvent.AddToFront(this, amount);
+        EventManager.entityHealthChangedEvent.AddToBack(this, amount);
     }
 
     public void ChangeMaxHP(int amount)
     {
         maxHP += amount;
-        var eq = EventQueue.GetInstance();
-        eq.entityMaxHealthChangedEvent.AddToFront(this, amount);
-        var temp = hp;
-        hp = Math.Min(maxHP, hp);
-        if (hp != temp)
-            eq.entityHealthChangedEvent.AddToFront(this, hp - temp);
+        EventManager.entityMaxHealthChangedEvent.AddToBack(this, amount);
+        Heal(amount);
     }
 
     public void SpendMana(int amount)
@@ -98,25 +94,21 @@ public abstract class AbstractEntity : MonoBehaviour
         if (amount == 0) return;
         mana -= amount;
         mana = Math.Max(0, mana);
-        EventQueue.GetInstance().entityManaChangedEvent.AddToFront(this, -amount);
+        EventManager.entityManaChangedEvent.AddToBack(this, -amount);
     }
 
     public void RestoreMana(int amount)
     {
         mana += amount;
         mana = Math.Min(maxMana, mana);
-        EventQueue.GetInstance().entityManaChangedEvent.AddToFront(this, amount);
+        EventManager.entityManaChangedEvent.AddToBack(this, amount);
     }
 
     public void ChangeMaxMana(int amount)
     {
         maxMana += amount;
-        var eq = EventQueue.GetInstance();
-        eq.entityMaxManaChangedEvent.AddToFront(this, amount);
-        var temp = mana;
-        mana = Math.Min(maxMana, mana);
-        if (mana != temp)
-            eq.entityManaChangedEvent.AddToFront(this, mana - temp);
+        EventManager.entityMaxManaChangedEvent.AddToBack(this, amount);
+        RestoreMana(amount);
     }
 
     /// <summary>
@@ -129,7 +121,7 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
-            EventQueue.GetInstance().cardDrawEvent.AddToFront(this, drawn);
+            EventManager.cardDrawnEvent.AddToBack(this, drawn);
             return drawn;
         }
         return null;
@@ -143,6 +135,14 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             Draw();
         }
-        EventQueue.GetInstance().entityRefreshEvent.AddToFront(this);
+        EventManager.entityRefreshEvent.AddToBack(this);
+    }
+
+    /// <summary>
+    /// Skips this entity's next turn.
+    /// </summary>
+    public void SkipTurn()
+    {
+        skipped = true;
     }
 }

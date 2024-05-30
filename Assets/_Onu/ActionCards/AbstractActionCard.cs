@@ -7,15 +7,13 @@ namespace ActionCards
 {
     public abstract class AbstractActionCard : MonoBehaviour, IUsable
     {
-        public abstract int Id { get; }
         public abstract string Name { get; }
         public abstract string Description { get; }
         public abstract string SpriteName { get; }
         public bool IsUIObject;
         public TooltipOwner Tooltips;
-        public int PlayerDataIndex { get; set; } = -1;
 
-        public static AbstractActionCard New<T>(bool isUIObject) => New(typeof(T), isUIObject);
+        public static T New<T>(bool isUIObject = true) where T : AbstractActionCard => New(typeof(T), isUIObject) as T;
         public static AbstractActionCard New(System.Type actionCardType, bool isUIObject)
         {
             GameObject go = new();
@@ -56,11 +54,38 @@ namespace ActionCards
             return ac;
         }
 
-        public abstract bool IsUsable();
+        /// <summary>
+        /// By default, usable if in battle and during the player's turn.
+        /// <code>
+        /// var gm = GameMaster.GetInstance();
+        /// if (gm == null) return false;
+        /// if (gm.CurrentEntity == gm.Player)
+        /// {
+        ///     return true;
+        /// }
+        /// return false;
+        /// </code>
+        /// </summary>
+        /// <returns>Whether it is usable.</returns>
+        public virtual bool IsUsable()
+        {
+            var gm = GameMaster.GetInstance();
+            if (gm == null) return false;
+            if (gm.CurrentEntity == gm.Player)
+            {
+                return true;
+            }
+            return false;
+        }
 
+        /// <summary>
+        /// <code>
+        /// GameMaster.GetInstance().TryUseActionCard(this);
+        /// </code>
+        /// </summary>
         public virtual void TryUse()
         {
-            EventQueue.GetInstance().actionCardTryUseEvent.AddToBack(GameMaster.GetInstance().Player, this);
+            GameMaster.GetInstance().TryUseActionCard(this);
         }
 
         public abstract void Use(Action resolve);

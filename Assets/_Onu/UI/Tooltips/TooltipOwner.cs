@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[Serializable]
 public struct Tooltip
 {
     public string Title;
@@ -12,7 +14,7 @@ public struct Tooltip
 
 public class TooltipOwner : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    List<Tooltip> tooltips = new();
+    [SerializeField] List<Tooltip> tooltips = new();
     readonly List<GameObject> instances = new();
 
     public void Add(Tooltip tooltip)
@@ -100,12 +102,13 @@ public class TooltipOwner : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         DestroyAll();
     }
 
-    void DestroyAll()
+    public void DestroyAll()
     {
         if (instances.Count > 0)
         {
-            foreach (var instance in instances)
+            for (int i = instances.Count - 1; i >= 0; i--)
             {
+                var instance = instances[i];
                 Destroy(instance);
             }
             instances.Clear();

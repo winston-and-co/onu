@@ -9,7 +9,7 @@ public class TurnButton : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().startTurnEvent.AddListener(OnTurnStart);
+        EventManager.startTurnEvent.AddListener(OnTurnStart);
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
@@ -23,6 +23,6 @@ public class TurnButton : MonoBehaviour
     {
         if (GameMaster.GetInstance().CurrentEntity != PlayerData.GetInstance().Player) return;
         GetComponent<Button>().interactable = false;
-        EventQueue.GetInstance().tryEndTurnEvent.AddToBack(PlayerData.GetInstance().Player);
+        EventManager.tryEndTurnEvent.AddToBack(PlayerData.GetInstance().Player);
     }
 }

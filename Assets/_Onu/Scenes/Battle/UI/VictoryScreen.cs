@@ -11,7 +11,7 @@ public class VictoryScreen : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().endBattleEvent.AddListener(OnEndBattle);
+        EventManager.endBattleEvent.AddListener(OnEndBattle);
         Hide();
         nextButton.onClick.AddListener(OnClickNext);
     }

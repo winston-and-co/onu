@@ -11,13 +11,15 @@ public class GameMaster : MonoBehaviour
     public AbstractEntity Player;
     public AbstractEntity Enemy;
 
-    int turn = 0;
+    int turn;
     AbstractEntity[] order;
     public AbstractEntity CurrentEntity;
-
     public int TurnNumber;
 
     public AbstractEntity Victor;
+
+    readonly GameEvent startTurnMsg = new();
+    readonly GameEvent skipTurnMsg = new();
 
     void Awake()
     {
@@ -34,11 +36,11 @@ public class GameMaster : MonoBehaviour
             DiscardPile = FindObjectOfType<Pile>();
         }
 
-        EventQueue eq = EventQueue.GetInstance();
-        eq.cardTryPlayedEvent.AddListener(OnTryPlayCard);
-        eq.actionCardTryUseEvent.AddListener(OnTryUseActionCard);
-        eq.tryEndTurnEvent.AddListener(TryEndTurn);
-        eq.entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
+        EventManager.tryEndTurnEvent.AddListener(TryEndTurn);
+        EventManager.entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
+
+        startTurnMsg.AddListener(StartTurn);
+        skipTurnMsg.AddListener(SkipTurn);
     }
 
     void Start()
@@ -47,6 +49,7 @@ public class GameMaster : MonoBehaviour
         order = new AbstractEntity[2];
         order[0] = Player;
         order[1] = Enemy;
+        turn = 0;
 
         Player.mana = Player.maxMana;
         Enemy.hp = Enemy.maxHP;
@@ -56,7 +59,7 @@ public class GameMaster : MonoBehaviour
         Victor = null;
 
         // Begin combat
-        EventQueue.GetInstance().startBattleEvent.AddToBack(this);
+        EventManager.startBattleEvent.AddToBack(this);
         Player.deck.Shuffle();
         for (int i = 0; i < Player.startingHandSize; i++)
         {
@@ -68,32 +71,45 @@ public class GameMaster : MonoBehaviour
             Enemy.Draw();
         }
 
-        StartTurn(0); // player
+        StartNextTurn();
     }
 
     void StartNextTurn()
     {
-        turn = (turn + 1) % order.Length;
-        StartTurn(turn);
-    }
-
-    void StartTurn(int turn)
-    {
         CurrentEntity = order[turn];
+        turn = (turn + 1) % order.Length;
 
         if (CurrentEntity == Player)
         {
             TurnNumber++;
         }
 
-        EventQueue.GetInstance().startTurnEvent.AddToBack(CurrentEntity);
+        if (CurrentEntity.skipped)
+        {
+            skipTurnMsg.AddToBack();
+        }
+        else
+        {
+            startTurnMsg.AddToBack();
+        }
+    }
+
+    void SkipTurn()
+    {
+        EventManager.skippedTurnEvent.AddToBack(CurrentEntity);
+        StartNextTurn();
+    }
+
+    void StartTurn()
+    {
+        EventManager.startTurnEvent.AddToBack(CurrentEntity);
 
         // if your hand contains no playable cards
         //   draw cards until you draw a playable one
         // else
         //   draw one card
         bool hasPlayable = false;
-        foreach (AbstractCard c in CurrentEntity.hand.hand)
+        foreach (AbstractCard c in CurrentEntity.hand.Cards)
         {
             if (CurrentEntity.gameRulesController.CardIsPlayable(this, CurrentEntity, c))
             {
@@ -115,56 +131,57 @@ public class GameMaster : MonoBehaviour
     void TryEndTurn(AbstractEntity e)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        EventQueue.GetInstance().endTurnEvent.AddToBack(CurrentEntity);
+        EventManager.endTurnEvent.AddToBack(CurrentEntity);
         StartNextTurn();
     }
 
     /*
      * Validate card being played
      */
-    void OnTryPlayCard(AbstractEntity e, AbstractCard card)
+    public void TryPlayCard(AbstractCard card)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
-        if (e == null || card == null) return;
-        if (e != CurrentEntity) return;
+        if (card.Entity == null || card == null) return;
+        if (card.Entity != CurrentEntity) return;
         if (card.IsPlayable())
         {
-            PlayCard(e, card);
+            PlayCard(card);
         }
     }
 
-    void PlayCard(AbstractEntity e, AbstractCard c)
+    void PlayCard(AbstractCard c)
     {
-        AbstractEntity target = (e == Player) ? Enemy : Player;
-        int cost = e.gameRulesController.CardManaCost(this, e, c);
-        EventQueue.GetInstance().cardPlayedEvent.AddToBack(e, c);
-        e.SpendMana(cost);
+        AbstractEntity player = c.Entity;
+        AbstractEntity target = (player == Player) ? Enemy : Player;
+        int cost = player.gameRulesController.CardManaCost(this, player, c);
+        EventManager.cardPlayedEvent.AddToBack(player, c);
+        player.SpendMana(cost);
         AbstractCard top = DiscardPile.Peek();
         if (top != null && top.Value == 0)
         {
-            e.Heal(c.Value ?? 0);
+            player.Heal(c.Value ?? 0);
         }
         else
         {
             target.Damage(c.Value ?? 0);
         }
-        e.hand.RemoveCard(c);
+        player.hand.RemoveCard(c);
     }
 
-    void OnTryUseActionCard(AbstractEntity e, AbstractActionCard ac)
+    public void TryUseActionCard(AbstractActionCard ac)
     {
         if (Blockers.UIPopupBlocker.IsBlocked()) return;
         if (ac.IsUsable())
         {
-            UseActionCard(e, ac);
+            UseActionCard(ac);
         }
     }
 
-    void UseActionCard(AbstractEntity e, AbstractActionCard ac)
+    void UseActionCard(AbstractActionCard ac)
     {
         ac.Use(() =>
         {
-            EventQueue.GetInstance().actionCardUsedEvent.AddToBack(e, ac);
+            EventManager.actionCardUsedEvent.AddToBack(ac);
             PlayerData.GetInstance().RemoveActionCard(ac);
         });
     }
@@ -188,9 +205,9 @@ public class GameMaster : MonoBehaviour
         {
             return;
         }
-        EventQueue.GetInstance().endTurnEvent.AddToBack(CurrentEntity);
+        EventManager.endTurnEvent.AddToBack(CurrentEntity);
         CurrentEntity = null;
-        EventQueue.GetInstance().endBattleEvent.AddToBack(this);
+        EventManager.endBattleEvent.AddToBack(this);
     }
 
     public bool PlayerWon()

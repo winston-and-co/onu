@@ -14,7 +14,8 @@ namespace ActionCards
                 cardType: typeof(WildCard),
                 frontSprite: "AC0_Wild",
                 backSprite: "alpha_art_card_back",
-                mouseEventsEnabled: false
+                mouseEventsEnabled: false,
+                generatedInCombat: true
             ) as WildCard;
         }
     }

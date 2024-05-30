@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using Cards;
 
 public class Hand : MonoBehaviour
 {
-    public List<AbstractCard> hand;
+    public readonly List<AbstractCard> Cards = new();
     public AbstractEntity e;
 
     private void Awake()
@@ -22,20 +19,26 @@ public class Hand : MonoBehaviour
 
     public void AddCard(AbstractCard c)
     {
-        hand.Add(c);
+        Cards.Add(c);
         c.gameObject.SetActive(true);
         c.gameObject.transform.SetParent(transform, false);
     }
 
     public void RemoveCard(AbstractCard c)
     {
-        hand.Remove(c);
+        Cards.Remove(c);
+    }
+
+    public void RemoveCard(AbstractCard c, GameObject newParent)
+    {
+        Cards.Remove(c);
+        c.transform.SetParent(newParent.transform);
     }
 
     public AbstractCard GetCard(int index)
     {
-        return hand[index];
+        return Cards[index];
     }
 
-    public int GetCardCount() { return hand.Count; }
+    public int GetCardCount() { return Cards.Count; }
 }

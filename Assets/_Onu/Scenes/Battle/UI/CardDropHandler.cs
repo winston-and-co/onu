@@ -6,10 +6,9 @@ public class CardDropHandler : MonoBehaviour, IDropHandler
 {
     void Awake()
     {
-        var eq = EventQueue.GetInstance();
-        eq.startBattleEvent.AddListener(OnBattleStart);
-        eq.endBattleEvent.AddListener(OnBattleEnd);
-        eq.cardPlayedEvent.AddListener(OnCardPlayed);
+        EventManager.startBattleEvent.AddListener(OnBattleStart);
+        EventManager.endBattleEvent.AddListener(OnBattleEnd);
+        EventManager.cardPlayedEvent.AddListener(OnCardPlayed);
     }
 
     void OnBattleStart(GameMaster _)
@@ -42,7 +41,7 @@ public class CardDropHandler : MonoBehaviour, IDropHandler
         GameObject go = eventData.pointerDrag;
         if (go.TryGetComponent(out AbstractCard card))
         {
-            card.Play();
+            card.TryPlay();
         }
     }
 }

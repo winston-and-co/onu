@@ -10,8 +10,8 @@ public class HealthBarAdapter : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().startBattleEvent.AddListener(OnStartBattle);
-        EventQueue.GetInstance().entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
+        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
     }
 
     void OnStartBattle(GameMaster gm)

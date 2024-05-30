@@ -1,47 +1,32 @@
 using System;
+using System.Collections.Generic;
 using ActionCards;
 
 public class ActionCardFactory
 {
-    public static AbstractActionCard MakeActionCard(ActionCard actionCard)
+    readonly static Dictionary<int, Func<AbstractActionCard>> registeredActionCards = new()
     {
-        return actionCard switch
-        {
-            ActionCard.Wild => Wild.New(),
-            ActionCard.Draw2 => Draw2.New(),
-            _ => throw new ArgumentException(),
-        };
-    }
-
-    public static AbstractActionCard MakeActionCard(string actionCardName)
-    {
-        return MakeActionCard((ActionCard)Enum.Parse(typeof(ActionCard), actionCardName));
-    }
+        {Wild.Id, Wild.New},
+        {Draw2.Id, Draw2.New},
+        {Skip.Id, Skip.New},
+        {Heal.Id, Heal.New},
+        {RestoreMana.Id, RestoreMana.New},
+        {MaxHPUp.Id, MaxHPUp.New},
+        {MaxManaUp.Id, MaxManaUp.New},
+    };
 
     public static AbstractActionCard MakeActionCard(int id)
     {
-        return MakeActionCard((ActionCard)id);
+        return registeredActionCards[id]();
     }
 
     public static AbstractActionCard MakeRandom()
     {
-        var values = Enum.GetValues(typeof(ActionCard));
-        return MakeActionCard((ActionCard)values.GetValue(UnityEngine.Random.Range(0, values.Length)));
-    }
-
-    public static bool CheckExists(string actionCardName)
-    {
-        return Enum.IsDefined(typeof(ActionCard), actionCardName);
+        return MakeActionCard(UnityEngine.Random.Range(0, registeredActionCards.Count));
     }
 
     public static bool CheckExists(int id)
     {
-        return Enum.IsDefined(typeof(ActionCard), id);
+        return registeredActionCards.ContainsKey(id);
     }
-}
-
-public enum ActionCard
-{
-    Wild,
-    Draw2,
 }

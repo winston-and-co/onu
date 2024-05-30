@@ -10,9 +10,18 @@ public class BathroomUseButton : MonoBehaviour
 
     public UnityEvent MouseDownEvent = new();
 
+    void Awake()
+    {
+        SetOpen(true);
+        SetGlowing(true);
+    }
+
     void OnMouseDown()
     {
         MouseDownEvent.Invoke();
+        SetOpen(false);
+        SetGlowing(false);
+        Destroy(GetComponent<BoxCollider2D>());
     }
 
     public void SetGlowing(bool isGlowing)

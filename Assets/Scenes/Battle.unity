@@ -3015,7 +3015,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   picker: {fileID: 1110049334}
-  closer: {fileID: 0}
 --- !u!1 &706102057
 GameObject:
   m_ObjectHideFlags: 0
@@ -6090,6 +6089,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8154946044973013593, guid: 8a80fad3b03827943b16e024c3de8f7a, type: 3}
+      propertyPath: eventManagerPrefab
+      value: 
+      objectReference: {fileID: 9000011881824637994, guid: 8e8ff13fede5e204fb50f0669c661350, type: 3}
     - target: {fileID: 8154946044973013593, guid: 8a80fad3b03827943b16e024c3de8f7a, type: 3}
       propertyPath: eventTrackerPrefab
       value: 

@@ -9,8 +9,8 @@ public class RuleCardBar : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().startBattleEvent.AddListener(DisplayRuleCards);
-        EventQueue.GetInstance().endBattleEvent.AddListener(CleanUp);
+        EventManager.startBattleEvent.AddListener(DisplayRuleCards);
+        EventManager.endBattleEvent.AddListener(CleanUp);
     }
 
     void DisplayRuleCards(GameMaster gm)

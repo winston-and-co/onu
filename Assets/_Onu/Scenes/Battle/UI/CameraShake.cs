@@ -26,7 +26,7 @@ public class CameraShake : MonoBehaviour
 
     private void Awake()
     {
-        EventQueue.GetInstance().entityHealthChangedEvent.AddListener(OnHealthChanged);
+        EventManager.entityHealthChangedEvent.AddListener(OnHealthChanged);
     }
 
     void OnHealthChanged(AbstractEntity _, int value)

@@ -8,14 +8,14 @@ public class PlayerPreview
     public string Name;
     public RuleCard[] StarterRuleCards;
     public AbstractRuleCard[] StarterRuleCardInstances;
-    public ActionCard[] StarterActionCards;
+    public int[] StarterActionCards;
     public AbstractActionCard[] StarterActionCardInstances;
     public DeckType Deck;
     public int MaxHP;
     public int MaxMana;
     public int StartingHandSize;
 
-    public PlayerPreview(string name, RuleCard[] starterRuleCards, ActionCard[] starterActionCards, DeckType deck, int maxHP, int maxMana, int startingHandSize)
+    public PlayerPreview(string name, RuleCard[] starterRuleCards, int[] starterActionCards, DeckType deck, int maxHP, int maxMana, int startingHandSize)
     {
         Name = name;
         StarterRuleCards = starterRuleCards;

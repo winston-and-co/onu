@@ -23,7 +23,7 @@ public class DeckFactory
             DeckType.Standard => Standard(deck),
             _ => throw new ArgumentException(),
         };
-        deck.Populate(cards);
+        deck.SetCards(cards);
         return deck;
     }
 
@@ -46,11 +46,11 @@ public class DeckFactory
                     AbstractCard newCard;
                     if (deck.e.isPlayer)
                     {
-                        newCard = PlayerCard.New(colors[colorIdx], value, deck.e);
+                        newCard = PlayerCard.New(colors[colorIdx], value, deck.e, false);
                     }
                     else
                     {
-                        newCard = EnemyCard.New(colors[colorIdx], value, deck.e);
+                        newCard = EnemyCard.New(colors[colorIdx], value, deck.e, false);
                     }
                     newCard.transform.SetParent(deck.transform, false);
                     newCard.Entity = deck.e;

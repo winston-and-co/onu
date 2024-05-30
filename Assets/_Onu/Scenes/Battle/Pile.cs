@@ -1,17 +1,14 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using Cards;
 
 public class Pile : MonoBehaviour
 {
-    private List<AbstractCard> pile;
-    public ReadOnlyCollection<AbstractCard> Items => pile.AsReadOnly();
+    readonly public List<AbstractCard> Cards = new();
 
     void OnEnable()
     {
-        EventQueue.GetInstance().cardPlayedEvent.AddListener(OnCardPlayed);
-        pile = new();
+        EventManager.cardPlayedEvent.AddListener(OnCardPlayed);
     }
 
     void OnCardPlayed(AbstractEntity e, AbstractCard card)
@@ -22,39 +19,33 @@ public class Pile : MonoBehaviour
     ///<returns>Top of pile, or <c>null</c> if empty.</returns>
     public AbstractCard Peek()
     {
-        if (pile.Count == 0)
+        if (Cards.Count == 0)
         {
             return null;
         }
-        return pile[pile.Count - 1];
+        return Cards[Cards.Count - 1];
     }
 
     void AddToTop(AbstractCard card)
     {
-        pile.Add(card);
+        Cards.Add(card);
     }
 
     /// <summary>
-    /// Removes cards that belonged to given entity.
+    /// Called when an entity draws and their deck is empty. Returns that
+    /// entity's cards to their deck (except the top card).
     /// </summary>
-    /// <param name="includeTop">Whether the top card should also be removed</param>
-    /// <returns>
-    /// A list containing the removed cards.
-    /// </returns>
-    public List<AbstractCard> RemoveCardsFromEntity(AbstractEntity e, bool includeTop)
+    /// <param name="e"></param>
+    public void OnEmptyDeckDraw(AbstractEntity e)
     {
-        List<AbstractCard> res = new();
-        foreach (var c in pile)
+        Cards.RemoveAll(c =>
         {
-            if (c.Entity == e && (includeTop || c != Peek()) && c is AbstractCard)
+            if (c.Entity == e && c != Peek())
             {
-                res.Add(c as AbstractCard);
+                e.deck.AddCard(c);
+                return true;
             }
-        }
-        foreach (var c in res)
-        {
-            pile.Remove(c);
-        }
-        return res;
+            return false;
+        });
     }
 }

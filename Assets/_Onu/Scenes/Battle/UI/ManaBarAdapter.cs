@@ -10,8 +10,8 @@ public class ManaBarAdapter : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().startBattleEvent.AddListener(OnStartBattle);
-        EventQueue.GetInstance().entityManaChangedEvent.AddListener(OnEntityManaChanged);
+        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.entityManaChangedEvent.AddListener(OnEntityManaChanged);
     }
 
     void OnStartBattle(GameMaster gm)

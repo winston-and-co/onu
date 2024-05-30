@@ -42,7 +42,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    public AbstractEntity Player;
+    public PlayerEntity Player;
 
     public GameObject ActionCardsParent;
     List<AbstractActionCard> _actionCards = new();
@@ -60,7 +60,7 @@ public class PlayerData : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds an Action Card instance. Sets PlayerData.ActionCards object as parent object.
+    /// Adds an Action Card instance. Sets its gameObject active. Sets PlayerData.ActionCards object as parent object.
     /// </summary>
     public void AddActionCard(AbstractActionCard actionCard)
     {

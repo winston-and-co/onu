@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using Cards;
 
@@ -13,56 +11,90 @@ public class Deck : MonoBehaviour
 
     void Awake()
     {
-        EventQueue.GetInstance().endBattleEvent.AddListener(OnEndBattle);
+        EventManager.endBattleEvent.AddListener(OnEndBattle);
     }
 
     void OnEndBattle(GameMaster gm)
     {
-        // return cards from this entity's deck back to the deck
-        var d = GameMaster.GetInstance().DiscardPile;
-        var cards = d.RemoveCardsFromEntity(e, true);
-        foreach (var c in e.hand.hand)
+        // RESET DISCARD PILE
+        var pile = gm.DiscardPile.Cards;
+        // for each card in the pile
+        for (int i = pile.Count - 1; i >= 0; i--)
         {
-            if (c is not AbstractCard)
+            AbstractCard c = pile[i];
+            // if it is permanent
+            if (!c.GeneratedInCombat)
             {
-                e.hand.RemoveCard(c);
+                // return it to the owner's deck
+                c.Entity.deck.AddCard(c);
+                // then remove the card from the pile
+                pile.Remove(c);
             }
         }
-        cards = cards.Concat(e.hand.hand.Select(p => p as AbstractCard)).ToList();
-        e.hand.hand = new();
-        foreach (var c in cards)
+        // destroy all remaining cards and reset the pile
+        for (int i = pile.Count - 1; i >= 0; i--)
         {
-            c.transform.SetParent(transform, false);
-            c.gameObject.SetActive(false);
-            m_Cards.Add(c);
+            AbstractCard c = pile[i];
+            pile.Remove(c);
+            Destroy(c.gameObject);
+        }
+
+        // RESET HAND
+        var hand = e.hand.Cards;
+        for (int i = hand.Count - 1; i >= 0; i--)
+        {
+            AbstractCard c = hand[i];
+            if (!c.GeneratedInCombat)
+            {
+                e.deck.AddCard(c);
+            }
+            e.hand.RemoveCard(c);
         }
     }
 
-    public void Populate(List<AbstractCard> cards)
+    public void SetCards(List<AbstractCard> cards)
     {
         m_Cards = cards;
     }
 
-    public int size()
-    {
-        return m_Cards.Count;
-    }
+    public int Size() { return m_Cards.Count; }
 
-
-    public AbstractCard get(int index)
+    public AbstractCard Get(int index)
     {
         return m_Cards[index];
     }
 
-    public void Add(AbstractCard c)
+    /// <summary>
+    /// Adds a card to this deck. Sets the card inactive and sets its parent to
+    /// this deck.
+    /// </summary>
+    /// <param name="c">The card to add</param>
+    public void AddCard(AbstractCard c)
     {
         m_Cards.Add(c);
+        c.gameObject.SetActive(false);
+        c.transform.SetParent(transform);
+        c.transform.localPosition = Vector3.zero;
     }
-    public AbstractCard Remove(int id)
+
+    public AbstractCard RemoveCard(AbstractCard c)
     {
-        AbstractCard c = m_Cards[id];
-        m_Cards.RemoveAt(id);
+        m_Cards.Remove(c);
         return c;
+    }
+    public AbstractCard RemoveCard(int idx)
+    {
+        return RemoveCard(m_Cards[idx]);
+    }
+
+    public void RemovePermanently(AbstractCard c)
+    {
+        m_Cards.Remove(c);
+        Destroy(c.gameObject);
+    }
+    public void RemovePermanently(int idx)
+    {
+        RemovePermanently(m_Cards[idx]);
     }
 
     public AbstractCard Draw()
@@ -73,14 +105,8 @@ public class Deck : MonoBehaviour
         if (m_Cards.Count == 0)
         {
             // empty deck, reshuffle own cards back in (except top card)
-            var d = GameMaster.GetInstance().DiscardPile;
-            var discardedCards = d.RemoveCardsFromEntity(e, false);
-            foreach (var dCard in discardedCards)
-            {
-                dCard.transform.SetParent(transform, false);
-                dCard.gameObject.SetActive(false);
-                m_Cards.Add(dCard);
-            }
+            var pile = GameMaster.GetInstance().DiscardPile;
+            pile.OnEmptyDeckDraw(e);
             Shuffle();
         }
         return c;
@@ -103,6 +129,6 @@ public class Deck : MonoBehaviour
             m_Cards[k] = m_Cards[n];
             m_Cards[n] = value;
         }
+        EventManager.deckShuffledEvent.AddToBack(e, this);
     }
-
 }

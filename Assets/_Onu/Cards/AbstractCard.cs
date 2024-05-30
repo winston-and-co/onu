@@ -23,8 +23,9 @@ namespace Cards
         }
         public CardSpriteController SpriteController;
         public AbstractEntity Entity;
+        public bool GeneratedInCombat;
 
-        public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled)
+        public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled, bool generatedInCombat)
         {
             PrefabHelper ph = PrefabHelper.GetInstance();
             GameObject go = ph.GetInstantiatedPrefab(PrefabType.Card);
@@ -35,19 +36,20 @@ namespace Cards
             card.Value = value;
             card.Cost = card.Value ?? 0;
             card.Entity = cardOwner;
+            card.GeneratedInCombat = generatedInCombat;
             card.SpriteController = card.GetComponent<CardSpriteController>();
             card.SpriteController.Front = SpriteLoader.LoadSprite(frontSprite);
             card.SpriteController.Back = SpriteLoader.LoadSprite(backSprite);
             card.SpriteController.MouseEventsEnabled = mouseEventsEnabled;
             card.SpriteController.Card = card;
             card.SpriteController.SpriteRenderer.color = new(1, 1, 1, 1);
-            card.SpriteController.SetupCard();
+            card.SpriteController.Init();
             return card;
         }
 
-        public void Play()
+        public void TryPlay()
         {
-            EventQueue.GetInstance().cardTryPlayedEvent.AddToBack(Entity, this);
+            GameMaster.GetInstance().TryPlayCard(this);
         }
 
         public virtual bool IsPlayable()

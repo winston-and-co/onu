@@ -7,7 +7,9 @@ using UnityEngine.EventSystems;
 
 public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    bool initialMouseEventsEnabled;
     public bool MouseEventsEnabled;
+    bool initialFlipped;
     public bool Flipped;
     public SpriteRenderer SpriteRenderer;
     public Sprite Front;
@@ -16,6 +18,7 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
     public string HandSortingLayer;
     public AbstractCard Card;
     public Animator Animator;
+    bool initialDraggable;
     public bool Draggable = true;
     Vector3 prevPos;
 
@@ -23,19 +26,28 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public Vector3 CardInHandScale = new Vector3(0.3f, 0.3f, 1.0f);
     public Vector3 CardInPileScale = new Vector3(0.2f, 0.2f, 1.0f);
-    public float EnlargedSizeFactor = 1.01f;
+    public float EnlargedSizeFactor = 1.05f;
 
     void Awake()
     {
-        EventQueue.GetInstance().cardPlayedEvent.AddListener(AfterCardPlayed);
-        EventQueue.GetInstance().cardDrawEvent.AddListener(OnCardDrawn);
+        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.cardPlayedEvent.AddListener(AfterCardPlayed);
+        EventManager.cardDrawnEvent.AddListener(OnCardDrawn);
 
         if (!TryGetComponent<SpriteRenderer>(out SpriteRenderer)) throw new System.NullReferenceException();
 
         Animator = GetComponent<Animator>();
     }
 
-    public void SetupCard()
+    public void Init()
+    {
+        initialMouseEventsEnabled = MouseEventsEnabled;
+        initialDraggable = Draggable;
+        initialFlipped = Flipped;
+        SetupCard();
+    }
+
+    void SetupCard()
     {
         if (!Flipped)
         {
@@ -62,6 +74,14 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
+    void OnStartBattle(GameMaster _)
+    {
+        MouseEventsEnabled = initialMouseEventsEnabled;
+        Draggable = initialDraggable;
+        Flipped = initialFlipped;
+        SetupCard();
+    }
+
     void AfterCardPlayed(AbstractEntity _, AbstractCard p)
     {
         if (p != Card) return;
@@ -77,21 +97,6 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
         var sg = GetComponent<SortingGroup>();
         sg.sortingLayerName = "OnTable";
         SetOrder(rt.GetSiblingIndex());
-
-        // if (Items.Count > 1)
-        // {
-        //     var secondFromTop = Items[Items.Count - 2];
-        //     foreach (var r in secondFromTop.GetComponentsInChildren<Renderer>())
-        //     {
-        //         r.enabled = false;
-        //     }
-        //     var tmp = secondFromTop.GetComponentInChildren<TextMeshPro>();
-        //     if (tmp != null)
-        //     {
-        //         tmp.enabled = false;
-        //     }
-        // }
-        // GetComponent<BoxCollider2D>().enabled = false;
     }
 
     void OnCardDrawn(AbstractEntity e, AbstractCard c)

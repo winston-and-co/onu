@@ -1,10 +1,12 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CharacterSelect : MonoBehaviour
 {
+    public UnityEvent OnConfirmSelection;
     PlayerPreview preview;
 
     [SerializeField] GameObject previewPanel;
@@ -31,6 +33,7 @@ public class CharacterSelect : MonoBehaviour
             }
             DontDestroyOnLoad(pd.Player);
         }
+        OnConfirmSelection.Invoke();
     }
 
     public void PreviewPlayerCharacter(PlayerCharacter character)

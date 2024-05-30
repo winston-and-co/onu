@@ -22,7 +22,7 @@ public class SimpleAI : AbstractPattern
     bool PickCardToPlay()
     {
         List<AbstractCard> legalCards = new();
-        foreach (var c in entity.hand.hand)
+        foreach (var c in entity.hand.Cards)
         {
             if (c.IsPlayable())
             {
@@ -35,7 +35,7 @@ public class SimpleAI : AbstractPattern
             if (chancePickCard > stupidity)
             {
                 var cardPicked = legalCards[Random.Range(0, legalCards.Count)];
-                EventQueue.GetInstance().cardTryPlayedEvent.AddToBack(entity, cardPicked);
+                cardPicked.TryPlay();
                 return true;
             }
         }

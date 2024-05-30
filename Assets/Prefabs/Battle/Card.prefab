@@ -367,4 +367,4 @@ MonoBehaviour:
   lastOrder: 0
   CardInHandScale: {x: 0.3, y: 0.3, z: 1}
   CardInPileScale: {x: 0.2, y: 0.2, z: 1}
-  EnlargedSizeFactor: 1.01
+  EnlargedSizeFactor: 1.05

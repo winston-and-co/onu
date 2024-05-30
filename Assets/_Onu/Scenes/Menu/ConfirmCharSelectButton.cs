@@ -17,10 +17,5 @@ public class ConfirmCharSelectButton : MonoBehaviour
     {
         var cs = FindObjectOfType<CharacterSelect>();
         cs.ConfirmSelection();
-
-        PlayerData.GetInstance().Player.gameObject.SetActive(false);
-        PlayerData.GetInstance().Player.deck.gameObject.SetActive(false);
-
-        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
     }
 }
