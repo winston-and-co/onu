@@ -11,21 +11,33 @@ public abstract class AbstractEntity : MonoBehaviour
     public Hand hand;
 
     public int maxHP;
-    public int maxMana;
-
     public int hp;
+    public int maxMana;
     public int mana;
-
-    public int startingHandSize;
 
     public string e_name;
 
     public bool skipped;
 
+    #region OTHER VALUES
+    /// <summary>
+    /// Affects how much damage this entity DEALS
+    /// </summary>
+    public float DamageDealingModifier = 1.0f;
+    /// <summary>
+    /// Affects how much damage this entity TAKES
+    /// </summary>
+    public float DamageTakingModifier = 1.0f;
+    public int StartingHandSize;
+    public int RefreshThreshold = 0;
+    public int TurnStartNumCardsToDraw = 1;
+    public bool TurnStartDrawUntilPlayable = true;
+    #endregion
+
     public static AbstractEntity New(string name, string entityName, System.Type entityType, int maxHP, int maxMana, int startingHandSize, bool isPlayer)
     {
         PrefabHelper ph = PrefabHelper.GetInstance();
-        GameObject go = ph.GetInstantiatedPrefab(PrefabType.Entity);
+        GameObject go = ph.InstantiatePrefab(PrefabType.Entity);
         go.name = name;
         if (go == null) throw new System.Exception("Failed to instantiate entity prefab");
         AbstractEntity entity = go.AddComponent(entityType) as AbstractEntity;
@@ -35,7 +47,7 @@ public abstract class AbstractEntity : MonoBehaviour
         entity.hp = entity.maxHP;
         entity.maxMana = maxMana;
         entity.mana = entity.maxMana;
-        entity.startingHandSize = startingHandSize;
+        entity.StartingHandSize = startingHandSize;
         entity.isPlayer = isPlayer;
         // RULE CARDS
         entity.gameRulesController = new(entity);
@@ -61,7 +73,7 @@ public abstract class AbstractEntity : MonoBehaviour
     void OnCardPlayed(AbstractEntity e, AbstractCard _)
     {
         if (e != this) return;
-        if (hand.GetCardCount() == 0)
+        if (hand.GetCardCount() == RefreshThreshold)
         {
             Refresh();
         }
@@ -69,9 +81,10 @@ public abstract class AbstractEntity : MonoBehaviour
 
     public void Damage(int amount)
     {
-        hp -= amount;
+        int modifiedAmount = (int)(amount * DamageTakingModifier);
+        hp -= modifiedAmount;
         hp = Math.Max(0, hp);
-        EventManager.entityHealthChangedEvent.AddToBack(this, -amount);
+        EventManager.entityHealthChangedEvent.AddToBack(this, -modifiedAmount);
     }
 
     public void Heal(int amount)
@@ -131,7 +144,7 @@ public abstract class AbstractEntity : MonoBehaviour
     {
         RestoreMana(maxMana - mana);
         deck.Shuffle();
-        for (int i = 0; i < startingHandSize; i++)
+        for (int i = 0; i < StartingHandSize; i++)
         {
             Draw();
         }

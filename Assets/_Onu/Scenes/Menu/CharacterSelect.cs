@@ -27,9 +27,9 @@ public class CharacterSelect : MonoBehaviour
             {
                 PlayerData.GetInstance().AddRuleCard(rc);
             }
-            foreach (var ac in preview.StarterActionCardInstances)
+            foreach (var actionCardId in preview.StarterActionCards)
             {
-                PlayerData.GetInstance().AddActionCard(ac);
+                PlayerData.GetInstance().AddActionCard(actionCardId);
             }
             DontDestroyOnLoad(pd.Player);
         }

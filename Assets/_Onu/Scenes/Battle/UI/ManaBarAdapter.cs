@@ -10,12 +10,13 @@ public class ManaBarAdapter : MonoBehaviour
 
     void Awake()
     {
-        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.startedBattleEvent.AddListener(OnStartBattle);
         EventManager.entityManaChangedEvent.AddListener(OnEntityManaChanged);
     }
 
-    void OnStartBattle(GameMaster gm)
+    void OnStartBattle()
     {
+        var gm = GameMaster.GetInstance();
         entity = isPlayerAdapter ? gm.Player : gm.Enemy;
         bar.Initialize(entity.maxMana);
         bar.UpdateHealthBar(entity.mana);

@@ -1,51 +1,49 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using RuleCards;
 
 public class RuleCardFactory
 {
-    public static AbstractRuleCard MakeRuleCard(RuleCard ruleCard)
+    readonly static Dictionary<int, Func<AbstractRuleCard>> registeredRuleCards = new()
     {
-        return ruleCard switch
-        {
-            RuleCard.Purple => Purple.New(),
-            RuleCard.Teal => Teal.New(),
-            RuleCard.Chartreuse => Chartreuse.New(),
-            RuleCard.Orange => Orange.New(),
-            _ => throw new ArgumentException(),
-        };
-    }
-
-    public static AbstractRuleCard MakeRuleCard(string ruleCardName)
-    {
-        return MakeRuleCard((RuleCard)Enum.Parse(typeof(RuleCard), ruleCardName));
-    }
+        {Purple.Id, Purple.New},
+        {Teal.Id, Teal.New},
+        {Chartreuse.Id, Chartreuse.New},
+        {Orange.Id, Orange.New},
+        {Traditionalist.Id, Traditionalist.New},
+        {Copycat.Id, Copycat.New},
+        {Echo.Id, Echo.New},
+        {Soda.Id, Soda.New},
+        {ShrinkRay.Id, ShrinkRay.New},
+    };
 
     public static AbstractRuleCard MakeRuleCard(int id)
     {
-        return MakeRuleCard((RuleCard)id);
+        return registeredRuleCards[id]();
     }
 
+    /// <summary>
+    /// Makes a random Rule Card, returning the instance.
+    /// </summary>
+    /// <returns>
+    /// The Rule Card instance
+    /// </returns>
     public static AbstractRuleCard MakeRandom()
     {
-        var values = Enum.GetValues(typeof(RuleCard));
-        return MakeRuleCard((RuleCard)values.GetValue(UnityEngine.Random.Range(0, values.Length)));
+        int id = GetRandomId();
+        return MakeRuleCard(id);
     }
 
-    public static bool CheckExists(string ruleCardName)
+    readonly static Random rand = new();
+    public static int GetRandomId()
     {
-        return Enum.IsDefined(typeof(RuleCard), ruleCardName);
+        var idx = rand.Next(registeredRuleCards.Count);
+        return registeredRuleCards.Keys.ToArray()[idx];
     }
 
     public static bool CheckExists(int id)
     {
-        return Enum.IsDefined(typeof(RuleCard), id);
+        return registeredRuleCards.ContainsKey(id);
     }
-}
-
-public enum RuleCard
-{
-    Purple,
-    Teal,
-    Chartreuse,
-    Orange,
 }

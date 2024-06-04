@@ -11,54 +11,37 @@ class AbstractRuleCardComparer : IEqualityComparer<AbstractRuleCard>
 {
     public bool Equals(AbstractRuleCard x, AbstractRuleCard y)
     {
-        return x.Id == y.Id;
+        return x.Name == y.Name;
     }
 
     public int GetHashCode(AbstractRuleCard obj)
     {
-        return obj.Id;
+        return obj.Name.GetHashCode();
     }
 }
 
 public class GameRulesController : IRuleset
 {
-    readonly GameObject ruleCardsContainer;
+    public AbstractEntity Entity;
     public readonly HashSet<AbstractRuleCard> Rules = new(new AbstractRuleCardComparer());
 
-    public GameRulesController(AbstractEntity entity)
+    public GameRulesController(AbstractEntity e)
     {
-        GameObject go = new("RuleCards");
-        go.transform.SetParent(entity.transform);
-        ruleCardsContainer = go;
+        Entity = e;
     }
 
     public bool AddRuleCard(AbstractRuleCard ruleCard)
     {
-        var success = Rules.Add(ruleCard);
-        if (success)
+        if (ruleCard != null)
         {
-            ruleCard.gameObject.SetActive(true);
-            ruleCard.transform.SetParent(ruleCardsContainer.transform);
+            ruleCard.Entity = Entity;
+            return Rules.Add(ruleCard);
         }
-        else
-        {
-            UnityEngine.Object.Destroy(ruleCard.gameObject);
-        }
-        return success;
+        return false;
     }
     public bool RemoveRuleCard(AbstractRuleCard ruleCard)
     {
-        var success = Rules.Remove(ruleCard);
-        UnityEngine.Object.Destroy(ruleCard.gameObject);
-        return success;
-    }
-
-    public void ReturnToContainer()
-    {
-        foreach (var r in Rules)
-        {
-            r.transform.SetParent(ruleCardsContainer.transform);
-        }
+        return Rules.Remove(ruleCard);
     }
 
     /// <param name="depth">Unused</param>

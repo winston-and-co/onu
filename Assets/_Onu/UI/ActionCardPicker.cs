@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using ActionCards;
-using Blockers;
 using UnityEngine;
 
-public class ActionCardPicker : ScrollGridPicker
+public class ActionCardPicker : ScrollGridSelect
 {
-    List<GameObject> options;
+    List<GameObject> options = new();
 
     void Awake()
     {
-        base.OnItemPicked.AddListener(OnActionCardPicked);
+        base.Setup();
+        base.ItemSelected.AddListener(OnActionCardPicked);
     }
 
     void OnActionCardPicked(GameObject go)
@@ -22,7 +22,7 @@ public class ActionCardPicker : ScrollGridPicker
 
     public new void Show()
     {
-        options = PlayerData.GetInstance().ActionCards.Select(v => v.gameObject).ToList();
+        options = PlayerData.GetInstance().GetActionCardInstances().Select(v => v.gameObject).ToList();
         base.SetItems(options);
         base.Show();
     }
@@ -30,6 +30,10 @@ public class ActionCardPicker : ScrollGridPicker
     public new void Hide()
     {
         base.Hide();
-        options.ForEach(v => v.transform.SetParent(PlayerData.GetInstance().ActionCardsParent.transform));
+        for (int i = 0; i < options.Count; i++)
+        {
+            Destroy(options[i]);
+            options.RemoveAt(i);
+        }
     }
 }

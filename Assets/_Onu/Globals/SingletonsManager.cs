@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SingletonsManager : MonoBehaviour
 {
@@ -25,21 +26,25 @@ public class SingletonsManager : MonoBehaviour
     [SerializeField] GameObject eventManagerPrefab;
     [SerializeField] GameObject eventTrackerPrefab;
     [SerializeField] GameObject gameCursorPrefab;
+    [SerializeField] GameObject tutorialPrefab;
+
+    void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
+    void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
+
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        var go = Instantiate(tutorialPrefab);
+        go.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
+        go.transform.SetAsLastSibling();
+    }
 
     void SpawnSingletons()
     {
-        GameObject go;
-        go = GameObject.Find(onuSceneManagerPrefab.name);
-        if (go == null) Instantiate(onuSceneManagerPrefab);
-        go = GameObject.Find(playerDataPrefab.name);
-        if (go == null) Instantiate(playerDataPrefab);
-        go = GameObject.Find(prefabHelperPrefab.name);
-        if (go == null) Instantiate(prefabHelperPrefab);
-        go = GameObject.Find(eventManagerPrefab.name);
-        if (go == null) Instantiate(eventManagerPrefab);
-        go = GameObject.Find(eventTrackerPrefab.name);
-        if (go == null) Instantiate(eventTrackerPrefab);
-        go = GameObject.Find(gameCursorPrefab.name);
-        if (go == null) Instantiate(gameCursorPrefab);
+        Instantiate(onuSceneManagerPrefab);
+        Instantiate(playerDataPrefab);
+        Instantiate(prefabHelperPrefab);
+        Instantiate(eventManagerPrefab);
+        Instantiate(eventTrackerPrefab);
+        Instantiate(gameCursorPrefab);
     }
 }

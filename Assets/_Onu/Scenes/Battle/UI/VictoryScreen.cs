@@ -11,7 +11,7 @@ public class VictoryScreen : MonoBehaviour
 
     void Awake()
     {
-        EventManager.endBattleEvent.AddListener(OnEndBattle);
+        EventManager.endedBattleEvent.AddListener(OnEndBattle);
         Hide();
         nextButton.onClick.AddListener(OnClickNext);
     }
@@ -22,8 +22,9 @@ public class VictoryScreen : MonoBehaviour
         OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
     }
 
-    void OnEndBattle(GameMaster gm)
+    void OnEndBattle()
     {
+        var gm = GameMaster.GetInstance();
         if (gm.Victor == gm.Player)
         {
             Show();
@@ -45,26 +46,29 @@ public class VictoryScreen : MonoBehaviour
 
     void GenerateRewards()
     {
-        var maxManaReward = ManaReward.New();
-        AddToRewardsList(maxManaReward);
-        int numActionCards = Random.Range(0, 100) switch
+        var rand = new System.Random();
+        bool chanceManaReward = rand.Next(2) == 1;
+        if (chanceManaReward)
         {
-            >= 0 and < 70 => 1,
-            >= 70 and < 90 => 2,
-            >= 90 and < 98 => 3,
-            _ => 4,
+            var maxManaReward = ManaReward.New();
+            AddToRewardsList(maxManaReward);
+        }
+        int numActionCards = rand.Next(100) switch
+        {
+            >= 0 and < 90 => 1,
+            >= 90 and < 98 => 2,
+            _ => 3,
         };
         for (int i = 0; i < numActionCards; i++)
         {
             var actionCardReward = ActionCardReward.New();
             AddToRewardsList(actionCardReward);
         }
-        int numRuleCards = Random.Range(0, 100) switch
+        int numRuleCards = rand.Next(100) switch
         {
-            >= 0 and < 70 => 1,
-            >= 70 and < 90 => 2,
-            >= 90 and < 98 => 3,
-            _ => 4,
+            >= 0 and < 70 => 0,
+            >= 70 and < 99 => 1,
+            _ => 2,
         };
         for (int i = 0; i < numRuleCards; i++)
         {

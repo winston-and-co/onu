@@ -8,15 +8,16 @@ public class DefeatScreen : MonoBehaviour
 
     void Awake()
     {
-        EventManager.endBattleEvent.AddListener(OnEndBattle);
+        EventManager.endedBattleEvent.AddListener(OnEndBattle);
         gameObject.SetActive(false);
 
         nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(Scene.Map));
         // Show();
     }
 
-    void OnEndBattle(GameMaster gm)
+    void OnEndBattle()
     {
+        var gm = GameMaster.GetInstance();
         if (gm.Victor != gm.Player)
         {
             // TODO: Back to menu?

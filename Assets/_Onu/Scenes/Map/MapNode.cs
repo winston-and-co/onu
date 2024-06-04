@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MapNode : MonoBehaviour
@@ -19,7 +16,7 @@ public class MapNode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(IsValid())
+        if (IsValid())
         {
             Visit();
         }

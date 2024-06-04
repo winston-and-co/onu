@@ -10,12 +10,13 @@ public class HealthBarAdapter : MonoBehaviour
 
     void Awake()
     {
-        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.startedBattleEvent.AddListener(OnStartBattle);
         EventManager.entityHealthChangedEvent.AddListener(OnEntityHealthChanged);
     }
 
-    void OnStartBattle(GameMaster gm)
+    void OnStartBattle()
     {
+        var gm = GameMaster.GetInstance();
         entity = isPlayerAdapter ? gm.Player : gm.Enemy;
         bar.Initialize(entity.maxHP);
         bar.UpdateHealthBar(entity.hp);

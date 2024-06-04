@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1257537865484679012, guid: cd63f6e1c556d83489b03ab03ce1ab3d, type: 3}
+  cardUIPrefab: {fileID: 7508440747063637051, guid: d21d3c6781f895e48bc5ff52ce3f62ce, type: 3}
   deckPrefab: {fileID: 2787731918303097278, guid: f27a636d418bc0247aab807b0d18701c, type: 3}
-  colorPickerPrefab: {fileID: 7086895482930904874, guid: b643156439dce4d41bb0918bcf0945df, type: 3}
   entityPrefab: {fileID: 8448616644910313864, guid: cac477c2b0c5f7640ad951ddb6350c4f, type: 3}
   rewardItemPrefab: {fileID: 857100085499147140, guid: 5d8bbf5b17062e94f85677a601c058b5, type: 3}
   tooltipPrefab: {fileID: 7116631906466180917, guid: 560fa035446cab141a2a23b07dbba764, type: 3}
+  colorPickerPrefab: {fileID: 7086895482930904874, guid: b643156439dce4d41bb0918bcf0945df, type: 3}
+  actionCardPickerPrefab: {fileID: 42610007787760541, guid: a2eb15c5d03f26746b2eb8dec76c7ce5, type: 3}
+  deckViewerPrefab: {fileID: 4339640741195895163, guid: 7b9aaf9048018964985e7c0d0ff947be, type: 3}
+  deckMultiSelectPrefab: {fileID: 5592946994174533379, guid: cc6fa216ee609ab49882ddcbed06640c, type: 3}

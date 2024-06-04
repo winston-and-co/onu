@@ -5,12 +5,12 @@ namespace RuleCards
 {
     public class Purple : AbstractRuleCard
     {
-        public override int Id => 0;
+        public static int Id => 0;
         public override string Name => "Purple";
         public override string Description => "Red and Blue are the same Color.";
         public override string SpriteName => "RC0_Purple";
 
-        public static Purple New() => New<Purple>() as Purple;
+        public static Purple New() => new();
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {

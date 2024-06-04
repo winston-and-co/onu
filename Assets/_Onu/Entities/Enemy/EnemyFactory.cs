@@ -1,15 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-public enum EnemyCharacter
-{
-    Ken,
-    LostKid,
-    LightweightLarry,
-    OldMaster,
-    ADog,
-}
-
 public enum EnemyPool
 {
     Easy1,
@@ -19,43 +10,46 @@ public enum EnemyPool
 
 public class EnemyFactory
 {
-    static readonly Dictionary<EnemyPool, List<EnemyCharacter>> Pools = new()
+    static readonly Dictionary<EnemyPool, List<Func<EnemyEntity>>> Pools = new()
     {
         [EnemyPool.Easy1] = new()
         {
-            EnemyCharacter.Ken,
-            EnemyCharacter.LostKid
+            Baby,
+            // Ken,
+            // LostKid
         },
         [EnemyPool.Hard1] = new()
         {
-            EnemyCharacter.LightweightLarry,
+            LightweightLarry,
         },
         [EnemyPool.Boss1] = new()
         {
-            EnemyCharacter.OldMaster,
-            EnemyCharacter.ADog,
+            OldMaster,
+            ADog,
         },
     };
 
+    readonly static Random rand = new();
     public static EnemyEntity RandomFromPool(EnemyPool pool)
     {
-        List<EnemyCharacter> chars = Pools[pool];
-        var character = chars[UnityEngine.Random.Range(0, chars.Count)];
-        var enemy = MakeEnemy(character);
+        var funcs = Pools[pool];
+        var idx = rand.Next(funcs.Count);
+        var func = funcs[idx];
+        var enemy = func();
         return enemy;
     }
 
-    public static EnemyEntity MakeEnemy(EnemyCharacter character)
+    static EnemyEntity Baby()
     {
-        return character switch
-        {
-            EnemyCharacter.Ken => Ken(),
-            EnemyCharacter.LostKid => LostKid(),
-            EnemyCharacter.LightweightLarry => LightweightLarry(),
-            EnemyCharacter.OldMaster => OldMaster(),
-            EnemyCharacter.ADog => ADog(),
-            _ => throw new ArgumentException("Invalid EnemyCharacter"),
-        };
+        return EnemyEntity.New(
+            enemyName: "Baby",
+            deckType: DeckType.Standard,
+            maxHP: 1,
+            maxMana: 1,
+            startingHandSize: 7,
+            patternType: typeof(SimpleAI),
+            spriteName: "Enemy/ken"
+        );
     }
 
     static EnemyEntity Ken()

@@ -20,10 +20,6 @@ public class PlayerData : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        ActionCardsParent = new GameObject("ActionCards");
-        ActionCardsParent.transform.SetParent(gameObject.transform);
-        ActionCardsParent.SetActive(false);
     }
 
     /// <summary>
@@ -44,39 +40,45 @@ public class PlayerData : MonoBehaviour
 
     public PlayerEntity Player;
 
-    public GameObject ActionCardsParent;
-    List<AbstractActionCard> _actionCards = new();
-    public List<AbstractActionCard> ActionCards
+    public List<int> ActionCards { get; set; } = new();
+
+    /// <summary>
+    /// Adds an Action Card id.
+    /// </summary>
+    public void AddActionCard(int actionCardId)
     {
-        get => _actionCards;
-        set
+        for (int i = 0; i < ActionCards.Count; i++)
         {
-            _actionCards = new();
-            foreach (var ac in value)
+            if (ActionCards[i] > actionCardId)
             {
-                AddActionCard(ac);
+                ActionCards.Insert(i - 1, actionCardId);
             }
         }
+        ActionCards.Add(actionCardId);
     }
 
     /// <summary>
-    /// Adds an Action Card instance. Sets its gameObject active. Sets PlayerData.ActionCards object as parent object.
+    /// Removes an Action Card id by index and destroys the game object.
     /// </summary>
-    public void AddActionCard(AbstractActionCard actionCard)
+    public void RemoveActionCard(AbstractActionCard instance)
     {
-        _actionCards.Add(actionCard);
-        actionCard.gameObject.SetActive(true);
-        actionCard.transform.SetParent(ActionCardsParent.transform);
+        ActionCards.RemoveAt(instance.PlayerDataIndex);
+        Destroy(instance.gameObject);
     }
 
     /// <summary>
-    /// Removes an Action Card instance.
+    /// Instantiates list of Action Cards.
     /// </summary>
-    public void RemoveActionCard(AbstractActionCard actionCard)
+    public List<AbstractActionCard> GetActionCardInstances()
     {
-        int i = _actionCards.IndexOf(actionCard);
-        _actionCards.RemoveAt(i);
-        Destroy(actionCard.gameObject);
+        List<AbstractActionCard> res = new();
+        for (int i = 0; i < ActionCards.Count; i++)
+        {
+            var instance = ActionCardFactory.MakeActionCard(ActionCards[i]);
+            instance.PlayerDataIndex = i;
+            res.Add(instance);
+        }
+        return res;
     }
 
     /// <summary>

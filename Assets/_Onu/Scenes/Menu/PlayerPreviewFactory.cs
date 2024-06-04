@@ -25,7 +25,7 @@ public class PlayerPreviewFactory
             maxMana: 11,
             startingHandSize: 7,
             starterActionCards: new[] { ActionCards.Wild.Id, },
-            starterRuleCards: new[] { RuleCard.Purple, }
+            starterRuleCards: new[] { RuleCards.Purple.Id, }
         );
     }
 }

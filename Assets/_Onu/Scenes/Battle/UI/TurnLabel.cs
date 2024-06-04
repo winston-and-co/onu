@@ -10,7 +10,7 @@ public class TurnLabel : MonoBehaviour
     void Awake()
     {
         turnLabelText = GetComponent<TMP_Text>();
-        EventManager.startTurnEvent.AddListener(OnTurnStart);
+        EventManager.startedTurnEvent.AddListener(OnTurnStart);
     }
 
     public void OnTurnStart(AbstractEntity e)

@@ -15,14 +15,12 @@ public class Bathroom : MonoBehaviour
     [SerializeField] TMP_Text healText;
     [SerializeField] float eventChance = 0.1f;
     [SerializeField] List<GameObject> eventPrefabs;
-    public UnityEvent eventDone;
 
     bool usingBathroom;
 
     void Awake()
     {
         eventContainer.SetActive(false);
-        eventDone.AddListener(OnEventDone);
         leaveButton.gameObject.SetActive(false);
         leaveButton.onClick.AddListener(OnLeaveBathroom);
         fadeToBlack.color = new Vector4(0, 0, 0, 0);
@@ -64,7 +62,7 @@ public class Bathroom : MonoBehaviour
         go.SetActive(true);
     }
 
-    void OnEventDone()
+    public void EventDone()
     {
         eventContainer.SetActive(false);
         StartCoroutine(UseBathroomEndAnimation());
@@ -75,8 +73,8 @@ public class Bathroom : MonoBehaviour
         Tween t = fadeToBlack.DOFade(0.998f, 1);
         yield return t.WaitForCompletion();
         yield return new WaitForSeconds(2);
-        // var p = PlayerData.GetInstance().Player;
-        // p.Heal(p.maxHP / 5);
+        var p = PlayerData.GetInstance().Player;
+        p.Heal(p.maxHP / 5);
         t = healText.DOFade(1f, 0.4f);
         yield return t.WaitForCompletion();
         yield return new WaitForSeconds(1);

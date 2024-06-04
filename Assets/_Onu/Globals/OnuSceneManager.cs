@@ -142,7 +142,7 @@ public class OnuSceneManager : MonoBehaviour
         switch (scene)
         {
             case Scene.Map:
-                SceneManager.LoadSceneAsync("Map");
+                SceneManager.LoadScene("Map");
                 break;
             case Scene.Bathroom:
                 SceneManager.LoadSceneAsync("Bathroom");

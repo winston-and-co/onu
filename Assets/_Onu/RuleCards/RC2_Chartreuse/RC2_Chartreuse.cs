@@ -5,12 +5,12 @@ namespace RuleCards
 {
     public class Chartreuse : AbstractRuleCard
     {
-        public override int Id => 2;
+        public static int Id => 2;
         public override string Name => "Chartreuse";
         public override string Description => "Green and Yellow are the same Color.";
         public override string SpriteName => "RC2_Chartreuse";
 
-        public static Chartreuse New() => New<Chartreuse>() as Chartreuse;
+        public static Chartreuse New() => new();
 
         public override RuleResult<bool> ColorsMatch(GameMaster gm, AbstractEntity e, Color color, Color target, int depth)
         {

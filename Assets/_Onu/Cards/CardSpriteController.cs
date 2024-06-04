@@ -4,6 +4,7 @@ using UnityEngine;
 using Cards;
 using UnityEngine.Rendering;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -30,7 +31,7 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
 
     void Awake()
     {
-        EventManager.startBattleEvent.AddListener(OnStartBattle);
+        EventManager.startedBattleEvent.AddListener(OnStartBattle);
         EventManager.cardPlayedEvent.AddListener(AfterCardPlayed);
         EventManager.cardDrawnEvent.AddListener(OnCardDrawn);
 
@@ -44,10 +45,10 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
         initialMouseEventsEnabled = MouseEventsEnabled;
         initialDraggable = Draggable;
         initialFlipped = Flipped;
-        SetupCard();
+        Redraw();
     }
 
-    void SetupCard()
+    public void Redraw()
     {
         if (!Flipped)
         {
@@ -56,7 +57,7 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
             if (CardText != null)
             {
                 CardText.text = Card.Value.HasValue ? Card.Value.ToString() : "";
-                CardText.color = Color.white.WithAlpha(1.0f);
+                CardText.color = Color.white;
                 // https://forum.unity.com/threads/asset-text-mesh-pro-api-outline.503171/
                 CardText.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
                 CardText.outlineColor = Color.black;
@@ -74,12 +75,12 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
 
-    void OnStartBattle(GameMaster _)
+    void OnStartBattle()
     {
         MouseEventsEnabled = initialMouseEventsEnabled;
         Draggable = initialDraggable;
         Flipped = initialFlipped;
-        SetupCard();
+        Redraw();
     }
 
     void AfterCardPlayed(AbstractEntity _, AbstractCard p)
@@ -90,7 +91,7 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
         Card.transform.SetParent(GameMaster.GetInstance().DiscardPile.transform, false);
         Card.transform.localPosition = Vector3.zero;
         Flipped = false;
-        SetupCard();
+        Redraw();
         var rt = GetComponent<RectTransform>();
         rt.localScale = CardInPileScale;
         rt.SetAsLastSibling();
@@ -119,7 +120,7 @@ public class CardSpriteController : MonoBehaviour, IPointerEnterHandler, IPointe
     public void Flip()
     {
         Flipped = !Flipped;
-        SetupCard();
+        Redraw();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

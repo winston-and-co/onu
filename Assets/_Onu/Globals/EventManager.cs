@@ -40,12 +40,13 @@ public class EventManager : MonoBehaviour
     public static GameEvent<AbstractActionCard> actionCardUsedEvent = new();
 
     public static GameEvent startGameEvent = new();
-    public static GameEvent<GameMaster> startBattleEvent = new();
-    public static GameEvent<AbstractEntity> startTurnEvent = new();
+    public static GameEvent beforeBattleStartEvent = new();
+    public static GameEvent startedBattleEvent = new();
+    public static GameEvent<AbstractEntity> startedTurnEvent = new();
     public static GameEvent<AbstractEntity> tryEndTurnEvent = new();
-    public static GameEvent<AbstractEntity> endTurnEvent = new();
+    public static GameEvent<AbstractEntity> endedTurnEvent = new();
     public static GameEvent<AbstractEntity> skippedTurnEvent = new();
-    public static GameEvent<GameMaster> endBattleEvent = new();
+    public static GameEvent endedBattleEvent = new();
     public static GameEvent endGameEvent = new();
 }
 

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ScrollGrid : MonoBehaviour
@@ -11,7 +13,10 @@ public class ScrollGrid : MonoBehaviour
     public int NumColumns = 5;
     public ScrollRect ScrollRect;
 
-    void Awake()
+    [SerializeField] GameObject UIWindowCloserPrefab;
+    GameObject UIWindowCloser;
+
+    protected void Setup()
     {
         if (ScrollRect == null && !TryGetComponent(out ScrollRect))
         {
@@ -77,9 +82,10 @@ public class ScrollGrid : MonoBehaviour
             + ScrollRect.GetComponentInChildren<Scrollbar>(true)
                         .GetComponent<RectTransform>().rect.width;
         var srrt = ScrollRect.GetComponent<RectTransform>();
+        var maxHeight = FindObjectOfType<Canvas>().GetComponent<RectTransform>().sizeDelta.y - 4 * Spacing;
         srrt.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Vertical,
-            sizeVertical
+            Math.Min(sizeVertical, maxHeight)
         );
         srrt.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Horizontal,
@@ -91,10 +97,25 @@ public class ScrollGrid : MonoBehaviour
     {
         gameObject.SetActive(true);
         IsOpen = true;
+        Blockers.UIPopupBlocker.StartBlocking();
+        if (UIWindowCloserPrefab != null)
+        {
+            UIWindowCloser = Instantiate(UIWindowCloserPrefab);
+            UIWindowCloser.transform.SetParent(transform.parent);
+            ((RectTransform)UIWindowCloser.transform).offsetMin = new(0, 0);
+            ((RectTransform)UIWindowCloser.transform).offsetMax = new(0, 0);
+            UIWindowCloser.transform.SetSiblingIndex(transform.GetSiblingIndex());
+            UIWindowCloser.GetComponent<UIWindowCloser>().OnPointerClickEvent.AddListener((_) => Hide());
+        }
     }
 
     public void Hide()
     {
+        if (UIWindowCloser != null)
+        {
+            Destroy(UIWindowCloser);
+        }
+        Blockers.UIPopupBlocker.StopBlocking();
         gameObject.SetActive(false);
         IsOpen = false;
     }

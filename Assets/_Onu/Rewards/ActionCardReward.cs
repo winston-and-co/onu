@@ -1,21 +1,20 @@
-using ActionCards;
-
 public class ActionCardReward : AbstractReward
 {
-    AbstractActionCard actionCard;
+    int actionCardId;
 
     public static ActionCardReward New()
     {
-        AbstractActionCard ac = ActionCardFactory.MakeRandom();
+        (var ac, int id) = ActionCardFactory.MakeRandom();
         ac.gameObject.SetActive(false);
         ActionCardReward reward = New<ActionCardReward>(ac.Name, ac.SpriteName) as ActionCardReward;
-        reward.actionCard = ac;
+        reward.actionCardId = id;
         reward.Tooltips.Copy(ac.Tooltips);
+        Destroy(ac.gameObject);
         return reward;
     }
 
     public override void Collect()
     {
-        PlayerData.GetInstance().AddActionCard(actionCard);
+        PlayerData.GetInstance().AddActionCard(actionCardId);
     }
 }

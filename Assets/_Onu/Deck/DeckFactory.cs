@@ -12,7 +12,7 @@ public class DeckFactory
 {
     public static Deck MakeDeck(DeckType type, AbstractEntity owner)
     {
-        var deck = PrefabHelper.GetInstance().GetInstantiatedPrefab(PrefabType.Deck).GetComponent<Deck>();
+        var deck = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.Deck).GetComponent<Deck>();
         if (deck == null) throw new Exception("Deck prefab missing Deck script component");
         // Attach to entity
         owner.deck = deck;
@@ -39,9 +39,9 @@ public class DeckFactory
         List<AbstractCard> cards = new();
         for (int sets = 0; sets < 2; sets++)
         {
-            for (int value = 0; value < 10; value++)
+            for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
             {
-                for (int colorIdx = 0; colorIdx < colors.Length; colorIdx++)
+                for (int value = 0; value < 10; value++)
                 {
                     AbstractCard newCard;
                     if (deck.e.isPlayer)

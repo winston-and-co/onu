@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ActionCards;
 
 public class ActionCardFactory
@@ -13,6 +14,9 @@ public class ActionCardFactory
         {RestoreMana.Id, RestoreMana.New},
         {MaxHPUp.Id, MaxHPUp.New},
         {MaxManaUp.Id, MaxManaUp.New},
+        {Generate2.Id, Generate2.New},
+        {DoubleDamage.Id, DoubleDamage.New},
+        {Randomize.Id, Randomize.New},
     };
 
     public static AbstractActionCard MakeActionCard(int id)
@@ -20,9 +24,23 @@ public class ActionCardFactory
         return registeredActionCards[id]();
     }
 
-    public static AbstractActionCard MakeRandom()
+    /// <summary>
+    /// Makes a random Action Card, returning the instance and its ID.
+    /// </summary>
+    /// <returns>
+    /// A tuple containing the Action Card instance and its ID.
+    /// </returns>
+    public static (AbstractActionCard, int) MakeRandom()
     {
-        return MakeActionCard(UnityEngine.Random.Range(0, registeredActionCards.Count));
+        int id = GetRandomId();
+        return (MakeActionCard(id), id);
+    }
+
+    public static int GetRandomId()
+    {
+        var rand = new Random();
+        var idx = rand.Next(registeredActionCards.Count);
+        return registeredActionCards.Keys.ToArray()[idx];
     }
 
     public static bool CheckExists(int id)

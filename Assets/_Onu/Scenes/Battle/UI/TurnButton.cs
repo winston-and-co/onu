@@ -9,7 +9,7 @@ public class TurnButton : MonoBehaviour
 
     void Awake()
     {
-        EventManager.startTurnEvent.AddListener(OnTurnStart);
+        EventManager.startedTurnEvent.AddListener(OnTurnStart);
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 

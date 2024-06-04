@@ -7,10 +7,11 @@ public class RuleCardReward : AbstractReward
     public static RuleCardReward New()
     {
         var rc = RuleCardFactory.MakeRandom();
-        rc.gameObject.SetActive(false);
         var reward = New<RuleCardReward>(rc.Name, rc.SpriteName) as RuleCardReward;
         reward.ruleCard = rc;
-        reward.Tooltips.Copy(rc.Tooltips);
+        var temp = rc.ToGameObject();
+        reward.Tooltips.Copy(temp.GetComponent<RuleCardUIObject>().Tooltips);
+        Destroy(temp);
         return reward;
     }
 

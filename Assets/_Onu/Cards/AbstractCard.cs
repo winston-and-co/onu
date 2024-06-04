@@ -1,24 +1,32 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Cards
 {
     public abstract class AbstractCard : MonoBehaviour
     {
         public int Cost;
-        public int? Value;
-        [SerializeField] private Color _color;
+        int? _value;
+        public int? Value
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                if (SpriteController != null)
+                    SpriteController.Redraw();
+            }
+        }
+        [SerializeField] Color _color;
         public Color Color
         {
             get => _color;
             set
             {
                 _color = value;
-                var sr = GetComponentInChildren<SpriteRenderer>();
-                if (sr != null)
-                {
-                    sr.color = value;
-                    return;
-                }
+                if (SpriteController != null)
+                    SpriteController.Redraw();
             }
         }
         public CardSpriteController SpriteController;
@@ -28,7 +36,7 @@ namespace Cards
         public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled, bool generatedInCombat)
         {
             PrefabHelper ph = PrefabHelper.GetInstance();
-            GameObject go = ph.GetInstantiatedPrefab(PrefabType.Card);
+            GameObject go = ph.InstantiatePrefab(PrefabType.Card);
             go.name = name;
             if (go == null) throw new System.Exception("Failed to instantiate card prefab");
             AbstractCard card = go.AddComponent(cardType) as AbstractCard;
@@ -45,6 +53,27 @@ namespace Cards
             card.SpriteController.SpriteRenderer.color = new(1, 1, 1, 1);
             card.SpriteController.Init();
             return card;
+        }
+
+        /// <summary>
+        /// Creates a new game object to show on canvas.
+        /// </summary>
+        /// <param name="facingFront"></param>
+        /// <returns>The GameObject instance</returns>
+        public GameObject CreateCardUIObject(bool facingFront = true)
+        {
+            var go = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.CardUI);
+            go.GetComponent<CardUIObject>().Card = this;
+            Image image = go.GetComponent<Image>();
+            image.sprite = SpriteLoader.LoadSprite(facingFront ? "alpha_art_card_front" : "alpha_art_card_back");
+            image.color = Color;
+            var text = go.GetComponentInChildren<TMP_Text>();
+            text.text = Value.HasValue ? Value.ToString() : "";
+            text.color = Color.white;
+            text.fontSharedMaterial.shaderKeywords = new string[] { "OUTLINE_ON" };
+            text.outlineColor = Color.black;
+            text.outlineWidth = 0.2f;
+            return go;
         }
 
         public void TryPlay()

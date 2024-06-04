@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cards;
+using System.Collections.ObjectModel;
 
 public class Deck : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public class Deck : MonoBehaviour
 
     void Awake()
     {
-        EventManager.endBattleEvent.AddListener(OnEndBattle);
+        EventManager.endedBattleEvent.AddListener(OnEndBattle);
     }
 
-    void OnEndBattle(GameMaster gm)
+    void OnEndBattle()
     {
+        var gm = GameMaster.GetInstance();
         // RESET DISCARD PILE
         var pile = gm.DiscardPile.Cards;
         // for each card in the pile
@@ -50,6 +52,11 @@ public class Deck : MonoBehaviour
             }
             e.hand.RemoveCard(c);
         }
+    }
+
+    public ReadOnlyCollection<AbstractCard> GetCards()
+    {
+        return m_Cards.AsReadOnly();
     }
 
     public void SetCards(List<AbstractCard> cards)
@@ -87,6 +94,10 @@ public class Deck : MonoBehaviour
         return RemoveCard(m_Cards[idx]);
     }
 
+    /// <summary>
+    /// Removes the card from the deck and destroys its game object.
+    /// </summary>
+    /// <param name="c"></param>
     public void RemovePermanently(AbstractCard c)
     {
         m_Cards.Remove(c);
@@ -112,10 +123,10 @@ public class Deck : MonoBehaviour
         return c;
     }
 
-    public void OnMouseDown()
-    {
-        e.Draw();
-    }
+    // public void OnMouseDown()
+    // {
+    //     e.Draw();
+    // }
 
     public void Shuffle()
     {

@@ -4,7 +4,16 @@ using UnityEngine.EventSystems;
 
 public class ActionCardPouch : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
-    [SerializeField] ActionCardPicker picker;
+    ActionCardPicker picker;
+
+    void Awake()
+    {
+        var go = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.UI_ActionCardPicker);
+        go.transform.SetParent(transform.parent, false);
+        go.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        picker = go.GetComponent<ActionCardPicker>();
+        picker.Hide();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

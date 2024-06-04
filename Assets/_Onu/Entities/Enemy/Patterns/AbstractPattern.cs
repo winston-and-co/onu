@@ -8,7 +8,7 @@ public abstract class AbstractPattern : MonoBehaviour
     void Awake()
     {
         entity = GetComponent<EnemyEntity>();
-        EventManager.startTurnEvent.AddListener(OnTurnStart);
+        EventManager.startedTurnEvent.AddListener(OnTurnStart);
     }
 
     void OnTurnStart(AbstractEntity e)

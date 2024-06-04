@@ -10,7 +10,7 @@ public abstract class AbstractReward : MonoBehaviour, IPointerClickHandler
     public static AbstractReward New<T>(string label, string spriteName) => New(typeof(T), label, spriteName);
     public static AbstractReward New(System.Type rewardType, string label, string spriteName)
     {
-        GameObject go = PrefabHelper.GetInstance().GetInstantiatedPrefab(PrefabType.RewardItem);
+        GameObject go = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.RewardItem);
         AbstractReward reward = go.AddComponent(rewardType) as AbstractReward;
         Image image = go.GetComponentsInChildren<Image>()[1];
         image.sprite = SpriteLoader.LoadSprite(spriteName);

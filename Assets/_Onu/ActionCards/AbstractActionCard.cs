@@ -10,6 +10,7 @@ namespace ActionCards
         public abstract string Name { get; }
         public abstract string Description { get; }
         public abstract string SpriteName { get; }
+        public int PlayerDataIndex;
         public bool IsUIObject;
         public TooltipOwner Tooltips;
 

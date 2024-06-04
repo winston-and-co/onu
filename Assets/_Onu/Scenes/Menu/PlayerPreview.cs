@@ -6,16 +6,16 @@ using RuleCards;
 public class PlayerPreview
 {
     public string Name;
-    public RuleCard[] StarterRuleCards;
+    public int[] StarterRuleCards;
     public AbstractRuleCard[] StarterRuleCardInstances;
     public int[] StarterActionCards;
-    public AbstractActionCard[] StarterActionCardInstances;
+    AbstractActionCard[] StarterActionCardInstances;
     public DeckType Deck;
     public int MaxHP;
     public int MaxMana;
     public int StartingHandSize;
 
-    public PlayerPreview(string name, RuleCard[] starterRuleCards, int[] starterActionCards, DeckType deck, int maxHP, int maxMana, int startingHandSize)
+    public PlayerPreview(string name, int[] starterRuleCards, int[] starterActionCards, DeckType deck, int maxHP, int maxMana, int startingHandSize)
     {
         Name = name;
         StarterRuleCards = starterRuleCards;
@@ -41,9 +41,9 @@ Deck: {Enum.GetName(typeof(DeckType), Deck)}
         {
             ret += "\nRule Cards:";
             StarterRuleCardInstances = StarterRuleCards.Select(v => RuleCardFactory.MakeRuleCard(v)).ToArray();
-            foreach (var rc in StarterRuleCardInstances)
+            for (int i = 0; i < StarterRuleCardInstances.Length; i++)
             {
-                rc.gameObject.SetActive(false);
+                AbstractRuleCard rc = StarterRuleCardInstances[i];
                 ret += $"\n{rc.Name}";
             }
             ret += "\n";
@@ -52,10 +52,12 @@ Deck: {Enum.GetName(typeof(DeckType), Deck)}
         {
             ret += "\nAction Cards:";
             StarterActionCardInstances = StarterActionCards.Select(v => ActionCardFactory.MakeActionCard(v)).ToArray();
-            foreach (var ac in StarterActionCardInstances)
+            for (int i = 0; i < StarterActionCardInstances.Length; i++)
             {
+                AbstractActionCard ac = StarterActionCardInstances[i];
                 ac.gameObject.SetActive(false);
                 ret += $"\n{ac.Name}";
+                UnityEngine.Object.Destroy(ac.gameObject);
             }
         }
         return ret;

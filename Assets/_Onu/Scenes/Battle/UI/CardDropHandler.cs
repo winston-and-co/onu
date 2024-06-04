@@ -6,17 +6,17 @@ public class CardDropHandler : MonoBehaviour, IDropHandler
 {
     void Awake()
     {
-        EventManager.startBattleEvent.AddListener(OnBattleStart);
-        EventManager.endBattleEvent.AddListener(OnBattleEnd);
+        EventManager.startedBattleEvent.AddListener(OnBattleStart);
+        EventManager.endedBattleEvent.AddListener(OnBattleEnd);
         EventManager.cardPlayedEvent.AddListener(OnCardPlayed);
     }
 
-    void OnBattleStart(GameMaster _)
+    void OnBattleStart()
     {
         Hide();
     }
 
-    void OnBattleEnd(GameMaster _)
+    void OnBattleEnd()
     {
         Hide();
     }
