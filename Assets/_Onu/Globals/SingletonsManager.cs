@@ -22,11 +22,12 @@ public class SingletonsManager : MonoBehaviour
 
     [SerializeField] GameObject onuSceneManagerPrefab;
     [SerializeField] GameObject playerDataPrefab;
-    [SerializeField] GameObject prefabHelperPrefab;
+    [SerializeField] GameObject prefabLoaderPrefab;
     [SerializeField] GameObject eventManagerPrefab;
     [SerializeField] GameObject eventTrackerPrefab;
     [SerializeField] GameObject gameCursorPrefab;
     [SerializeField] GameObject tutorialPrefab;
+    [SerializeField] GameObject soundManagerPrefab;
 
     void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
     void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
@@ -42,9 +43,10 @@ public class SingletonsManager : MonoBehaviour
     {
         Instantiate(onuSceneManagerPrefab);
         Instantiate(playerDataPrefab);
-        Instantiate(prefabHelperPrefab);
+        Instantiate(prefabLoaderPrefab);
         Instantiate(eventManagerPrefab);
         Instantiate(eventTrackerPrefab);
         Instantiate(gameCursorPrefab);
+        Instantiate(soundManagerPrefab);
     }
 }

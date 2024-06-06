@@ -140,6 +140,10 @@ public class Deck : MonoBehaviour
             m_Cards[k] = m_Cards[n];
             m_Cards[n] = value;
         }
+        // SOUND EFFECT
+        SoundManager sm = SoundManager.GetInstance();
+        AudioSource source = sm.mainSource;
+        source.PlayOneShot(sm.drawCard);
         EventManager.deckShuffledEvent.AddToBack(e, this);
     }
 }

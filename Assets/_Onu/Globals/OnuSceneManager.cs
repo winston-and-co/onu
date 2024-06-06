@@ -1,9 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Scene
+public enum SceneType
 {
     Map,
     Bathroom,
@@ -45,7 +44,7 @@ public class OnuSceneManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // scene cleanup
         if (lastSceneName != scene.name)
@@ -57,6 +56,9 @@ public class OnuSceneManager : MonoBehaviour
                     break;
                 case "Battle":
                     CleanBattleScene();
+                    break;
+                case "Boss":
+                    CleanBossScene();
                     break;
                 default:
                     break;
@@ -85,6 +87,10 @@ public class OnuSceneManager : MonoBehaviour
     {
         Map map = FindObjectOfType<Map>(true);
         if (map != null) map.gameObject.SetActive(true);
+        // AudioSource bgSource = SoundManager.GetInstance().backgroundSource;
+        // bgSource.clip = SoundManager.GetInstance().backgroundMap;
+        // bgSource.loop = true;
+        // bgSource.Play();
     }
     void CleanMapScene()
     {
@@ -135,38 +141,46 @@ public class OnuSceneManager : MonoBehaviour
         enemy = EnemyFactory.RandomFromPool(EnemyPool.Boss1);
         gm.Enemy = enemy;
     }
+    void CleanBossScene()
+    {
+        var pd = PlayerData.GetInstance();
+        if (pd.Player == null) throw new System.Exception();
+        pd.Player.gameObject.SetActive(false);
+        if (pd.Player.deck == null) throw new System.Exception();
+        pd.Player.deck.gameObject.SetActive(false);
+    }
 
-    public void ChangeScene(Scene scene)
+    public void ChangeScene(SceneType scene)
     {
         Debug.Log("ChangeScene to: " + scene);
         switch (scene)
         {
-            case Scene.Map:
+            case SceneType.Map:
                 SceneManager.LoadScene("Map");
                 break;
-            case Scene.Bathroom:
+            case SceneType.Bathroom:
                 SceneManager.LoadSceneAsync("Bathroom");
                 break;
-            case Scene.Battle:
+            case SceneType.Battle:
                 SceneManager.LoadSceneAsync("Battle");
                 break;
-            case Scene.Boss:
-                SceneManager.LoadSceneAsync("Boss");
+            case SceneType.Boss:
+                SceneManager.LoadSceneAsync("Battle");
                 break;
-            case Scene.ShadyMan:
+            case SceneType.ShadyMan:
                 SceneManager.LoadSceneAsync("ShadyMan");
                 break;
         }
     }
 
     /// <param name="delay">Time to wait in seconds</param>
-    public void ChangeSceneWithDelay(Scene scene, int delay)
+    public void ChangeSceneWithDelay(SceneType scene, int delay)
     {
         Debug.Log("ChangeSceneWithDelay: " + delay);
         StartCoroutine(WaitThenChange(scene, delay));
     }
 
-    private IEnumerator WaitThenChange(Scene scene, int delay)
+    private IEnumerator WaitThenChange(SceneType scene, int delay)
     {
         yield return new WaitForSeconds(delay);
         ChangeScene(scene);

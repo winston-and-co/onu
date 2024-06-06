@@ -90,6 +90,6 @@ public class ShadyMan : MonoBehaviour
 
     public void Exit()
     {
-        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
+        OnuSceneManager.GetInstance().ChangeScene(SceneType.Map);
     }
 }

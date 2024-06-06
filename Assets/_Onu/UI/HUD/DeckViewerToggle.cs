@@ -18,7 +18,7 @@ public class DeckViewerToggle : MonoBehaviour, IPointerClickHandler
         {
             if (deckViewer == null)
             {
-                var go = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.UI_DeckViewer);
+                var go = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.UI_DeckViewer);
                 go.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
                 deckViewer = go.GetComponent<DeckViewer>();
             }

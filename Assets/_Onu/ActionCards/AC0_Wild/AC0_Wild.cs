@@ -44,7 +44,7 @@ namespace ActionCards
         {
             var canvas = FindObjectOfType<Canvas>();
             var canvasRt = canvas.GetComponent<RectTransform>();
-            colorPickerInstance = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.UI_ColorPicker);
+            colorPickerInstance = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.UI_ColorPicker);
             var rt = colorPickerInstance.GetComponent<RectTransform>();
             rt.SetParent(canvasRt);
             rt.anchoredPosition = new Vector2(0, 0);

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeType: 3
   IsStartingNode: 0
-  IsBossNode: 0
+  IsBossNode: 1
   _connectedNodes: []
 --- !u!61 &8966106537065562921
 BoxCollider2D:
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0b7deca3a87764d9693f0c89f8b542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clicked: 0
+  valid: 0
 --- !u!1 &8925703748264289770
 GameObject:
   m_ObjectHideFlags: 0

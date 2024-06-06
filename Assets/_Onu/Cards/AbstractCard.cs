@@ -35,7 +35,7 @@ namespace Cards
 
         public static AbstractCard New(string name, Color color, int? value, AbstractEntity cardOwner, System.Type cardType, string frontSprite, string backSprite, bool mouseEventsEnabled, bool generatedInCombat)
         {
-            PrefabHelper ph = PrefabHelper.GetInstance();
+            PrefabLoader ph = PrefabLoader.GetInstance();
             GameObject go = ph.InstantiatePrefab(PrefabType.Card);
             go.name = name;
             if (go == null) throw new System.Exception("Failed to instantiate card prefab");
@@ -62,7 +62,7 @@ namespace Cards
         /// <returns>The GameObject instance</returns>
         public GameObject CreateCardUIObject(bool facingFront = true)
         {
-            var go = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.CardUI);
+            var go = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.CardUI);
             go.GetComponent<CardUIObject>().Card = this;
             Image image = go.GetComponent<Image>();
             image.sprite = SpriteLoader.LoadSprite(facingFront ? "alpha_art_card_front" : "alpha_art_card_back");
