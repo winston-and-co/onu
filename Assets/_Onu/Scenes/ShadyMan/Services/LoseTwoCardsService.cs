@@ -3,9 +3,6 @@ using Cards;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// Player removes 2 cards from their deck
-/// </summary>
 public class LoseTwoCardsService : AbstractShadyManService
 {
     public override bool ConditionMet()

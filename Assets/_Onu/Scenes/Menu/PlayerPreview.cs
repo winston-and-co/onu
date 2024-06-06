@@ -24,6 +24,19 @@ public class PlayerPreview
         MaxHP = maxHP;
         MaxMana = maxMana;
         StartingHandSize = startingHandSize;
+
+        StarterRuleCardInstances = new AbstractRuleCard[StarterRuleCards.Length];
+        for (int i = 0; i < StarterRuleCards.Length; i++)
+        {
+            var v = RuleCardFactory.MakeRuleCard(StarterRuleCards[i]);
+            StarterRuleCardInstances[i] = v;
+        }
+        StarterActionCardInstances = new AbstractActionCard[StarterActionCards.Length];
+        for (int i = 0; i < StarterActionCards.Length; i++)
+        {
+            var v = ActionCardFactory.MakeActionCard(StarterActionCards[i]);
+            StarterActionCardInstances[i] = v;
+        }
     }
 
     public override string ToString()
@@ -37,21 +50,27 @@ Starting Hand Size: {StartingHandSize}
 
 Deck: {Enum.GetName(typeof(DeckType), Deck)}
 ";
-        if (StarterRuleCards.Length > 0)
+        ret += "\nRule Cards:";
+        if (StarterRuleCards.Length == 0)
         {
-            ret += "\nRule Cards:";
-            StarterRuleCardInstances = StarterRuleCards.Select(v => RuleCardFactory.MakeRuleCard(v)).ToArray();
+            ret += "\nNone";
+        }
+        else
+        {
             for (int i = 0; i < StarterRuleCardInstances.Length; i++)
             {
                 AbstractRuleCard rc = StarterRuleCardInstances[i];
                 ret += $"\n{rc.Name}";
             }
-            ret += "\n";
         }
-        if (StarterActionCards.Length > 0)
+        ret += "\n";
+        ret += "\nAction Cards:";
+        if (StarterActionCards.Length == 0)
         {
-            ret += "\nAction Cards:";
-            StarterActionCardInstances = StarterActionCards.Select(v => ActionCardFactory.MakeActionCard(v)).ToArray();
+            ret += "\nNone";
+        }
+        else
+        {
             for (int i = 0; i < StarterActionCardInstances.Length; i++)
             {
                 AbstractActionCard ac = StarterActionCardInstances[i];

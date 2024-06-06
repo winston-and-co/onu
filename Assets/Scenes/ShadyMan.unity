@@ -800,7 +800,12 @@ MonoBehaviour:
   optionPrefabs:
   - {fileID: 5632824920894527156, guid: a9088e1c7ecab2f44a4a7b0384170be9, type: 3}
   - {fileID: 2786917823563145926, guid: 10fbc471a923d2a4e9621815b68a81c5, type: 3}
+  - {fileID: 8260038985007493104, guid: 24e94e172fe9125498bcd178f2170e95, type: 3}
+  - {fileID: 8260038985007493104, guid: eef472f0c9fe18e44985e19ce05cb47d, type: 3}
+  - {fileID: 8260038985007493104, guid: 8f0c179f541dc8b41924f61831537779, type: 3}
+  - {fileID: 5632824920894527156, guid: 79dbe631d1c09e044a2619ce4d1b2233, type: 3}
   - {fileID: 8260038985007493104, guid: 0c959fcc869d9cd499bf57b59f662791, type: 3}
+  - {fileID: 5632824920894527156, guid: ce6de832585818647a8918222d2b3e60, type: 3}
   optionsContainer: {fileID: 62946865}
   muggedPanel: {fileID: 1441327114}
 --- !u!4 &1780300134

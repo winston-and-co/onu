@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pick 2 cards to remove from your deck
+  m_text: Increase Max Mana by 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Remove 2
+  m_text: Max Mana
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -281,9 +281,9 @@ GameObject:
   - component: {fileID: 7277512760835354446}
   - component: {fileID: 915994610918105801}
   - component: {fileID: 4955393287716424953}
-  - component: {fileID: 151003515760338437}
+  - component: {fileID: 8095189132148322883}
   m_Layer: 5
-  m_Name: Remove2
+  m_Name: MaxMana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dd3a2ea0a25644082549dd9c887ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &151003515760338437
+--- !u!114 &8095189132148322883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -414,6 +414,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8260038985007493104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea842fe3582837e4684866dbc35a3d33, type: 3}
+  m_Script: {fileID: 11500000, guid: 864de0ba876ab414ea766e3168936a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amount: 5

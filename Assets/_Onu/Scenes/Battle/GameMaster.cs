@@ -21,6 +21,9 @@ public class GameMaster : MonoBehaviour
     readonly GameEvent startTurnMsg = new();
     readonly GameEvent skipTurnMsg = new();
 
+    [SerializeField] GameObject victoryPanel;
+    [SerializeField] GameObject defeatPanel;
+
     void Awake()
     {
         // https://gamedevbeginner.com/singletons-in-unity-the-right-way/
@@ -41,6 +44,9 @@ public class GameMaster : MonoBehaviour
 
         startTurnMsg.AddListener(StartTurn);
         skipTurnMsg.AddListener(SkipTurn);
+
+        victoryPanel.SetActive(true);
+        defeatPanel.SetActive(true);
     }
 
     void Start()
@@ -70,6 +76,8 @@ public class GameMaster : MonoBehaviour
         {
             Enemy.Draw();
         }
+
+        Tutorial.Instance.FirstBattleTutorial();
 
         StartNextTurn();
     }

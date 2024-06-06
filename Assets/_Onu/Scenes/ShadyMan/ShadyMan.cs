@@ -29,7 +29,12 @@ public class ShadyMan : MonoBehaviour
                 randI = rand.Next(optionPrefabs.Count);
             }
             while (pickedAlready.Contains(randI));
-            var option = Instantiate(optionPrefabs[randI], optionsContainer.transform);
+            GameObject option = Instantiate(
+                original: optionPrefabs[randI],
+                position: new(-200f + 200f * options.Count, 0),
+                rotation: Quaternion.identity
+            );
+            option.transform.SetParent(optionsContainer.transform, false);
             var service = option.GetComponent<AbstractShadyManService>();
             if (service.ConditionMet())
             {
@@ -51,7 +56,7 @@ public class ShadyMan : MonoBehaviour
         {
             if (o != c)
             {
-                o.transform.DOLocalMoveY(-500, 0.5f).SetEase(Ease.InBack);
+                o.transform.DOLocalMoveY(-1000, 0.5f).SetEase(Ease.InBack);
             }
             else
             {

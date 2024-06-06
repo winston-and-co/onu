@@ -6,6 +6,8 @@ using UnityEngine;
 public class Settings
 {
     public bool tutorial1Seen;
+    public bool tutorial2Seen;
+    public bool tutorial3Seen;
 }
 
 public class SettingsHelper

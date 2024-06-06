@@ -81,11 +81,17 @@ public class PlayerData : MonoBehaviour
         return res;
     }
 
+    bool _firstFoundRuleCardFlag = false;
     /// <summary>
     /// Calls matching method in player entity's GameRulesController.
     /// </summary>
     public bool AddRuleCard(AbstractRuleCard ruleCard)
     {
+        if (!_firstFoundRuleCardFlag)
+        {
+            Tutorial.Instance.RuleCardsTutorial();
+            _firstFoundRuleCardFlag = true;
+        }
         return Player.gameRulesController.AddRuleCard(ruleCard);
     }
 

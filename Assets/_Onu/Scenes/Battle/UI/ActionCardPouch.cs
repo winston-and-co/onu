@@ -29,6 +29,7 @@ public class ActionCardPouch : MonoBehaviour, IPointerEnterHandler, IPointerClic
         else
         {
             SafeShow();
+            Tutorial.Instance.ActionCardsTutorial();
         }
     }
 

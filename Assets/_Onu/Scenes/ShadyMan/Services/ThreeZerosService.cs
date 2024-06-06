@@ -1,9 +1,6 @@
 using Cards;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// Adds 3 zeros to the deck
-/// </summary>
 public class ThreeZerosService : AbstractShadyManService
 {
     public override bool ConditionMet()

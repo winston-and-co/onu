@@ -14,9 +14,9 @@ public class EnemyFactory
     {
         [EnemyPool.Easy1] = new()
         {
-            Baby,
-            // Ken,
-            // LostKid
+            // Baby,
+            Ken,
+            LostKid
         },
         [EnemyPool.Hard1] = new()
         {
