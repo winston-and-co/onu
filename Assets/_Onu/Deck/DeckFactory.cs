@@ -12,7 +12,7 @@ public class DeckFactory
 {
     public static Deck MakeDeck(DeckType type, AbstractEntity owner)
     {
-        var deck = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.Deck).GetComponent<Deck>();
+        var deck = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.Deck).GetComponent<Deck>();
         if (deck == null) throw new Exception("Deck prefab missing Deck script component");
         // Attach to entity
         owner.deck = deck;

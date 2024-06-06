@@ -33,6 +33,6 @@ public class Home : MonoBehaviour
         PlayerData.GetInstance().Player.deck.gameObject.SetActive(false);
 
         EventManager.startGameEvent.AddToFront();
-        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
+        OnuSceneManager.GetInstance().ChangeScene(SceneType.Map);
     }
 }

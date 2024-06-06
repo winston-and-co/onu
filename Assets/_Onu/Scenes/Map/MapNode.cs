@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapNode : MonoBehaviour
 {
-    [SerializeField] Scene nodeType;
+    [SerializeField] SceneType nodeType;
     public bool IsStartingNode;
     public bool IsBossNode;
     /// <summary>
@@ -46,15 +46,19 @@ public class MapNode : MonoBehaviour
         PlayerData.GetInstance().CurrentNodeLocation = Location;
         if (IsBossNode)
         {
-            FindObjectOfType<SoundManager>().PlayEnteringCrownNodeSound();
+            // AudioSource source = SoundManager.GetInstance().mainSource;
+            // source.clip = SoundManager.GetInstance().enterBossNode;
+            // source.Play();
         }
         else
         {
-            FindObjectOfType<SoundManager>().PlayEnteringSound();
+            // AudioSource source = SoundManager.GetInstance().mainSource;
+            // source.clip = SoundManager.GetInstance().enterNode;
+            // source.Play();
         }
         var playerSprite = GameObject.Find("PlayerSprite");
         playerSprite.transform.position = transform.position;
 
-        OnuSceneManager.GetInstance().ChangeSceneWithDelay(nodeType, 1);
+        OnuSceneManager.GetInstance().ChangeScene(nodeType);
     }
 }

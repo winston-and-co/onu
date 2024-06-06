@@ -13,7 +13,7 @@ public class LoseTwoCardsService : AbstractShadyManService
     DeckMultiSelect multiSelect;
     public override void OnPointerClick(PointerEventData _)
     {
-        multiSelect = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.UI_DeckMultiSelect).GetComponent<DeckMultiSelect>();
+        multiSelect = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.UI_DeckMultiSelect).GetComponent<DeckMultiSelect>();
         multiSelect.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
         multiSelect.MinSelection = 2;
         multiSelect.MaxSelection = 2;

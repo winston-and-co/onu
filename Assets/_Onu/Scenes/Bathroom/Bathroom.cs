@@ -49,7 +49,7 @@ public class Bathroom : MonoBehaviour
 
     void OnLeaveBathroom()
     {
-        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
+        OnuSceneManager.GetInstance().ChangeScene(SceneType.Map);
     }
 
     void TriggerRandomEvent()

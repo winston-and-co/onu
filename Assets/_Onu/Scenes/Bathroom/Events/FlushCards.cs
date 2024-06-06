@@ -9,7 +9,7 @@ public class FlushCards : MonoBehaviour
     DeckMultiSelect multiSelect;
     public void Flush()
     {
-        multiSelect = PrefabHelper.GetInstance().InstantiatePrefab(PrefabType.UI_DeckMultiSelect).GetComponent<DeckMultiSelect>();
+        multiSelect = PrefabLoader.GetInstance().InstantiatePrefab(PrefabType.UI_DeckMultiSelect).GetComponent<DeckMultiSelect>();
         multiSelect.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
         multiSelect.MinSelection = num_lost;
         multiSelect.MaxSelection = num_lost;

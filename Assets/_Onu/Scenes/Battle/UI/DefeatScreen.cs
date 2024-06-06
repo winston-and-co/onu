@@ -11,7 +11,7 @@ public class DefeatScreen : MonoBehaviour
         EventManager.endedBattleEvent.AddListener(OnEndBattle);
         gameObject.SetActive(false);
 
-        nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(Scene.Map));
+        nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(SceneType.Map));
         // Show();
     }
 

@@ -1,6 +1,7 @@
 using Cards;
 using ActionCards;
 using UnityEngine;
+using System.Collections;
 
 public class GameMaster : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class GameMaster : MonoBehaviour
         defeatPanel.SetActive(true);
     }
 
-    void Start()
+    IEnumerator Start()
     {
         // Init combat
         order = new AbstractEntity[2];
@@ -67,15 +68,9 @@ public class GameMaster : MonoBehaviour
         // Begin combat
         EventManager.startedBattleEvent.AddToBack();
         Player.deck.Shuffle();
-        for (int i = 0; i < Player.StartingHandSize; i++)
-        {
-            Player.Draw();
-        }
+        yield return Player.DrawMany(Player.StartingHandSize);
         Enemy.deck.Shuffle();
-        for (int i = 0; i < Enemy.StartingHandSize; i++)
-        {
-            Enemy.Draw();
-        }
+        yield return Enemy.DrawMany(Enemy.StartingHandSize);
 
         Tutorial.Instance.FirstBattleTutorial();
 

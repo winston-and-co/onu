@@ -19,7 +19,7 @@ public class VictoryScreen : MonoBehaviour
     void OnClickNext()
     {
         Hide();
-        OnuSceneManager.GetInstance().ChangeScene(Scene.Map);
+        OnuSceneManager.GetInstance().ChangeScene(SceneType.Map);
     }
 
     void OnEndBattle()

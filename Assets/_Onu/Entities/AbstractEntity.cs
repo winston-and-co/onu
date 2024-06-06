@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Cards;
 using RuleCards;
+using System.Collections;
 
 public abstract class AbstractEntity : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public abstract class AbstractEntity : MonoBehaviour
 
     public static AbstractEntity New(string name, string entityName, System.Type entityType, int maxHP, int maxMana, int startingHandSize, bool isPlayer)
     {
-        PrefabHelper ph = PrefabHelper.GetInstance();
+        PrefabLoader ph = PrefabLoader.GetInstance();
         GameObject go = ph.InstantiatePrefab(PrefabType.Entity);
         go.name = name;
         if (go == null) throw new System.Exception("Failed to instantiate entity prefab");
@@ -124,6 +125,17 @@ public abstract class AbstractEntity : MonoBehaviour
         RestoreMana(amount);
     }
 
+    public IEnumerator DrawMany(int numToDraw)
+    {
+        for (int i = 0; i < numToDraw; i++)
+        {
+            AbstractCard drawn = deck.Draw();
+            hand.AddCard(drawn);
+            yield return StartCoroutine(DrawCoroutine());
+            EventManager.cardDrawnEvent.AddToBack(this, drawn);
+        }
+    }
+
     /// <summary>
     /// Draw a card.
     /// </summary>
@@ -134,10 +146,20 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
+            StartCoroutine(DrawCoroutine());
             EventManager.cardDrawnEvent.AddToBack(this, drawn);
             return drawn;
         }
         return null;
+    }
+
+    IEnumerator DrawCoroutine()
+    {
+        // SOUND EFFECT
+        SoundManager sm = SoundManager.GetInstance();
+        AudioSource source = sm.mainSource;
+        source.PlayOneShot(sm.drawCard);
+        yield return new WaitUntil(() => !source.isPlaying);
     }
 
     public void Refresh()

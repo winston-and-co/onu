@@ -46,8 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onuSceneManagerPrefab: {fileID: 6500310687141077306, guid: dd6d0096d31166e4eab180c237ede863, type: 3}
   playerDataPrefab: {fileID: 9180944248164513390, guid: 55427dadf09418048859b9cf1cba9265, type: 3}
-  prefabHelperPrefab: {fileID: 2236185122093085229, guid: 2cfa8c1b81ef1ae44adcd01db05c3397, type: 3}
+  prefabLoaderPrefab: {fileID: 2236185122093085229, guid: 2cfa8c1b81ef1ae44adcd01db05c3397, type: 3}
   eventManagerPrefab: {fileID: 9000011881824637994, guid: 8e8ff13fede5e204fb50f0669c661350, type: 3}
   eventTrackerPrefab: {fileID: 214900607692661360, guid: 84cf844ef7268664a82c729a1154bc8e, type: 3}
   gameCursorPrefab: {fileID: 493509494130497079, guid: f9a45b0b1cfa61249ac81086fb888111, type: 3}
   tutorialPrefab: {fileID: 9060801953047063292, guid: 5bd64ad2b11dab141ac1052a11d2fd45, type: 3}
+  soundManagerPrefab: {fileID: 5963660756277365100, guid: d00716757db96cb4397d51fae3d78846, type: 3}
