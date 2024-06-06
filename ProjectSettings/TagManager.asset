@@ -41,6 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: ActionCardList
+  - name: OnTable
+    uniqueID: 3491585889
+    locked: 0
+  - name: EnemyHand
+    uniqueID: 3947407571
+    locked: 0
+  - name: PlayerHand
+    uniqueID: 3228037649
+    locked: 0
+  - name: ObjectUI
     uniqueID: 737210469
     locked: 0
