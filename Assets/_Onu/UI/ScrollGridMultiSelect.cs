@@ -87,7 +87,7 @@ public class ScrollGridMultiSelect : ScrollGrid
     public new void Show()
     {
         base.Show();
-        Blockers.UIPopupBlocker.StartBlocking();
+        Blockers.GameBlocker.StartBlocking();
         pickerCloser = Instantiate(pickerCloserPrefab);
         pickerCloser.transform.SetParent(transform.parent);
         ((RectTransform)pickerCloser.transform).offsetMin = new(0, 0);
@@ -111,7 +111,7 @@ public class ScrollGridMultiSelect : ScrollGrid
             Destroy(hoverOutline);
             hoverOutline = null;
         }
-        Blockers.UIPopupBlocker.StopBlocking();
+        Blockers.GameBlocker.StopBlocking();
         selection.Clear();
         base.Hide();
     }

@@ -7,7 +7,7 @@ public class TradeRuleCardService : AbstractShadyManService
 {
     public override bool ConditionMet()
     {
-        return PlayerData.GetInstance().Player.gameRulesController.Rules.Count > 0;
+        return PlayerData.GetInstance().Player.gameRulesController.GetCount() > 0;
     }
 
     public override void OnPointerClick(PointerEventData eventData)
@@ -15,10 +15,13 @@ public class TradeRuleCardService : AbstractShadyManService
         var pd = PlayerData.GetInstance();
         var currentRules = pd.Player.gameRulesController.Rules.ToList();
         var rand = new Random();
-        var toRemove = currentRules[rand.Next(currentRules.Count)];
-        pd.RemoveRuleCard(toRemove);
-        AbstractRuleCard rc = RuleCardFactory.MakeRandom();
-        pd.AddRuleCard(rc);
+        var toRemove = currentRules[1 + rand.Next(currentRules.Count - 1)];
+        bool res = pd.RemoveRuleCard(toRemove);
+        if (res)
+        {
+            AbstractRuleCard rc = RuleCardFactory.MakeRandom();
+            pd.AddRuleCard(rc);
+        }
         base.Done();
     }
 }

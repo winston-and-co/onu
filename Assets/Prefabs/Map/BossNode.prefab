@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a112366e2044284db4ae80b4f438770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeType: 3
+  nodeType: 4
   IsStartingNode: 0
   IsBossNode: 1
   _connectedNodes: []

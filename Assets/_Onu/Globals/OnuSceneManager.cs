@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public enum SceneType
 {
+    MainMenu,
     Map,
     Bathroom,
     Battle,
@@ -68,6 +69,9 @@ public class OnuSceneManager : MonoBehaviour
         // scene initialization
         switch (scene.name)
         {
+            case "MainMenu":
+                InitMainMenuScene();
+                break;
             case "Map":
                 InitMapScene();
                 break;
@@ -81,6 +85,11 @@ public class OnuSceneManager : MonoBehaviour
                 break;
         }
         lastSceneName = scene.name;
+    }
+
+    void InitMainMenuScene()
+    {
+        PlayerData.GetInstance().Player = null;
     }
 
     void InitMapScene()
@@ -153,10 +162,20 @@ public class OnuSceneManager : MonoBehaviour
     public void ChangeScene(SceneType scene)
     {
         Debug.Log("ChangeScene to: " + scene);
+        StartCoroutine(ChangeSceneHelper(scene));
+    }
+
+    private IEnumerator ChangeSceneHelper(SceneType scene)
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(() => !Blockers.GameBlocker.IsBlocked());
         switch (scene)
         {
+            case SceneType.MainMenu:
+                SceneManager.LoadSceneAsync("MainMenu");
+                break;
             case SceneType.Map:
-                SceneManager.LoadScene("Map");
+                SceneManager.LoadSceneAsync("Map");
                 break;
             case SceneType.Bathroom:
                 SceneManager.LoadSceneAsync("Bathroom");
@@ -165,7 +184,7 @@ public class OnuSceneManager : MonoBehaviour
                 SceneManager.LoadSceneAsync("Battle");
                 break;
             case SceneType.Boss:
-                SceneManager.LoadSceneAsync("Battle");
+                SceneManager.LoadSceneAsync("Boss");
                 break;
             case SceneType.ShadyMan:
                 SceneManager.LoadSceneAsync("ShadyMan");

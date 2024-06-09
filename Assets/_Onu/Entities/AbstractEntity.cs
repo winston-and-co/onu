@@ -131,7 +131,9 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
-            yield return StartCoroutine(DrawCoroutine());
+            // float audioLength = 0.3f;
+            // float delay = Math.Max(audioLength * ((float)(numToDraw - i) / numToDraw), 0.1f);
+            yield return DrawCoroutine(0.2f);
             EventManager.cardDrawnEvent.AddToBack(this, drawn);
         }
     }
@@ -146,20 +148,20 @@ public abstract class AbstractEntity : MonoBehaviour
         {
             AbstractCard drawn = deck.Draw();
             hand.AddCard(drawn);
-            StartCoroutine(DrawCoroutine());
+            StartCoroutine(DrawCoroutine(0.4f));
             EventManager.cardDrawnEvent.AddToBack(this, drawn);
             return drawn;
         }
         return null;
     }
 
-    IEnumerator DrawCoroutine()
+    IEnumerator DrawCoroutine(float delay)
     {
         // SOUND EFFECT
         SoundManager sm = SoundManager.GetInstance();
         AudioSource source = sm.mainSource;
         source.PlayOneShot(sm.drawCard);
-        yield return new WaitUntil(() => !source.isPlaying);
+        yield return new WaitForSeconds(delay);
     }
 
     public void Refresh()

@@ -4,7 +4,9 @@ public class TextFormat
 {
     static readonly Dictionary<string, string> keywordColors = new()
     {
-        ["Color"] = "yellow",
+        ["HP"] = "#FF5959",
+        ["Mana"] = "#929BFF",
+        ["Colors"] = "yellow",
         ["Color"] = "yellow",
         ["Values"] = "yellow",
         ["Value"] = "yellow",
@@ -17,7 +19,12 @@ public class TextFormat
     {
         foreach ((string keyword, string colorName) in keywordColors)
         {
-            input = input.Replace(keyword, $"<b><color=\"{colorName}\">{keyword}</color></b>");
+            if (input.Contains($"_{keyword}"))
+            {
+                input = input.Replace($"_{keyword}", keyword);
+                continue;
+            }
+            input = input.Replace(keyword, $"<b><color={colorName}>{keyword}</color></b>");
         }
         return input;
     }

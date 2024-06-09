@@ -40,7 +40,7 @@ namespace ActionCards
             return false;
         }
 
-        public override void Use(Action onResolved)
+        public override void Use(Action resolve)
         {
             var canvas = FindObjectOfType<Canvas>();
             var canvasRt = canvas.GetComponent<RectTransform>();
@@ -49,7 +49,7 @@ namespace ActionCards
             rt.SetParent(canvasRt);
             rt.anchoredPosition = new Vector2(0, 0);
             var cp = colorPickerInstance.GetComponent<ColorPicker>();
-            cp.OnColorPicked.AddListener(OnColorSelected(onResolved));
+            cp.OnColorPicked.AddListener(OnColorSelected(resolve));
             cp.Show();
         }
 
@@ -64,8 +64,8 @@ namespace ActionCards
                 cardInstance.gameObject.SetActive(true);
                 cardInstance.TryPlay();
                 resolve();
+                cardInstance.SpriteController.Front = SpriteLoader.LoadSprite("alpha_art_card_front");
                 cardInstance.Color = color;
-                cardInstance.SpriteController.SpriteRenderer.color = Color.white;
             };
         }
     }

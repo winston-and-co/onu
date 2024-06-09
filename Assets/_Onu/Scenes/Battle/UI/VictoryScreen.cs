@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Blockers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,14 +33,14 @@ public class VictoryScreen : MonoBehaviour
     void Show()
     {
         gameObject.SetActive(true);
-        UIPopupBlocker.StartBlocking();
+        Blockers.GameBlocker.StartBlocking();
         GenerateRewards();
     }
 
     void Hide()
     {
         gameObject.SetActive(false);
-        UIPopupBlocker.StopBlocking();
+        Blockers.GameBlocker.StopBlocking();
     }
 
     void GenerateRewards()
