@@ -166,14 +166,17 @@ public class GameMaster : MonoBehaviour
         EventManager.cardPlayedEvent.AddToBack(cardPlayer, c);
         cardPlayer.SpendMana(cost);
         AbstractCard top = DiscardPile.Peek();
-        if (top != null && top.Value == 0)
+        if (c.Value.HasValue)
         {
-            cardPlayer.Heal(c.Value ?? 0);
-        }
-        else
-        {
-            int modifiedAmount = (int)(c.Value * cardPlayer.DamageDealingModifier);
-            cardTarget.Damage(modifiedAmount);
+            if (top != null && top.Value == 0)
+            {
+                cardPlayer.Heal(c.Value ?? default);
+            }
+            else
+            {
+                int modifiedAmount = (int)((c.Value ?? default) * cardPlayer.DamageDealingModifier);
+                cardTarget.Damage(modifiedAmount);
+            }
         }
         cardPlayer.hand.RemoveCard(c);
     }
