@@ -6,9 +6,10 @@ using UnityEngine;
 [Serializable]
 public class Settings
 {
-    public bool tutorial1Seen = false;
-    public bool tutorial2Seen = false;
-    public bool tutorial3Seen = false;
+    public bool firstBattleTutorialSeen = false;
+    public bool manaTutorialSeen = false;
+    public bool actionCardTutorialSeen = false;
+    public bool ruleCardTutorialSeen = false;
 }
 
 public class SettingsHelper

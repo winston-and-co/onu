@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
-    [SerializeField] GameObject tutorial1;
-    [SerializeField] GameObject tutorial2;
-    [SerializeField] GameObject tutorial3;
+    [SerializeField] GameObject firstBattleTutorial;
+    [SerializeField] GameObject manaTutorial;
+    [SerializeField] GameObject actionCardTutorial;
+    [SerializeField] GameObject ruleCardTutorial;
 
     private GameObject[] parts;
     private int index;
@@ -29,33 +30,44 @@ public class Tutorial : MonoBehaviour
 
     public void FirstBattleTutorial()
     {
-        if (SettingsHelper.Instance.Deserialize().tutorial1Seen) return;
-        StartTutorialSequence(tutorial1, () =>
+        if (SettingsHelper.Instance.Deserialize().firstBattleTutorialSeen) return;
+        StartTutorialSequence(firstBattleTutorial, () =>
         {
             var s = SettingsHelper.Instance.Deserialize();
-            s.tutorial1Seen = true;
+            s.firstBattleTutorialSeen = true;
+            SettingsHelper.Instance.Serialize(s);
+        });
+    }
+
+    public void ManaTutorial()
+    {
+        if (SettingsHelper.Instance.Deserialize().manaTutorialSeen) return;
+        StartTutorialSequence(manaTutorial, () =>
+        {
+            var s = SettingsHelper.Instance.Deserialize();
+            s.manaTutorialSeen = true;
             SettingsHelper.Instance.Serialize(s);
         });
     }
 
     public void ActionCardsTutorial()
     {
-        if (SettingsHelper.Instance.Deserialize().tutorial2Seen) return;
-        StartTutorialSequence(tutorial2, () =>
+        if (SettingsHelper.Instance.Deserialize().actionCardTutorialSeen) return;
+        StartTutorialSequence(actionCardTutorial, () =>
         {
             var s = SettingsHelper.Instance.Deserialize();
-            s.tutorial2Seen = true;
+            s.actionCardTutorialSeen = true;
             SettingsHelper.Instance.Serialize(s);
         });
     }
 
     public void RuleCardsTutorial()
     {
-        if (SettingsHelper.Instance.Deserialize().tutorial3Seen) return;
-        StartTutorialSequence(tutorial3, () =>
+        if (SettingsHelper.Instance.Deserialize().ruleCardTutorialSeen) return;
+        StartTutorialSequence(ruleCardTutorial, () =>
         {
             var s = SettingsHelper.Instance.Deserialize();
-            s.tutorial3Seen = true;
+            s.ruleCardTutorialSeen = true;
             SettingsHelper.Instance.Serialize(s);
         });
     }
@@ -75,7 +87,7 @@ public class Tutorial : MonoBehaviour
         }
         parts[0].SetActive(true);
         endSequenceCallback = onEnd;
-        UIPopupBlocker.StartBlocking();
+        GameBlocker.StartBlocking();
     }
 
     public void Advance()
@@ -95,6 +107,6 @@ public class Tutorial : MonoBehaviour
     void EndTutorialSequence()
     {
         endSequenceCallback();
-        UIPopupBlocker.StopBlocking();
+        GameBlocker.StopBlocking();
     }
 }

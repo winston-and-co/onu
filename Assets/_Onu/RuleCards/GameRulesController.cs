@@ -30,6 +30,12 @@ public class GameRulesController : IRuleset
         Entity = e;
     }
 
+    public int GetCount()
+    {
+        // not counting default rules
+        return Rules.Count - 1;
+    }
+
     public bool AddRuleCard(AbstractRuleCard ruleCard)
     {
         if (ruleCard != null)
@@ -41,6 +47,7 @@ public class GameRulesController : IRuleset
     }
     public bool RemoveRuleCard(AbstractRuleCard ruleCard)
     {
+        if (ruleCard is DefaultRuleset) return false;
         return Rules.Remove(ruleCard);
     }
 

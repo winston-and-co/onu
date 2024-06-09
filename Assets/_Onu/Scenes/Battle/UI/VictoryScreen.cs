@@ -34,14 +34,14 @@ public class VictoryScreen : MonoBehaviour
     void Show()
     {
         gameObject.SetActive(true);
-        UIPopupBlocker.StartBlocking();
+        GameBlocker.StartBlocking();
         GenerateRewards();
     }
 
     void Hide()
     {
         gameObject.SetActive(false);
-        UIPopupBlocker.StopBlocking();
+        GameBlocker.StopBlocking();
     }
 
     void GenerateRewards()

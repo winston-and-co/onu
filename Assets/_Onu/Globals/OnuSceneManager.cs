@@ -153,6 +153,13 @@ public class OnuSceneManager : MonoBehaviour
     public void ChangeScene(SceneType scene)
     {
         Debug.Log("ChangeScene to: " + scene);
+        StartCoroutine(ChangeSceneHelper(scene));
+    }
+
+    private IEnumerator ChangeSceneHelper(SceneType scene)
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(() => !Blockers.GameBlocker.IsBlocked());
         switch (scene)
         {
             case SceneType.Map:

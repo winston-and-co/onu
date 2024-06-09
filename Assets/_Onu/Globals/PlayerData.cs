@@ -62,8 +62,11 @@ public class PlayerData : MonoBehaviour
     /// </summary>
     public void RemoveActionCard(AbstractActionCard instance)
     {
+        if (instance != null && instance.gameObject != null)
+        {
+            Destroy(instance.gameObject);
+        }
         ActionCards.RemoveAt(instance.PlayerDataIndex);
-        Destroy(instance.gameObject);
     }
 
     /// <summary>

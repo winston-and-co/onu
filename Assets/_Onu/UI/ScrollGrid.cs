@@ -97,7 +97,7 @@ public class ScrollGrid : MonoBehaviour
     {
         gameObject.SetActive(true);
         IsOpen = true;
-        Blockers.UIPopupBlocker.StartBlocking();
+        Blockers.GameBlocker.StartBlocking();
         if (UIWindowCloserPrefab != null)
         {
             UIWindowCloser = Instantiate(UIWindowCloserPrefab);
@@ -115,7 +115,7 @@ public class ScrollGrid : MonoBehaviour
         {
             Destroy(UIWindowCloser);
         }
-        Blockers.UIPopupBlocker.StopBlocking();
+        Blockers.GameBlocker.StopBlocking();
         gameObject.SetActive(false);
         IsOpen = false;
     }

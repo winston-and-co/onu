@@ -20,7 +20,7 @@ public class ShadyMan : MonoBehaviour
         // Pick 3 random service options
         if (optionPrefabs.Count < 3) throw new System.Exception();
         options = new();
-        List<int> pickedAlready = new();
+        List<int> seen = new();
         while (options.Count < 3)
         {
             int randI;
@@ -28,7 +28,7 @@ public class ShadyMan : MonoBehaviour
             {
                 randI = rand.Next(optionPrefabs.Count);
             }
-            while (pickedAlready.Contains(randI));
+            while (seen.Contains(randI));
             GameObject option = Instantiate(
                 original: optionPrefabs[randI],
                 position: new(-200f + 200f * options.Count, 0),
@@ -39,8 +39,8 @@ public class ShadyMan : MonoBehaviour
             if (service.ConditionMet())
             {
                 options.Add(option);
-                pickedAlready.Add(randI);
             }
+            seen.Add(randI);
         }
     }
 

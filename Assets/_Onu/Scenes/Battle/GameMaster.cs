@@ -52,6 +52,7 @@ public class GameMaster : MonoBehaviour
 
     IEnumerator Start()
     {
+        Blockers.GameBlocker.StartBlocking();
         // Init combat
         order = new AbstractEntity[2];
         order[0] = Player;
@@ -68,12 +69,15 @@ public class GameMaster : MonoBehaviour
         // Begin combat
         EventManager.startedBattleEvent.AddToBack();
         Player.deck.Shuffle();
-        yield return Player.DrawMany(Player.StartingHandSize);
+        Coroutine a = StartCoroutine(Player.DrawMany(Player.StartingHandSize));
         Enemy.deck.Shuffle();
-        yield return Enemy.DrawMany(Enemy.StartingHandSize);
+        Coroutine b = StartCoroutine(Enemy.DrawMany(Enemy.StartingHandSize));
+        yield return a;
+        yield return b;
 
         Tutorial.Instance.FirstBattleTutorial();
 
+        Blockers.GameBlocker.StopBlocking();
         StartNextTurn();
     }
 
@@ -139,7 +143,7 @@ public class GameMaster : MonoBehaviour
 
     void TryEndTurn(AbstractEntity e)
     {
-        if (Blockers.UIPopupBlocker.IsBlocked()) return;
+        if (Blockers.GameBlocker.IsBlocked()) return;
         EventManager.endedTurnEvent.AddToBack(CurrentEntity);
         StartNextTurn();
     }
@@ -149,7 +153,7 @@ public class GameMaster : MonoBehaviour
      */
     public void TryPlayCard(AbstractCard card)
     {
-        if (Blockers.UIPopupBlocker.IsBlocked()) return;
+        if (Blockers.GameBlocker.IsBlocked()) return;
         if (card.Entity == null || card == null) return;
         if (card.Entity != CurrentEntity) return;
         if (card.IsPlayable())
@@ -158,6 +162,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
+    bool _firstSpentManaFlag = false;
     void PlayCard(AbstractCard c)
     {
         AbstractEntity cardPlayer = c.Entity;
@@ -165,6 +170,11 @@ public class GameMaster : MonoBehaviour
         int cost = cardPlayer.gameRulesController.CardManaCost(this, cardPlayer, c);
         EventManager.cardPlayedEvent.AddToBack(cardPlayer, c);
         cardPlayer.SpendMana(cost);
+        if (cardPlayer.isPlayer && cost > 0 && !_firstSpentManaFlag)
+        {
+            _firstSpentManaFlag = true;
+            Tutorial.Instance.ManaTutorial();
+        }
         AbstractCard top = DiscardPile.Peek();
         if (c.Value.HasValue)
         {
@@ -183,7 +193,7 @@ public class GameMaster : MonoBehaviour
 
     public void TryUseActionCard(AbstractActionCard ac)
     {
-        if (Blockers.UIPopupBlocker.IsBlocked()) return;
+        if (Blockers.GameBlocker.IsBlocked()) return;
         if (ac.IsUsable())
         {
             UseActionCard(ac);
