@@ -1,13 +1,14 @@
 using System;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 [Serializable]
 public class Settings
 {
-    public bool tutorial1Seen;
-    public bool tutorial2Seen;
-    public bool tutorial3Seen;
+    public bool tutorial1Seen = false;
+    public bool tutorial2Seen = false;
+    public bool tutorial3Seen = false;
 }
 
 public class SettingsHelper
@@ -21,6 +22,7 @@ public class SettingsHelper
     {
         string filename = "settings.json";
         string path = System.IO.Path.Join(Application.persistentDataPath, filename);
+        this.Filepath = path;
         if (File.Exists(path))
         {
             Debug.Log("Settings file found.");
@@ -28,10 +30,10 @@ public class SettingsHelper
         else
         {
             Debug.Log("Settings file not found. Creating file.");
-            File.Create(path);
-            Serialize(new Settings());
+            using FileStream fs = File.Create(path);
+            string json = JsonUtility.ToJson(new Settings(), true);
+            fs.Write(Encoding.UTF8.GetBytes(json));
         }
-        this.Filepath = path;
         Debug.Log("Filepath: " + path);
     }
 
