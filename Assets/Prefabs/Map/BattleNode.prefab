@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a112366e2044284db4ae80b4f438770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeType: 2
+  nodeType: 3
   IsStartingNode: 0
   IsBossNode: 0
   _connectedNodes: []
@@ -330,3 +330,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0b7deca3a87764d9693f0c89f8b542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clicked: 0
+  valid: 0

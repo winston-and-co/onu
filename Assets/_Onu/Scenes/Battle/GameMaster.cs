@@ -144,6 +144,7 @@ public class GameMaster : MonoBehaviour
     void TryEndTurn(AbstractEntity e)
     {
         if (Blockers.GameBlocker.IsBlocked()) return;
+        if (Victor != null || CurrentEntity == null) return;
         EventManager.endedTurnEvent.AddToBack(CurrentEntity);
         StartNextTurn();
     }

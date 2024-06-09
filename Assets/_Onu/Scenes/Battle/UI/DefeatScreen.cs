@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +8,26 @@ public class DefeatScreen : MonoBehaviour
     void Awake()
     {
         EventManager.endedBattleEvent.AddListener(OnEndBattle);
-        gameObject.SetActive(false);
+        Hide();
+        nextButton.onClick.AddListener(OnClickNext);
+    }
 
-        nextButton.onClick.AddListener(() => OnuSceneManager.GetInstance().ChangeScene(SceneType.Map));
-        // Show();
+    void OnClickNext()
+    {
+        Hide();
+        OnuSceneManager.GetInstance().ChangeScene(SceneType.MainMenu);
+    }
+
+    void Show()
+    {
+        gameObject.SetActive(true);
+        Blockers.GameBlocker.StartBlocking();
+    }
+
+    void Hide()
+    {
+        gameObject.SetActive(false);
+        Blockers.GameBlocker.StopBlocking();
     }
 
     void OnEndBattle()
@@ -20,7 +35,7 @@ public class DefeatScreen : MonoBehaviour
         var gm = GameMaster.GetInstance();
         if (gm.Victor != gm.Player)
         {
-            // TODO: Back to menu?
+            Show();
         }
     }
 }

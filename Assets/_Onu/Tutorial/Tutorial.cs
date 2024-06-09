@@ -1,5 +1,4 @@
 using System;
-using Blockers;
 using TMPro;
 using UnityEngine;
 
@@ -87,7 +86,7 @@ public class Tutorial : MonoBehaviour
         }
         parts[0].SetActive(true);
         endSequenceCallback = onEnd;
-        GameBlocker.StartBlocking();
+        Blockers.GameBlocker.StartBlocking();
     }
 
     public void Advance()
@@ -107,6 +106,6 @@ public class Tutorial : MonoBehaviour
     void EndTutorialSequence()
     {
         endSequenceCallback();
-        GameBlocker.StopBlocking();
+        Blockers.GameBlocker.StopBlocking();
     }
 }
